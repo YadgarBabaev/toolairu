@@ -28,7 +28,7 @@
                         {% endfor %}
                     </ul>
                 </div>
-                <div class="col-sm-5 shop-item-col-2 shop-car">
+                <div class="col-sm-5 shop-item-col-2">
                     <img src="/{{ srs }}" alt="" id="image_target" data-zoom-image="/{{ srs }}">
                 </div>
                 <div class="col-sm-5 shop-item-col-3">
@@ -43,11 +43,23 @@
                                     {% if(shop.getMainCurrency().symbol) %}
                                         {{ shop.getMainCurrency().symbol }}
                                     {% endif %}
-                                    {{ product.price|number_format() }}
+                                    {{ product.priceB2B|number_format() }}
                                     {% if(shop.getMainCurrency().symbol is null) %}
                                         {{ shop.getMainCurrency().shortSign }}
                                     {% endif %}
                                 </div>
+                                <div>
+                                    <label>{% trans %}PRET-A-PORTER{% endtrans %}</label>
+                                    &nbsp;
+                                    &nbsp;
+                                    <label style="color: pink;">{% trans %}PRONTO{% endtrans %}</label>
+                                    &nbsp;
+                                    &nbsp;
+                                    <label>{% trans %}STOCK{% endtrans %}</label>
+                                    &nbsp;
+                                    &nbsp;
+                                </div>
+                                <br>
                                 <div class="page-desc">{{ product.description|raw }}
                                 </div>
                                 <div class="page-info-container">
@@ -74,49 +86,11 @@
                                                    name="size">
                                         </label>
                                     {% endfor %}
-                                    <a href="javascript:void(0)" onclick="openSizeTable()"
-                                       id="open_size_table">{% trans %}Size table{% endtrans %}</a>
-                                    <div id="size_table" style="display: none;">
-                                        <table class="table-striped">
-                                            {% for key, value in table %}
-                                                <tr>
-                                                    <td style="white-space: nowrap;">{{ key }}</td>
-                                                    {% if loop.index == 1 %}
-                                                        <th>XS/42</th>
-                                                        <th>S/44</th>
-                                                        <th>M/46</th>
-                                                        <th>L/48</th>
-                                                        <th>XL/50</th>
-                                                    {% elseif loop.index == 2 %}
-                                                        <td>80</td>
-                                                        <td>85</td>
-                                                        <td>91</td>
-                                                        <td>96</td>
-                                                        <td>102</td>
-                                                        {#{% for val in value %}#}
-                                                            {#<th>{{ val }}</th>#}
-                                                        {#{% endfor %}#}
-                                                    {% elseif loop.index == 3 %}
-                                                        <td>64</td>
-                                                        <td>69</td>
-                                                        <td>74</td>
-                                                        <td>79</td>
-                                                        <td>85</td>
-                                                    {% else %}
-                                                        <td>89</td>
-                                                        <td>94</td>
-                                                        <td>99</td>
-                                                        <td>104</td>
-                                                        <td>110</td>
-                                                        {#{% for val in value %}#}
-                                                            {#<td>{{ val }}</td>#}
-                                                        {#{% endfor %}#}
-                                                    {% endif %}
-                                                </tr>
-                                            {% endfor %}
-                                        </table>
-                                        <br>
-                                    </div>
+                                    <label class="tabs-size-label" for="size_all">
+                                        all
+                                        <input  id="size_all" value="all" type="radio"
+                                               name="size">
+                                    </label>
                                 </div>
 
                                 <div class="col-sm-3"><span class="tabs-shop-text-color">{% trans %}COLOR{% endtrans %}</span></div>
@@ -243,11 +217,7 @@
                 }
             });
         }
-        function openSizeTable() {
-            $('#size_table').animate({"height": "toggle", "opacity": "toggle"}, 'slow');
-            var scr = $('#open_size_table').offset().top;
-            $('html, body').animate({scrollTop: scr - 10}, 'slow');
-        }
+
         function validate(formData, jqForm, options) {
             var size = false;
             var color = false;
@@ -314,12 +284,4 @@
             $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
-    <style>
-        .table-striped th,td{
-            padding-left: 4px;
-            padding-top: 3px;
-            padding-right: 4px;
-            text-align: center;
-        }
-    </style>
 {% endblock %}

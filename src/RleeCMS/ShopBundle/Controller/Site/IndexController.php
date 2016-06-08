@@ -129,46 +129,46 @@ class IndexController extends Controller
         $breadcrumbs->addItem('Главная', $this->generateUrl('site_index'));
 //            $breadcrumbs->addItem($menu->getTitle());
 //        }
-        $table = array();
-        /** @var  $size \RleeCMS\ShopBundle\Entity\Size */
-        $heights = array();
-        foreach ($product->getSizes() as $size) {
-            if ($size->getHeight()) {
-                $heights[] = $size->getHeight();
-            }
-            $name[] = $size->getSize();
-            $bust[] = $size->getBust();
-            $waist[] = $size->getWaist();
-            $hips[] = $size->getHips();
-            $front_waist_length[] = $size->getFrontWaistLength();
-            $bust_depth[] = $size->getBustDepth();
-            $back_length[] = $size->getBackLength();
-            $back_width[] = $size->getBackWidth();
-            $shoulder_width[] = $size->getShoulderWidth();
-            $hand_length[] = $size->getHandLength();
-        }
-        $minMaxHeight = '';
-        if (count($heights) > 0) {
-            $max = max($heights);
-            $min = min($heights);
-            if (isset($min) and isset($max)) {
-                if ($max == $min) {
-                    $minMaxHeight = $min;
-                } else {
-                    $minMaxHeight = $min . ' - ' . $max;
-                }
-            } else if (isset($min)) {
-                $minMaxHeight = $min;
-            } else if (isset($max)) {
-                $minMaxHeight = $max;
-            }
-        }
+//        $table = array();
+//        /** @var  $size \RleeCMS\ShopBundle\Entity\Size */
+//        $heights = array();
+//        foreach ($product->getSizes() as $size) {
+//            if ($size->getHeight()) {
+//                $heights[] = $size->getHeight();
+//            }
+//            $name[] = $size->getSize();
+//            $bust[] = $size->getBust();
+//            $waist[] = $size->getWaist();
+//            $hips[] = $size->getHips();
+//            $front_waist_length[] = $size->getFrontWaistLength();
+//            $bust_depth[] = $size->getBustDepth();
+//            $back_length[] = $size->getBackLength();
+//            $back_width[] = $size->getBackWidth();
+//            $shoulder_width[] = $size->getShoulderWidth();
+//            $hand_length[] = $size->getHandLength();
+//        }
+//        $minMaxHeight = '';
+//        if (count($heights) > 0) {
+//            $max = max($heights);
+//            $min = min($heights);
+//            if (isset($min) and isset($max)) {
+//                if ($max == $min) {
+//                    $minMaxHeight = $min;
+//                } else {
+//                    $minMaxHeight = $min . ' - ' . $max;
+//                }
+//            } else if (isset($min)) {
+//                $minMaxHeight = $min;
+//            } else if (isset($max)) {
+//                $minMaxHeight = $max;
+//            }
+//        }
         $table = array(
-            $translator->trans('HEIGHT') => $minMaxHeight,
-            $translator->trans('SIZE STABLE FABRICS') => $name,
-            $translator->trans('Bust') => $bust,
-            $translator->trans('Waist') => $waist,
-            $translator->trans('Hips') => $hips,
+            $translator->trans('HEIGHT').' 167-174' => '',//$minMaxHeight,
+            //$translator->trans('SIZE STABLE FABRICS') => $name,
+            $translator->trans('Bust') => '',//$bust,
+            $translator->trans('Waist') => '',//$waist,
+            $translator->trans('Hips') => '',//$hips,
 //            $translator->trans('Front waist length') => $front_waist_length,
 //            $translator->trans('Bust depth') => $bust_depth,
 //            $translator->trans('Back length') => $back_length,
@@ -237,47 +237,7 @@ class IndexController extends Controller
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem('Главная', $this->generateUrl('site_index'));
 
-        $table = array();
-        /** @var  $size \RleeCMS\ShopBundle\Entity\Size */
-        $heights = array();
-        foreach ($product->getSizes() as $size) {
-            if ($size->getHeight()) {
-                $heights[] = $size->getHeight();
-            }
-            $name[] = $size->getSize();
-            $bust[] = $size->getBust();
-            $waist[] = $size->getWaist();
-            $hips[] = $size->getHips();
-            $front_waist_length[] = $size->getFrontWaistLength();
-            $bust_depth[] = $size->getBustDepth();
-            $back_length[] = $size->getBackLength();
-            $back_width[] = $size->getBackWidth();
-            $shoulder_width[] = $size->getShoulderWidth();
-            $hand_length[] = $size->getHandLength();
-        }
-        $minMaxHeight = '';
-        if (count($heights) > 0) {
-            $max = max($heights);
-            $min = min($heights);
-            if (isset($min) and isset($max)) {
-                if ($max == $min) {
-                    $minMaxHeight = $min;
-                } else {
-                    $minMaxHeight = $min . ' - ' . $max;
-                }
-            } else if (isset($min)) {
-                $minMaxHeight = $min;
-            } else if (isset($max)) {
-                $minMaxHeight = $max;
-            }
-        }
-        $table = array(
-            $translator->trans('HEIGHT') => $minMaxHeight,
-            $translator->trans('SIZE STABLE FABRICS') => $name,
-            $translator->trans('Bust') => $bust,
-            $translator->trans('Waist') => $waist,
-            $translator->trans('Hips') => $hips,
-        );
+
 
         $flag = false;
         if ($this->getUser()) {
@@ -306,7 +266,6 @@ class IndexController extends Controller
         $colorArray = array_unique($colorArray);
         return array(
             'product' => $product,
-            'table' => $table,
             'flag' => $flag,
             'stores' => $stores,
             'countStores' => $countStores,
