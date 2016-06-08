@@ -111,6 +111,21 @@ $(window).resize(function(){
                     $(this).addClass('active');
                 });
             
-    
-    
+    $('.cart-close-btn').click(function(){
+        /*$(this).parent().css({
+            "left": "100%"
+        });*/
+        $('.bag').css({
+            'left': '100%'
+        });
+        return false;
+    });
+
+		$('.shop-carousel').bxSlider({
+			mode: 'vertical',
+			pager: false,
+			maxSlides: 3,
+			minSlides: 3,
+			moveSlides: 1
+		});
 });

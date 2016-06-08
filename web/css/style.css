@@ -23,6 +23,14 @@ img {
 /*//////////////////////////////////////////////////////////////////////////*/
 /*                                      NAV                                     */
 /*//////////////////////////////////////////////////////////////////////////*/
+.cart-close-btn {
+	font-size: 24px;
+	color: #000;
+	text-decoration: none;
+}
+.tabs-size-label.disabled {
+	color: #ccc;
+}
 .nav img {
     vertical-align: baseline;
 }
@@ -31,6 +39,7 @@ nav.navbar ul.navbar-right{
 }
 .navbar-nav-menu {
     position: relative;
+    margin-top: 10px;
 }
 .dropdown-bg {
     display: block;
@@ -85,8 +94,6 @@ nav.navbar ul.navbar-right{
     font-family: "CenturyGothic";
     font-weight: bold;
     text-transform: uppercase;
-    padding-top:25px !important;
-    padding-bottom:10px !important;
     transition-duration: .3s;
 }
 footer .nav-item-link:focus,
@@ -102,7 +109,14 @@ footer .nav-item-link {
 .nav.navbar-nav.navbar-right > li > a {
     padding: 0px 8px;
 }
-
+.nav-item-link.cart-btn {
+	margin-right: 90px;
+}
+#total-in-cart {
+	width: 130px;
+  display: inline-block;
+  padding-left: 20px;
+}
 /*//////////////////////////////////////////////////////////////////////////*/
 /*                                      BAG                                     */
 /*//////////////////////////////////////////////////////////////////////////*/
@@ -139,13 +153,14 @@ footer .nav-item-link {
 
 }
 .bag-button {
-    display: block;
+       display: block;
     background-color: transparent;
-    border:1px solid black;
+    border: 1px solid black;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 13px;
     padding: 0 15px;
     margin-top: 38px;
+    text-align: center;
 }
 .bag-link:focus,
 .bag-link:hover,
@@ -156,11 +171,11 @@ footer .nav-item-link {
     text-transform: uppercase;
 }
 .bag-item {
-    font-size: 18px;
+    font-size: 16px;
 }
 .total {
     padding-left: 35px;
-    font-size: 18px;
+    font-size: 14px;
 }
 .total-price {
     font-weight: bold;
@@ -1291,3 +1306,26 @@ form {
     /*content: "";*/
     /*display: block;*/
 /*}*/
+.bx-wrapper {
+    background: none!important;
+    border: none!important;
+    -webkit-box-shadow: none!important;
+    box-shadow: none!important;
+}
+.bx-wrapper .bx-prev {
+    left: 0!important;
+    right: 0!important;
+    top: 0!important;
+    margin: auto;
+    background: url(images/controls.png) no-repeat 0 -32px;
+    transform: rotate(90deg);
+}
+.bx-wrapper .bx-next {
+    left: 0!important;
+    right: 0!important;
+    bottom: 0!important;
+    top: auto!important;
+    margin: auto;
+    background: url(images/controls.png) no-repeat 0 -32px;
+    transform: rotate(180deg);
+}
