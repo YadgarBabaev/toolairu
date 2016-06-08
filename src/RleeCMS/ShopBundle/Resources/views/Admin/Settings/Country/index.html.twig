@@ -1,0 +1,38 @@
+{% extends '::adminBase.html.twig' %}
+{% block content_header %}
+    <h1>
+        Каталог
+        <small>Страны</small>
+    </h1>
+{% endblock content_header %}
+{% block content %}
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <a class="btn btn-primary" href="{{ path('admin_shop_settings_country_new') }}">
+                Добавить <i class="fa fa-fw fa-plus-square-o"></i>
+            </a>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Наименование</th>
+                <th>Процент</th>
+                <th>Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for country in countries %}
+                <tr>
+                    <td>{{ country.id }}</td>
+                    <td><a href="{{ path('admin_shop_settings_country_edit', { 'id': country.id }) }}">{{ country }}</a></td>
+                    <td>{{ country.procent }}%</td>
+                    <td>
+                        <a class="btn btn-danger" href="{{ path('admin_shop_settings_country_delete', { 'id': country.id }) }}">Удалить <i class="fa fa-fw fa-minus-square-o"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

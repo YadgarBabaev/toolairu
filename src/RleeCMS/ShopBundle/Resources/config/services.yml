@@ -1,0 +1,4 @@
+services:
+#    rlee_cms_shop.core:
+#        class: RleeCMS\ShopBundle\Core\Shop
+#        arguments: ["@service_container", @doctrine.orm.entity_manager]

@@ -1,0 +1,181 @@
+{% extends "RleeCMSShopBundle::layout.html.twig" %}
+{% block content %}
+    <div class="container-fluid shop-inside">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="col-sm-6"><img src="/images/shop/{{ shopByLook.logo }}" alt=""></div>
+                <div class="col-sm-6">
+                    <!-- Tab panes -->
+                    <div class="tabs-content">
+                        {% for product in shopByLook.products %}
+                            {% if product.status == 1 %}
+                                {% set i = loop.index %}
+                                <div class="tabs-pane fade{% if loop.first %} in active{% endif %}"
+                                     id="tab_{{ loop.index }}">
+                                    <h4 class="tabs-title">{{ product }}</h4>
+                                    <div class="tabs-price">
+                                        {% if(shop.getMainCurrency().symbol) %}
+                                            {{ shop.getMainCurrency().symbol }}
+                                        {% endif %}
+                                        {{ product.price|number_format() }}
+                                        {% if(shop.getMainCurrency().symbol is null) %}
+                                            {{ shop.getMainCurrency().shortSign }}
+                                        {% endif %}
+                                    </div>
+                                    {#<div class="tabs-desc">#}
+                                    {#{{ product.description|raw }}#}
+                                    <div class="tabs-image text-center">
+                                        <img id="image_target_{{ product.id }}" src="/images/shop/{{ product.logo }}"
+                                             alt="">
+                                    </div>
+                                    <div class="tabs-shop">
+                                        <div class="row">
+                                            <div class="col-sm-4 tabs-shop-left">
+                                                <div>
+                                            <span class="tabs-shop-check-size">
+                                                {% trans %}Size{% endtrans %}
+                                            </span>
+                                                    {% set sizeArray = mainSizeArray[product.id] %}
+                                                    {% for size in product.sizes %}
+                                                        <label class="tabs-size-label{% if size.id not in sizeArray %} disabled{% endif %}"
+                                                               for="tab{{ i }}-size-{{ size }}">{{ size }}
+                                                            <input id="tab{{ i }}-size-{{ size }}" type="radio"
+                                                                   name="tab{{ i }}-size"
+                                                                   {% if size.id not in sizeArray %}disabled="disabled"{% endif %}
+                                                                   value="{{ size.id }}"></label>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                {% set table = productTable[product.id] %}
+                                                <a href="javascript:void(0)" onclick="openSizeTable('{{ product.id }}')"
+                                                   id="open_size_table_{{ product.id }}">{% trans %}Size table{% endtrans %}</a>
+                                                <div id="size_table_{{ product.id }}" style="display: none;">
+                                                    <table class="table-bordered table-striped">
+                                                        {% for key, value in table %}
+                                                            <tr>
+                                                                <td>{{ key }}</td>
+                                                                {% if loop.index == 1 %}
+                                                                    <td colspan="3">{{ value }}</td>
+                                                                {% elseif loop.index == 2 %}
+                                                                    {% for val in value %}
+                                                                        <th>{{ val }}</th>
+                                                                    {% endfor %}
+                                                                {% else %}
+                                                                    {% for val in value %}
+                                                                        <td>{{ val }}</td>
+                                                                    {% endfor %}
+                                                                {% endif %}
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 tabs-shop-right">
+                                                <button class="shop-btn shop-cart">
+                                                    {% trans %}Add to cart{% endtrans %}
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-5">
+                                                    <span class="tabs-shop-check-color">
+                                                        {% trans %}Color{% endtrans %}
+                                                    </span>
+                                                {% set colorArray = mainColorArray[product.id] %}
+                                                {% for color in product.colors %}
+                                                    <label class="tabs-color-label{% if color.id not in colorArray %} disabled{% endif %}"
+                                                           for="tab{{ i }}-color{{ loop.index }}">
+                                                        <img src="/{{ color.getWebPath() }}" alt="" width="34px">
+                                                        <input value="{{ color.id }}"
+                                                               id="tab{{ i }}-color{{ loop.index }}" type="radio"
+                                                               {% if color.id not in colorArray %}disabled="disabled"{% endif %}
+                                                               name="tab{{ i }}-color">
+                                                    </label>
+                                                {% endfor %}
+                                            </div>
+                                            <div class="col-sm-3 tabs-shop-center">
+                                                <a class="tabs-shop-center-link"
+                                                   href="{{ router.getRouteCollection().get('product_'~product.id).path }}">
+                                                    {% trans %}In shop{% endtrans %}
+                                                </a>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                {% set countStores = mainCountStores[product.id] %}
+                                                {% if countStores > 0 %}
+                                                    <a href="#" id="in_store" class="shop-btn shop-store">{% trans %}In store{% endtrans %}</a>
+                                                {% endif %}
+                                                {% if app.user %}
+                                                    {% set flag = flagArray[product.id] %}
+                                                    {% if flag == false %}
+                                                        <a id="addWish_{{ product.id }}" class="shop-btn shop-wishlist"
+                                                           onclick="addWish('{{ product.id }}')">{% trans %}Add to wish list{% endtrans %}</a>
+                                                    {% else %}
+                                                        <a href="#" class="shop-btn shop-wishlist">{% trans %}PRODUCT HAS BEEN ADDED TO WISH LIST{% endtrans %}</a>
+                                                    {% endif %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <!-- Nav tabs -->
+                    <ul class="tabs list-unstyled">
+                        {% for product in shopByLook.products %}
+                            {% if product.status == 1 %}
+                                <li class="tabs-item col-sm-4{% if loop.first %} active{% endif %}"><a
+                                            href="#tab_{{ loop.index }}" data-toggle="tab"><img
+                                                src="/images/shop/{{ product.logo }}" alt=""></a></li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block javascripts %}
+    <script type="text/javascript">
+        function addWish(id) {
+            $.ajax({
+                url: "{{ path('site_wish_add') }}",
+                dataType: "json",
+                type: "POST",
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.flag == 'success') {
+                        alert(data.msg);
+                        var t = $('#image_target_' + id), e = t.clone(), b = $('#wish-list'), o = t.position(), po = t.parent().offset(), bo = b.offset();
+                        e.css({top: o.top + 'px', left: o.left + 'px', position: 'absolute'});
+                        t.parent().append(e);
+                        e.animate({
+                            top: -po.top + bo.top + (b.height() - t.height()) / 500,
+                            left: -po.left + bo.left + (b.width() - t.width()) / 500,
+                            width: 25,
+                            height: 25
+                        }, 800, function () {
+                            $(this).remove();
+                        });
+                        $('#addWish_' + id).hide();
+                    }
+                    if (data.flag == 'warning') {
+                        alert(data.msg);
+                    }
+                    if (data.flag == 'error') {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        function openSizeTable(id) {
+            $('#size_table_' + id).animate({"height": "toggle", "opacity": "toggle"}, 'slow');
+            var scr = $('#open_size_table_' + id).offset().top;
+            $('html, body').animate({scrollTop: scr - 10}, 'slow');
+        }
+    </script>
+{% endblock %}

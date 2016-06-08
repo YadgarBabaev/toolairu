@@ -1,0 +1,120 @@
+{% extends "::base.html.twig" %}
+{% block content %}
+<div class="reg-form">
+    {{ form_start(form,{'attr': {'class': 'fos_user_registration_register','id' : 'orders' }}) }}
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <h3 class="text-center">{{ 'Cutomer information'|trans }}</h3>
+                <label class="text-left">
+                    {{ form_row(form.email) }}
+                </label>
+                {{ 'Alredy have an account?'|trans }}
+                <a href="{{ path('fos_user_security_login') }}">{{ 'Login'|trans }}</a>
+            <br>
+            <br>
+            <h3 class="text-center">{{ 'Shipping address'|trans }}</h3>
+                <label class="text-left">
+                    {{ form_row(form.fName) }}
+                </label>
+                <label class="text-left">
+                    {{ form_row(form.lName) }}
+                </label>
+                <label class="text-left">
+                    {{ form_row(form.address) }}
+                </label>
+                <label class="text-left">
+                    {{ form_row(form.houseNumber) }}
+                </label>
+                <label class="text-left">
+                    {{ form_row(form.city) }}
+                </label>
+                <label class="text-left">
+                    {{ form_row(form.country) }}
+                </label>
+                <label class="text-left">
+                    {{ form_row(form.state) }}
+                </label>
+                <label class="text-left">
+                    {{ form_row(form.pIndex) }}
+                </label>
+                <label class="text-left">
+                    {{ form_row(form.phone) }}
+                </label>
+            <h3 class="text-center">{{ 'Shipping method'|trans }}</h3>
+            <label class="text-left">
+                {{ form_row(form.shippingMethod) }}
+            </label>
+
+        </div>
+        <div class="col-md-6">
+            <h3 class="text-center">{{ 'Order summary'|trans }}</h3>
+            {% set sum = 0 %}
+            {% for product in products %}
+                {% set sum = sum + product.price %}
+                <div class="shopping-total">
+                    <div class="shopping-total-image"><img src="{{ product.src }}" alt=""></div>
+                    <div class="shopping-total-name">{{ product.name }} <br>
+                    {{ 'SIZE'|trans }}: {{ product.size }}<br>
+                    {{ 'COLOR'|trans }}: {{ product.color }}
+                    </div>
+                    <div class="shopping-total-quantity">
+                        <b>
+                        <span onclick="countUp({{ product.id }})" class="glyphicon glyphicon-plus" style="cursor: pointer;"></span>
+                          <input type="text" value="1" id="q_{{ product.id }}" name="count[{{ product.id }}]" style="width: 60px; margin: 0 auto;">
+                        <span onclick="countDown({{ product.id }})" class="glyphicon glyphicon-minus" style="cursor: pointer;"></span>
+                        </b>
+                    </div>
+                    <div class="shopping-total-price float">
+                        {% if currency %}
+                            {{ (product.price/currency.rate)|round(2,'floor') }} {{ currency.name }}
+                        {% elseif(shop.getMainCurrency().symbol) %}
+                            {{ product.price }}
+                            {{ shop.getMainCurrency().symbol }}
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="shopping-row">
+                <div class="shopping-footer-total text-right">Subtotal: <span class="total-price">
+                        {% if currency %}
+                        {{ (sum/currency.rate)|round(2,'floor') }} {{ currency.name }}
+                        {% elseif(shop.getMainCurrency().symbol) %}
+                            {{ sum }}
+                            {{ shop.getMainCurrency().symbol }}
+                        {% endif %}
+                    </span></div>
+
+            </div>
+            <div class="shopping-footer">
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="shopping-button" style="width: 300px;">
+        <a href="{{ path('index') }}" class="shop-btn shop-wishlist pull-left">{{ 'Continue shoping'|trans }}</a>
+        <button type="submit" form="orders" class="shop-btn shop-cart pull-right" >
+            {{'Check out' | trans  }}
+        </button>
+    </div>
+    {{ form_end(form) }}
+</div>
+    <script>
+        function countUp($id){
+          var cnt = parseInt($("#q_"+$id).val());
+            if(cnt){
+                $("#q_"+$id).val(cnt+1);
+            }else {
+                $("#q_"+$id).val(1);
+            }
+        }
+        function countDown($id){
+          var cnt = parseInt($("#q_"+$id).val());
+            if(cnt>1){
+                $("#q_"+$id).val(cnt-1);
+            }else {
+                $("#q_"+$id).val(1);
+            }
+        }
+    </script>
+{% endblock content %}

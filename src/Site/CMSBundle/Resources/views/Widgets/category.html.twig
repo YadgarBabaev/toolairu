@@ -1,0 +1,23 @@
+{% extends "CMSBundle:Widgets:layout.html.twig" %}
+{% block title %}
+    {% if widget.hideTitle %}
+        <div class="cms_widget_title">
+            <h4>{{ widget.title }}</h4>
+        </div>
+    {% endif %}
+{% endblock title %}
+{% block widget %}
+    <div class="cms_widget_content">
+        <div class="category-item new-{{ widget.num }}">
+            <div class="absolute">
+                {{ widget.titleHtml|raw }}
+                {% if widget.params.CategoryHref is defined and widget.params.CategoryHref == 1 %}
+                    <button class="btn btn-toolai btn-new-{{ widget.num }}">Shop now</button>
+                {% endif %}
+            </div>
+            {% if widget.category is defined %}
+                <img src="/images/shop/{{ widget.category.logo }}" alt="">
+            {% endif %}
+        </div>
+    </div>
+{% endblock widget %}

@@ -1,0 +1,120 @@
+{% extends '::adminBase.html.twig' %}
+{% block content_header %}
+    <h1>
+        Товары
+        <small>Добавление</small>
+    </h1>
+{% endblock content_header %}
+{% block content %}
+    <div class="box box-info">
+    </div>
+    {{ form_start(form) }}
+    <div class="box-body">
+        {{ form_widget(form) }}
+    </div>
+
+    <div class="box-footer">
+        <div class="col-md-offset-3 col-md-9">
+            <button type="submit" class="btn btn-primary">Сохранить <i class="fa fa-fw fa-check-square-o"></i></button>
+            <a class="btn btn-default" href="{{ path('admin_shop_product') }}">Отмена <i class="fa fa-fw fa-undo"></i></a>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
+{% block footer_script %}
+    <script type="text/javascript">
+        function trim(string) {
+            string = string.replace(/'|"|<|>|\!|\||@|#|$|%|^|&|\*|\(\)|-|\|\/|;|\+|№|,|\?|_|:|{|}|\[|\]/g, "");
+            string = string.replace(/(^\s+)|(\s+$)/g, "");
+            return string;
+        }
+        function get_trans(ag_val) {
+            en_to_ru = {
+                'а': 'a',
+                'б': 'b',
+                'в': 'v',
+                'г': 'g',
+                'д': 'd',
+                'е': 'e',
+                'ё': 'jo',
+                'ж': 'zh',
+                'з': 'z',
+                'и': 'i',
+                'й': 'j',
+                'к': 'k',
+                'л': 'l',
+                'м': 'm',
+                'н': 'n',
+                'о': 'o',
+                'п': 'p',
+                'р': 'r',
+                'с': 's',
+                'т': 't',
+                'у': 'u',
+                'ф': 'f',
+                'х': 'h',
+                'ц': 'c',
+                'ч': 'ch',
+                'ш': 'sh',
+                'щ': 'sch',
+                'ъ': '',
+                'ы': 'y',
+                'ь': '',
+                'э': 'je',
+                'ю': 'ju',
+                'я': 'ja',
+                ' ': '-',
+                'і': 'i',
+                'ї': 'i'
+            };
+            ag_val = ag_val.toLowerCase();
+            ag_val = trim(ag_val);
+            ag_val = ag_val.split("");
+            trans = new String();
+            for (i = 0; i < ag_val.length; i++) {
+                for (key in en_to_ru) {
+                    val = en_to_ru[key];
+                    if (key == ag_val[i]) {
+                        trans += val;
+                        break
+                    } else if (key == "ї") {
+                        trans += ag_val[i]
+                    }
+                }
+            }
+            return trans;
+        }
+        $("form[name='product']").ready(function () {
+            if ($(this).find("input[name='product[main][name]']").length > 0) {
+                var name = $(this).find("input[name='product[main][name]']");
+                $(name).blur(function () {
+                    var result = get_trans($(this).val());
+                    $("input[name='product[main][alias]']").val(result);
+                    $("input[name='product[main][metaTagTitle]']").val($(this).val());
+
+                });
+            }
+        });
+        function b2b(e) {
+            if ($(e).is(":checked")) {
+                $('#product_main_categoryB2B').parent().parent().show('slow');
+                $('#product_other_priceB2B').parent().parent().show('slow');
+            } else {
+                $('#product_main_categoryB2B').parent().parent().hide('slow');
+                $('#product_other_priceB2B').parent().parent().hide('slow');
+            }
+        }
+        $(document).ready(function () {
+            $('select').select2({
+                tags: true,
+                allowClear: true,
+                theme: "classic"
+            });
+            {% if product.categoryB2B %}
+            $('#product_main_b2b').attr('checked', 'checked');
+            {% else %}
+            b2b($('#product_main_b2b'));
+            {% endif %}
+        });
+    </script>
+{% endblock footer_script %}

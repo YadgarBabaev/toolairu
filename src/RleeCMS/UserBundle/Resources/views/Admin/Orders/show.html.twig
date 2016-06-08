@@ -1,0 +1,127 @@
+{% extends "::adminBase.html.twig" %}
+{% block content_header %}
+    <h1>
+        Заказы
+        {#<small>Список</small>#}
+    </h1>
+{% endblock content_header %}
+{% block content %}
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Просмотр</h3>
+
+            <div class="box-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                </div>
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body table-responsive no-padding">
+
+            <br>
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th>ID</th>
+                    <td> {{ entity.id }} </td>
+
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td> {{ entity.email }} </td>
+                </tr>
+                <tr>
+                    <th>Фио</th>
+                    <td>
+                        {{ entity.fName }}
+                        {{ entity.lName }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Адресс</th>
+                    <td> {{ entity.address }} </td>
+                </tr>
+                <tr>
+                    <th>Номер</th>
+                    <td>{{ entity.phone }}</td>
+                </tr>
+                <tr>
+                    <th>Страна</th>
+                    <td>{{ entity.country }}</td>
+                </tr>
+                <tr>
+                    <th>Город</th>
+                    <td>{{ entity.city }}</td>
+                </tr>
+                <tr>
+                    <th>Регион</th>
+                    <td>{{ entity.state }}</td>
+                </tr>
+                <tr>
+                    <th>Индекс</th>
+                    <td>{{ entity.pIndex }}</td>
+                </tr>
+                <tr>
+                    <th>Метод доставки</th>
+                    <td>{{ entity.shippingMethod }}</td>
+                </tr>
+            </table>
+<br>
+            <h2>Заказанные товары</h2>
+            <br>
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            <a href="{{ path('admin_ordering_products_new',{'id' : entity.id}) }}" class="btn btn-xs btn-success">Добавить</a>
+            <br>
+            <br>
+            <div class="col-xs-12">
+            {% for product in entity.products %}
+                <div style="display: inline-block; width: 300px;">
+                    <table>
+                        <tr>
+                            <td>
+                                {% set src = '' %}
+                                {% if product.product.getWebPath() %}
+                                    {% set src = product.product.images[0] %}
+                                {% elseif product.product.images[0] %}
+                                   {% set src = product.product.getWebPath() %}
+                                {% endif %}
+                                <img src="{{ src }}" style="width: 150px;"/>
+                            </td>
+                            <td style="padding-left: 25px;">
+                                <a href="{{ path('admin_shop_product_edit', {'id': product.product.id }) }}">{{ product.product.name }}</a>
+                                <br>
+                                Размер: <label>{{ product.size }}</label><br>
+                                Цвет: <label>{{ product.color }}</label><br>
+                                Количество: <label>{{ product.count }}</label>
+                            </td>
+                        </tr>
+                    </table>
+                    <br>
+                        <a href="{{ path('admin_ordering_products_edit',{'id' : product.id , 'id_order': entity.id }) }}" class="glyphicon glyphicon-edit"></a>
+                        <a href="{{ path('admin_ordering_products_delete',{'id' : product.id , 'id_order': entity.id }) }}"
+                           onclick="confirm('Удалить товар из списка заказов?')"
+                           class="glyphicon glyphicon-trash" style="color: red;"></a>
+                    <br>
+                    <br>
+                </div>
+            {% endfor %}
+            </div>
+<br>
+<br>
+<br>
+<br>
+
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            <a href="{{ path('admin_orders',{'id' : entity.id }) }}" class="btn btn-default btn-xs">Список</a>
+            <a href="{{ path('admin_order_edit',{'id' : entity.id }) }}" class="btn btn-primary btn-xs">Редактировать</a>
+            <a href="{{ path('admin_order_delete',{'id' : entity.id }) }}" class="btn btn-danger btn-xs"
+               onclick="return confirm('Удалить?')">Удалить</a>
+            <br>
+            <br>
+        </div>
+        <!-- /.box-body -->
+    </div>
+{% endblock content %}

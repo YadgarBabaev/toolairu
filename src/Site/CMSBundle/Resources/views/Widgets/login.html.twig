@@ -1,0 +1,52 @@
+{% extends "CMSBundle:Widgets:layout.html.twig" %}
+{% block widget %}
+
+    <p>
+        <a onclick="$('#order-form').toggle()" href="javascript:">
+            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+            {% if app.user %} {{ app.user.firstname }}{% else %} Войти{% endif %}
+        </a>
+    </p>
+
+    <div id="order-form" class="col-md-4 form_wrapp" style="display: none">
+    {% if app.user %}
+        <p><a href="{{ path('payment_history') }}">Личный кабинет</a></p>
+        <p><a href="{{ path('fos_user_security_logout') }}">Выход</a></p>
+    {% else %}
+        <form action="{{ path("fos_user_security_check") }}" method="post" role="form" class="form-horizontal">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+            <button class="close-order-form-button" type="button" data-dismiss="alert" aria-hidden="true">×</button>
+            <p>Вход с паролем</p>
+
+            <div class="form_group">
+                <div class="left_side">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Логин/Номер телефона</label>
+                </div>
+                <div class="right_side">
+                    <input type="text" class="form-control" id="username"
+                           name="_username" value="{{ last_username }}"
+                           required="required"/>
+                </div>
+            </div>
+            <br>
+            <div class="form_group">
+                <div class="left_side">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Пароль</label>
+                </div>
+                <div class="right_side">
+                    <input type="password" class="form-control" id="password"
+                           name="_password" required="required"/>
+                </div>
+            </div>
+
+            <div class="send_button">
+                <button type="submit" class="send_button_but">Войти</button>
+                <a href="{{ path('fos_user_resetting_request') }}" class="forget_password">Забыли пароль</a>
+
+                <div class="registration clear">
+                    <a href="{{ path('sonata_user_registration_register') }}">Регистрация</a>
+                </div>
+            </div>
+        </form>
+        </div>{% endif %}
+{% endblock widget %}

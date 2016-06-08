@@ -1,0 +1,66 @@
+{% extends "::adminBase.html.twig" %}
+{% block content_header %}
+    <h1>
+        Заказы
+        {#<small>Список</small>#}
+    </h1>
+{% endblock content_header %}
+{% block content %}
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Список</h3>
+
+            <div class="box-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Поиск...">
+
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body table-responsive no-padding">
+
+            <br>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Email</th>
+                    <th>Фио</th>
+                    <th>Адресс</th>
+                    <th>Номер</th>
+                    <th>Действия</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for order in orders %}
+                    <tr>
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.email }}</td>
+                        <td>{{ order.fName }} {{ order.lName }}</td>
+                        <td>
+                            {{ order.address }}
+                        </td>
+                        <td>
+                            {{ order.phone }}
+                        </td>
+                        <td>
+
+                            <a href="{{ path('admin_order_show',{'id' : order.id }) }}" class="btn btn-info btn-xs">Просмотр</a>
+                            <a href="{{ path('admin_order_edit',{'id' : order.id }) }}" class="btn btn-primary btn-xs">Редактировать</a>
+                            <a href="{{ path('admin_order_delete',{'id' : order.id }) }}" class="btn btn-danger btn-xs"
+                               onclick="return confirm('Удалить?')">Удалить</a>
+
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+        <!-- /.box-body -->
+    </div>
+{% endblock content %}

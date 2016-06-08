@@ -1,0 +1,63 @@
+{% extends '::adminBase.html.twig' %}
+{% block content_header %}
+    <h1>
+        Фильтры
+        <small>Редактирование</small>
+    </h1>
+{% endblock content_header %}
+{% block content %}
+    <input type="hidden" id="main" value="{{ main }}">
+    <input type="hidden" id="equal" value="{{ equal }}">
+    <div class="box box-info">
+    </div>
+    {{ form_start(edit_form) }}
+    <div class="box-body">
+        {{ form_widget(edit_form) }}
+    </div>
+
+    <div class="box-footer">
+        <div class="col-md-offset-3 col-md-9">
+            <button type="submit" class="btn btn-primary">Сохранить <i class="fa fa-fw fa-check-square-o"></i></button>
+            <a class="btn btn-default" href="{{ path('admin_shop_settings_currency') }}">Отмена <i
+                        class="fa fa-fw fa-undo"></i></a>
+        </div>
+    </div>
+    {{ form_end(edit_form) }}
+{% endblock %}
+{% block footer_script %}
+    <script>
+        function hideRate() {
+            if ($('#currency_mainTab_main').prop("checked")) {
+                $('#currency_mainTab_rate').parent().parent().hide('slow');
+                $('#currency_mainTab_rate').removeAttr('required');
+                if ($('#main').val() == 0) {
+                    $('#currency_mainTab_rate_for_main').parent().parent().hide('slow');
+                    $('#currency_mainTab_rate_for_main').removeAttr('required');
+                } else {
+                    if ($('#equal').val() == 1) {
+                        $('#currency_mainTab_rate_for_main').parent().parent().hide('slow');
+                        $('#currency_mainTab_rate_for_main').removeAttr('required');
+                    } else {
+                        $('#currency_mainTab_rate_for_main').parent().parent().show('slow');
+                        $('#currency_mainTab_rate_for_main').attr('required', true);
+                    }
+                }
+            } else {
+                if ($('#equal').val() == 1) {
+                    $('#currency_mainTab_main').prop("checked", true);
+                } else {
+                    $('#currency_mainTab_rate').parent().parent().show('slow');
+                    $('#currency_mainTab_rate').attr('required', true);
+                    $('#currency_mainTab_rate_for_main').parent().parent().hide('slow');
+                    $('#currency_mainTab_rate_for_main').removeAttr('required');
+                }
+            }
+        }
+        $(document).ready(function () {
+            hideRate();
+            $('#currency_mainTab_main').change(function () {
+                hideRate();
+            });
+        });
+    </script>
+{% endblock footer_script %}

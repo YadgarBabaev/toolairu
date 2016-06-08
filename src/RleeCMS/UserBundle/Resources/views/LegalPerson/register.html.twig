@@ -1,0 +1,196 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+{% block fos_user_content %}
+{% trans_default_domain 'FOSUserBundle' %}
+<style>
+    .reg-form .gender .radio{
+        display: inline-block;
+        margin: 0;
+    }
+    .reg-form .gender .radio label{
+        display: inherit;
+        padding-left: 34px;
+    }
+    .reg-form input[type="radio"]{
+        width: inherit;
+        margin-left: -20px;
+    }
+</style>
+{{ form_start(form, {'method': 'post', 'action': path('legal_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+    {{ form_widget(form._token) }}
+    {{ form_errors(form) }}
+<div class="reg-form">
+    <hgroup>
+        <div class="container-fluid">
+            <h2>{{ 'Register'|trans }}</h2>
+        </div>
+    </hgroup>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6" style="padding-left: 80px; padding-right: 80px;">
+                <h3 class="text-center">{{ 'Информация о покупателе'|trans }}:</h3>
+                {#{{ form_widget(form) }}#}
+                <label class="text-center">
+                    {#<p>{{ 'Эл. почта'|trans }}</p>#}
+                    {#{{ form_errors(form.email) }}#}
+                    {{ form_row(form.email) }}
+                </label>
+                <label class="text-center">
+                    {#{{ form_errors(form.plainPassword) }}#}
+                    {{ form_widget(form.plain_password) }}
+                </label>
+                {#<div class="gender">#}
+                    {#<label><strong>{{ 'Пол'|trans }}</strong></label>#}
+                    {#<div class="gender-inner">#}
+                        {#{{ form_errors(form.gender) }}#}
+                        {#{{ form_widget(form.gender) }}#}
+                    {#</div>#}
+                {#</div>#}
+                <label>
+                    <strong>{{ 'Подписка на новости'|trans }}</strong>
+                    {{ form_errors(form.news) }}
+                    {{ form_widget(form.news) }}
+                </label>
+                <br>
+                <h3 class="text-center">{{ 'Информация о компании:'|trans }}</h3>
+                {#{{ form_widget(form) }}#}
+                <label class="text-center">
+                    {#<p>{{ 'Эл. почта'|trans }}</p>#}
+                    {#{{ form_errors(form.email) }}#}
+                    {{ form_row(form.companyName) }}
+                </label>
+                <label class="text-center">
+                    {#{{ form_errors(form.plainPassword) }}#}
+                    {{ form_row(form.companyType) }}
+                </label>
+               <label class="text-center">
+                    {#{{ form_errors(form.plainPassword) }}#}
+                    {{ form_row(form.position) }}
+                </label>
+                <label class="text-center">
+                    {#{{ form_errors(form.plainPassword) }}#}
+                    {{ form_row(form.fio) }}
+                </label>
+                <label class="text-center">
+                    {#{{ form_errors(form.plainPassword) }}#}
+                    {{ form_row(form.inn) }}
+                </label>
+                <label class="text-center">
+                    {#{{ form_errors(form.plainPassword) }}#}
+                    {{ form_row(form.directorFio) }}
+                </label>
+                <br>
+                <h3 class="text-center">{{ 'Юридический адрес предприятия:'|trans }} </h3>
+                {#{{ form_widget(form) }}#}
+                <label class="text-center">
+                    {#<p>{{ 'Эл. почта'|trans }}</p>#}
+                    {#{{ form_errors(form.email) }}#}
+                    {{ form_row(form.country) }}
+                </label>
+                <label class="text-center">
+                    {#<p>{{ 'Эл. почта'|trans }}</p>#}
+                    {#{{ form_errors(form.email) }}#}
+                    {{ form_row(form.pIndex) }}
+                </label>
+                <label class="text-center">
+                    {#<p>{{ 'Эл. почта'|trans }}</p>#}
+                    {#{{ form_errors(form.email) }}#}
+                    {{ form_row(form.city) }}
+                </label>
+                <label class="text-center">
+                    {#<p>{{ 'Эл. почта'|trans }}</p>#}
+                    {#{{ form_errors(form.email) }}#}
+                    {{ form_row(form.street) }}
+                </label>
+                <label class="text-center">
+                    {#<p>{{ 'Эл. почта'|trans }}</p>#}
+                    {#{{ form_errors(form.email) }}#}
+                    {{ form_row(form.houseNumber) }}
+                </label>
+                <br>
+                </div>
+                <div class="col-md-6" style="padding-left: 80px; padding-right: 80px;">
+                <h3 class="text-center">{{ 'Банковские реквизиты предприятия:'|trans }} </h3>
+                {#{{ form_widget(form) }}#}
+                <label class="text-center">
+                    {#<p>{{ 'Эл. почта'|trans }}</p>#}
+                    {#{{ form_errors(form.email) }}#}
+                    {{ form_row(form.requisite1) }}
+                </label>
+                <label class="text-center">
+                    {#<p>{{ 'Эл. почта'|trans }}</p>#}
+                    {#{{ form_errors(form.email) }}#}
+                    {{ form_row(form.requisite2) }}
+                </label>
+                <br>
+                <h3 class="text-center">{{ 'Юридический адрес предприятия:'|trans }}</h3>
+                {#{{ form_widget(form) }}#}
+                <label class="text-center">
+                    {#<p>{{ 'Эл. почта'|trans }}</p>#}
+                    {#{{ form_errors(form.email) }}#}
+                    {{ form_row(form.factCountry) }}
+                </label>
+                <label class="text-center">
+                    {#<p>{{ 'Эл. почта'|trans }}</p>#}
+                    {#{{ form_errors(form.email) }}#}
+                    {{ form_row(form.factPIndex) }}
+                </label>
+                <label class="text-center">
+                    {#<p>{{ 'Эл. почта'|trans }}</p>#}
+                    {#{{ form_errors(form.email) }}#}
+                    {{ form_row(form.factCity) }}
+                </label>
+                <label class="text-center">
+                    {#<p>{{ 'Эл. почта'|trans }}</p>#}
+                    {#{{ form_errors(form.email) }}#}
+                    {{ form_row(form.factStreet) }}
+                </label>
+                <label class="text-center">
+                    {#<p>{{ 'Эл. почта'|trans }}</p>#}
+                    {#{{ form_errors(form.email) }}#}
+                    {{ form_row(form.factHouseNumber) }}
+                </label>
+                <br>
+                <h3 class="text-center">{{ 'Контактные данные:'|trans }}</h3>
+                {#{{ form_widget(form) }}#}
+                <label class="text-center">
+                    {#<p>{{ 'Эл. почта'|trans }}</p>#}
+                    {#{{ form_errors(form.email) }}#}
+                    {{ form_row(form.phoneNumber) }}
+                </label>
+                <label class="text-center">
+                    {#<p>{{ 'Эл. почта'|trans }}</p>#}
+                    {#{{ form_errors(form.email) }}#}
+                    {{ form_row(form.mobileNumber) }}
+                </label>
+                <label class="text-center">
+                    {#<p>{{ 'Эл. почта'|trans }}</p>#}
+                    {#{{ form_errors(form.email) }}#}
+                    {{ form_row(form.whatsApp) }}
+                </label>
+                <label class="text-center">
+                    {#<p>{{ 'Эл. почта'|trans }}</p>#}
+                    {#{{ form_errors(form.email) }}#}
+                    {{ form_row(form.email1) }}
+                </label>
+                <label class="text-center">
+                    {#<p>{{ 'Эл. почта'|trans }}</p>#}
+                    {#{{ form_errors(form.email) }}#}
+                    {{ form_row(form.email2) }}
+                </label>
+                <label class="text-center">
+                    {#<p>{{ 'Эл. почта'|trans }}</p>#}
+                    {#{{ form_errors(form.email) }}#}
+                    {{ form_row(form.site) }}
+                </label>
+                </div>
+            </div>
+            <div class="text-center">
+                <button class="reg-confirm">{{ 'save'|trans }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{ form_end(form) }}
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "::adminBase.html.twig" %}
+{% block content_header %}
+    <h1>CMS<small>Список</small></h1>
+{% endblock content_header %}
+{% block content %}
+    <div class="box box-info">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>№</th>
+                <th>Наименование</th>
+                <th>Описание</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td><a href="{{ path('admin_cms_menutype') }}">Типы меню</a></td>
+                <td>Типы меню, к которым будут привязаны пункты меню</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td><a href="{{ path('admin_cms_menu') }}">Меню</a></td>
+                <td>Пункты меню</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td><a href="{{ path('admin_cms_pages') }}">Страницы</a></td>
+                <td>Материалы</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td><a href="{{ path('admin_cms_widget') }}">Виджеты</a></td>
+                <td>Виджеты(меню, html)</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}

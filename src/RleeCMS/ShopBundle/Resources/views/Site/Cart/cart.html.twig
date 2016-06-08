@@ -1,0 +1,67 @@
+<div class="bag-header">Shopping cart <span class="bag-header-price">({{ cart|length }} items)</span></div>
+<ol>
+    {% set sum = 0 %}
+    {% for product in products %}
+        {% set sum = sum + product.price %}
+        <li class="bag-item cart_product_{{ product.id }}">
+            <a class="bag-link" href="{{ router.get('product_'~product.id).path }}">{{ product.name }}</a>
+            <div class="bag-price pull-right">
+
+                {% if currency %}
+                    {{ (product.price/currency.rate)|round(2,'floor') }} {{ currency.name }}
+                {% elseif(shop.getMainCurrency().symbol) %}
+                    {{ product.price }} {{ shop.getMainCurrency().symbol }}
+                {% endif %}
+            </div>
+            <div class="clearfix bag-content">
+                <div class="col-sm-6 bag-img">
+                    {% set srs =  null %}
+                    {% if product.getWebPath() %}
+                        {% set srs =  product.images[0] %}
+                    {% elseif(product.images[0]) %}
+                        {% set srs =  product.getWebPath() %}
+                    {% endif %}
+                    <img src="{{ srs }}" alt="">
+                </div>
+                <div class="col-sm-6 bag-button-container">
+                    <a href="{{ router.get('product_'~product.id).path }}" class="bag-button">detail</a>
+                    <button onclick="delProduct('{{ product.id }}')" class="bag-button">remove</button>
+                </div>
+            </div>
+        </li>
+    {% endfor %}
+</ol>
+<div class="total">Subtotal<span class="total-price pull-right">
+         {% if currency %}
+             {{ (sum/currency.rate)|round(2,'floor') }} {{ currency.name }}
+         {% elseif(shop.getMainCurrency().symbol) %}
+             {{ sum }}
+             {{ shop.getMainCurrency().symbol }}
+         {% endif %}
+    </span></div>
+<a class="shop-btn shop-cart bag-btn" href="{{ path('site_order') }}">Check out</a>
+<script>
+    $(function () {
+        $('#total-in-cart').html($('.total-price').html());
+    });
+    function delProduct(id) {
+        $.ajax({
+            type: "POST",
+            url: "{{ path('site_cart_del') }}",
+            data: {product_id: id},
+            success: function () {
+                $('.bag').load('{{ path('site_cart') }}');
+            }
+        });
+    }
+    function addToCart(id) {
+        $.ajax({
+            type: "POST",
+            url: "{{ path('site_cart') }}",
+            data: {id: id},
+            success: function () {
+                $('.bag').load('{{ path('site_cart') }}')
+            }
+        });
+    }
+</script>

@@ -1,0 +1,21 @@
+{% extends "RleeCMSShopBundle::layout.html.twig" %}
+{% block content %}
+    <div class="carousel">
+        {% for shopByLook in shopByLooks %}
+            <div class="carousel-item">
+                <a href="/{{ alias }}.html?to={{ shopByLook.id }}" class="carousel-item-link"><img src="/images/shop/{{ shopByLook.logo }}" alt=""></a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+            $('.carousel').slick({
+                dots: false,
+                slidesToShow: 3,
+                slidesToScroll: 1
+            });
+        });
+    </script>
+{% endblock javascripts %}

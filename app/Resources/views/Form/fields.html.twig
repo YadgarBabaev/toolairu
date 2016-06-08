@@ -1,0 +1,120 @@
+{#{% extends 'form_div_layout.html.twig' %}#}
+{#{%- block collection_widget -%}#}
+    {#{% if prototype is defined %}#}
+        {#{%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}#}
+    {#{% endif %}#}
+    {#{{- block('form_widget') -}}#}
+{#{%- endblock collection_widget -%}#}
+{% block file_browser_label %}
+    {% spaceless %}
+        {% if label is not same as(false) -%}
+            {% if label is empty %}
+                {%- if label_format is defined and label_format is not empty -%}
+                    {% set label = label_format|replace({
+                    '%name%': name,
+                    '%id%': id,
+                    }) %}
+                {%- else -%}
+                    {% set label = name|humanize %}
+                {%- endif -%}
+            {% endif %}
+            {% if not compound %}
+                {% set label_attr = label_attr|merge({'for': id}) %}
+            {% endif %}
+            {% set label_attr_class = '' %}
+            {% if horizontal %}
+                {% set label_attr_class = 'control-label ' ~ label_attr_class ~ horizontal_label_class %}
+            {% endif %}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ " " ~ label_attr_class ~ (required ? ' required' : ' optional'))|trim }) %}
+            <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+            {{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}
+            &nbsp;
+            <a onclick="addImage(this)" {% for attrname,attrvalue in widget_add_btn %} {{ attrname }}="{{ attrvalue }}"{% endfor %} data-collection-add-btn=".{{ form.vars['id'] }}_form_group">
+            <i class="fa fa-plus-circle"></i>
+            </a>
+            </label>
+        {%- endif -%}
+    {% endspaceless %}
+{% endblock file_browser_label %}
+{% block file_browser_widget %}
+    {% spaceless %}
+        <div id="div_{{ id }}" class="row">
+            {% if value %}
+                {% for image in value %}
+                    <div class="col-md-3">
+                        <a class="thumbnail" onclick="initJS(this)" href="javascript:" data-toggle="popover">
+                            <img width="100%" src="{{ image }}" data-holder-rendered="true">
+                        </a>
+                        <input type="hidden" value="{{ image }}" name="{{ full_name }}[]">
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <script type="text/javascript">
+            function rem(e) {
+                $(e).parent().parent().parent().remove();
+            }
+            function initJS(e) {
+                if ($(e).attr('data-original-title') == undefined) {
+                    $(e).popover({
+                        content: '<a class="btn btn-danger" onclick="rem(this)" href="javascript:" title="Удалить"><i class="fa fa-trash-o"></a>',
+                        html: true,
+                        placement: 'right',
+                        trigger: 'click'
+
+                    });
+                    $(e).popover('show');
+                }
+            }
+            function setValue(value, element_id) {
+                html = '<div class="col-md-3">' +
+                        '<a class="thumbnail" onclick="initJS(this)" href="javascript:" data-toggle="popover">' +
+                        '<img width="100%" src="' + value + '" data-holder-rendered="true">' +
+                        '</a>' +
+                        '<input type="hidden" value="' + value + '" name="{{ full_name }}[]">' +
+                        '</div>';
+                $('#div_{{ id }}').append(html);
+                $('#fileBrowser_{{ id }}').modal('hide');
+                initJS();
+            }
+            function addImage(e){
+                $('#modal_body_{{ id }}').html('<iframe id="frame_{{ id }}" src="{{ path('elfinder') }}?id={{ id }}" width="100%"></iframe>');
+                $('#fileBrowser_{{ id }}').modal('show');
+                $('#frame_{{ id }}').ready(function () {
+                    $('#frame_{{ id }}').attr('style', 'height:100%;');
+                })
+            }
+            $(function () {
+                {#$('body').on('click.collection.data-api', '[data-collection-add-btn]', function (e) {#}
+                    {#var $btn = $(e.target);#}
+                    {#if (!$btn.hasClass('btn')) {#}
+                        {#$btn = $btn.closest('.btn');#}
+                    {#}#}
+                    {#$('#modal_body_{{ id }}').html('<iframe id="frame_{{ id }}" src="{{ path('elfinder') }}?id={{ id }}" width="100%"></iframe>');#}
+                    {#$('#fileBrowser_{{ id }}').modal('show');#}
+                    {#$('#frame_{{ id }}').ready(function () {#}
+                        {#$('#frame_{{ id }}').attr('style', 'height:100%;');#}
+                    {#})#}
+                {#})#}
+            });
+        </script>
+        <!-- Modal -->
+        <div class="modal fade" id="fileBrowser_{{ id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                    </div>
+                    <div class="modal-body" id="modal_body_{{ id }}">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock %}

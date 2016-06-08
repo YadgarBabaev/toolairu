@@ -1,0 +1,14 @@
+
+<a class="nav-item-link dropdown-toggle"
+   data-toggle="dropdown" href="#!">
+    $
+</a>
+<ul class="dropdown-menu" role="menu">
+    {% for currency in currencies %}
+    <li {% if currency.main and current == null %}class="active"{% endif %}
+        {% if current == currency.id %} class = "active" {% endif %}
+    >
+        <a href="{{ path('currency_index') }}?id={{ currency.id }}">{{ currency.name }}
+        </a></li>
+    {% endfor %}
+</ul>

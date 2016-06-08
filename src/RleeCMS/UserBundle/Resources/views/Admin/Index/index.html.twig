@@ -1,0 +1,77 @@
+{% extends "::adminBase.html.twig" %}
+{% block content_header %}
+    <h1>
+        Пользователи
+        {#<small>Список</small>#}
+    </h1>
+{% endblock content_header %}
+{% block content %}
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Список</h3>
+
+            <div class="box-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Поиск...">
+
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body table-responsive no-padding">
+            <br>
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            <a href="{{ path('admin_user_new') }}" class="btn btn-success btn-xs">Добавить</a>
+            <br>
+            <br>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Email</th>
+                    <th>Фио</th>
+                    <th>Пол</th>
+                    <th>Статус</th>
+                    <th>Действия</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.name }} {{ user.fname }}</td>
+                        <td>
+                            {% if  user.gender == 1 %}
+                                    <button class="btn btn-primary btn-xs">Ж</button>
+                            {% else %}
+                                    <button class="btn btn-primary btn-xs">М</button>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if user.enabled %}
+                                <span class="label label-success">АКтивный</span>
+                            {% else %}
+                                <span class="label label-danger">Не активный</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ path('admin_user_edit',{'id' : user.id }) }}" class="btn btn-primary btn-xs">Редактировать</a>
+                            <a href="{{ path('admin_user_delete',{'id' : user.id }) }}" class="btn btn-danger btn-xs"
+                               onclick="return confirm('Удалить пользователя?')">Удалить</a>
+
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+        <!-- /.box-body -->
+    </div>
+{% endblock content %}

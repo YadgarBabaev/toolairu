@@ -1,0 +1,66 @@
+{% extends '::adminBase.html.twig' %}{% block content_header %}
+    <h1>
+        Товар
+        <small>Склад</small>
+    </h1>
+{% endblock content_header %}
+{% block content %}
+    <form method="POST" id="store_from">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Количество товара на складе по цвету и размеру</h3>
+
+                <div class="box-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                        <select id="store_id" name="store_id" class="" required>
+                            <option value="">Выберите склад</option>
+                            {% for store in stores %}
+                                <option {% if app.request.get('store') > 0 and app.request.get('store')== store.id %}
+                                    selected = "selected"
+                                {% endif %}
+                                        value="{{ store.id }}">{{ store }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="box-body" id="store_content">
+                {{ render(controller(
+                'RleeCMSShopBundle:Admin/ProductStore:content',
+                { 'id': product.id,'store': app.request.get('store') }
+                )) }}
+            </div>
+            <div class="box-footer">
+                <div class="col-md-offset-3 col-md-9">
+                    <button type="submit" class="btn btn-primary">Сохранить <i class="fa fa-fw fa-check-square-o"></i>
+                    </button>
+                    <a class="btn btn-default" href="{{ path('admin_shop_product') }}">Отмена <i
+                                class="fa fa-fw fa-undo"></i></a>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script>
+        $(document).ready(function() {
+
+            $("#store_id").on('change',function(){
+                var $storeId = $('#store_id').val();
+                var $action = '{{ path('admin_shop_product_store',{ 'id': product.id }) }}';
+                $("#store_from").attr('action',$action+'?store='+$storeId);
+                $.ajax({
+                    url: '{{ path('admin_shop_product_store_content',{ 'id': product.id }) }}',
+                    type: "GET",
+                    data: { store: $storeId },
+                    statusCode:{
+                        200: function($result){
+                        $('#store_content').html($result);
+                    }
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock content %}
+{% block footer_script %}
+{% endblock footer_script %}

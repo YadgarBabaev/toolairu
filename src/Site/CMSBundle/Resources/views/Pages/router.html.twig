@@ -1,0 +1,48 @@
+{% extends "CMSBundle::layout.html.twig" %}
+{% block title %}{{ content.title }}{% endblock title %}
+{% block description %}{{ content.description }}{% endblock description %}
+{% block keywords %}{{ content.keywords }}{% endblock keywords %}
+    {% set show_title = true %}
+    {% set show_content = true %}
+    {% if content.params.hide[0] is defined and content.params.hide[0] == 'hideTitle' %}
+        {% set show_title = false %}
+    {% endif %}
+    {% if content.params.hide[0] is defined and content.params.hide[0] == 'hideText' %}
+        {% set show_content = false %}
+    {% endif %}
+    {% if content.params.hide[1] is defined and content.params.hide[1] == 'hideTitle' %}
+        {% set show_title = false %}
+    {% endif %}
+    {% if content.params.hide[1] is defined and content.params.hide[1] == 'hideText' %}
+        {% set show_content = false %}
+    {% endif %}
+    {% block content_title %}
+        {% if show_title == true %}
+            <h3 class="title_blokk">{{ content.fullName|raw }}</h3>
+        {% endif %}
+    {% endblock content_title %}
+{% block pagesContent %}
+    {% if show_content %}
+        <div class="item_div">
+            <div class="item_div_content">
+                {% if not published %}
+                    <h1>{% trans %} will_be_published_from {% endtrans %} {{ content.published|date("d-m-Y") }}</h1>
+                {% endif %}
+                {% if published or is_granted('ROLE_ADMIN') %}
+                    {% if show_content %}
+                        <div class="content">
+                            <div>
+                                {% if content.content %}
+                                    {{ content.content|raw }}
+                                {% else %}
+                                    <p>{% trans %} page_text_change {% endtrans %}</p>
+                                {% endif %}
+                            </div>
+
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock pagesContent %}

@@ -1,0 +1,275 @@
+{% extends "RleeCMSShopBundle::layout.html.twig" %}
+{% block title %}{{ product.metaTagTitle }}{% endblock title %}
+{% block description %}{{ product.metaTagDescription }}{% endblock description %}
+{% block keywords %}{{ product.metaTagKeywords }}{% endblock keywords %}
+{% block content %}
+    {% set srs =  null %}
+    {% if product.getWebPath() %}
+        {% set srs =  product.getWebPath() %}
+    {% elseif(product.images[0]) %}
+        {% set srs =  product.images[0] %}
+    {% endif %}
+    <div class="container-fluid shop-item-page">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="col-sm-2 shop-item-col-1">
+                    <ul class="list-unstyled">
+                        <li class="item-page">
+                            <a href="#" class="item-page-link">
+                                <img src="/{{ srs }}" alt="" data-image="/{{ srs }}" class="product-thumb">
+                            </a>
+                        </li>
+                        {% for image in product.images %}
+                            <li class="item-page">
+                                <a href="#" class="item-page-link">
+                                    <img src="{{ image }}" alt="" data-image="{{ image }}" class="product-thumb">
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-sm-5 shop-item-col-2">
+                    <img src="/{{ srs }}" alt="" id="image_target" data-zoom-image="/{{ srs }}">
+                </div>
+                <div class="col-sm-5 shop-item-col-3">
+                    <!-- Tab panes -->
+                    <div class="page-content">
+                        <form id="product_form" action="{{ path('site_cart_add') }}" method="post">
+                            <input type="hidden" name="product_id" value="{{ product.id }}" required>
+                            <div class="">
+                                <h4 class="page-title">{{ product }}</h4>
+
+                                <div class="page-price">
+                                    {% if(shop.getMainCurrency().symbol) %}
+                                        {{ shop.getMainCurrency().symbol }}
+                                    {% endif %}
+                                    {{ product.price|number_format() }}
+                                    {% if(shop.getMainCurrency().symbol is null) %}
+                                        {{ shop.getMainCurrency().shortSign }}
+                                    {% endif %}
+                                </div>
+                                <div class="page-desc">{{ product.description|raw }}
+                                </div>
+                                <div class="page-info-container">
+                                    <div class="row page-info">
+                                        <div class="col-sm-5">{% trans %}STYLE{% endtrans %}</div>
+                                        <div class="col-sm-7 color-pink">{{ product.style }}</div>
+                                    </div>
+                                    <div class="row page-info">
+                                        <div class="col-sm-5">{% trans %}TYPE / DESCRIPTION{% endtrans %}</div>
+                                        <div class="col-sm-7 color-pink">{{ product.type }}</div>
+                                    </div>
+                                    <div class="row page-info">
+                                        <div class="col-sm-5">{% trans %}FABRIC COMPOSITION{% endtrans %}</div>
+                                        <div class="col-sm-7 color-pink">{{ product.composition }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3"><span class="tabs-shop-text-size">{% trans %}
+                                        Size{% endtrans %}</span></div>
+                                <div class="col-sm-9">
+                                    {% for size in product.sizes %}
+                                        <label class="tabs-size-label{% if size.id not in sizeArray %} disabled{% endif %}" for="size_{{ size.id }}">
+                                            {{ size }}
+                                            <input {% if size.id not in sizeArray %}disabled="disabled"{% endif %} id="size_{{ size.id }}" value="{{ size.id }}" type="radio"
+                                                   name="size">
+                                        </label>
+                                    {% endfor %}
+                                    <a href="javascript:void(0)" onclick="openSizeTable()"
+                                       id="open_size_table">{% trans %}Size table{% endtrans %}</a>
+                                    <div id="size_table" style="display: none;">
+                                        <table class="table-bordered table-striped">
+                                            {% for key, value in table %}
+                                                <tr>
+                                                    <td>{{ key }}</td>
+                                                    {% if loop.index == 1 %}
+                                                        <td colspan="3">{{ value }}</td>
+                                                    {% elseif loop.index == 2 %}
+                                                        {% for val in value %}
+                                                            <th>{{ val }}</th>
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        {% for val in value %}
+                                                            <td>{{ val }}</td>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3"><span class="tabs-shop-text-color">{% trans %}Color{% endtrans %}</span></div>
+                                <div class="col-sm-9">
+                                    {% for color in product.colors %}
+                                        <label class="tabs-color-label" for="color_{{ color.id }}" title="{{ color }}"
+                                               data-toggle="tooltip" data-placement="top">
+
+                                            <div class="label-img-container{% if color.id not in colorArray %} disabled{% endif %}">
+                                                <img src="/{{ color.getWebPath() }}" alt="">
+                                                <input id="color_{{ color.id }}" value="{{ color.id }}"
+                                                       {% if color.id not in colorArray %}disabled="disabled"{% endif %}
+                                                       type="radio" name="color">
+                                            </div>
+                                        </label>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% if countStores > 0 %}
+                                <a href="#" id="in_store" class="shop-btn shop-store">{% trans %}In store{% endtrans %}</a>
+                            {% endif %}
+                            <button id="addBag" type="submit" class="shop-btn shop-cart">
+                                {% trans %}Add to cart{% endtrans %}
+                            </button>
+                            {% if app.user %}
+                                {% if flag == false %}
+                                    <a id="addWish" class="shop-btn shop-wishlist"
+                                       onclick="addWish('{{ product.id }}')">{% trans %}Add to wish list{% endtrans %}</a>
+                                {% else %}
+                                    <a href="#" class="shop-btn shop-wishlist">{% trans %}PRODUCT HAS BEEN ADDED TO WISH LIST{% endtrans %}</a>
+                                {% endif %}
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block javascripts %}
+    <script type="text/javascript">
+        $(function () {
+            var zoomConfig = {}
+            var real_img = new Image();
+            var zoomImage = $('#image_target');
+            var zoomSize;
+            real_img.onload = function () {
+
+                var min = Math.min(this.width, this.height);
+                zoomSize = min / 2;
+                zoomConfig = {
+                    zoomWindowWidth: zoomSize,
+                    zoomWindowHeight: zoomSize
+                };
+
+                zoomImage.elevateZoom(zoomConfig);
+            };
+            real_img.src = $("#image_target").attr('data-zoom-image');
+
+            var image = $('.product-thumb');
+            image.on('click', function () {
+                $('.zoomContainer').remove();
+                zoomImage.removeData('elevateZoom');
+
+                var img = $(this).attr('data-image');
+                zoomImage.attr('src', img);
+                zoomImage.data('zoom-image', img);
+                real_img.src = img;
+
+            });
+
+        });
+        function addWish(id) {
+            $.ajax({
+                url: "{{ path('site_wish_add') }}",
+                dataType: "json",
+                type: "POST",
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.flag == 'success') {
+                        alert(data.msg);
+                        var t = $('#image_target'), e = t.clone(), b = $('#wish-list'), o = t.position(), po = t.parent().offset(), bo = b.offset();
+                        e.css({top: o.top + 'px', left: o.left + 'px', position: 'absolute'});
+                        t.parent().append(e);
+                        e.animate({
+                            top: -po.top + bo.top + (b.height() - t.height()) / 500,
+                            left: -po.left + bo.left + (b.width() - t.width()) / 500,
+                            width: 25,
+                            height: 25
+                        }, 800, function () {
+                            $(this).remove();
+                        });
+                        $('#addWish').hide();
+                    }
+                    if (data.flag == 'warning') {
+                        alert(data.msg);
+                    }
+                    if (data.flag == 'error') {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        function openSizeTable() {
+            $('#size_table').animate({"height": "toggle", "opacity": "toggle"}, 'slow');
+            var scr = $('#open_size_table').offset().top;
+            $('html, body').animate({scrollTop: scr - 10}, 'slow');
+        }
+        function validate(formData, jqForm, options) {
+            var size = false;
+            var color = false;
+            var product = false;
+            for (var i = 0; i < formData.length; i++) {
+                if (formData[i].name == 'product_id' && formData[i].value) {
+                    product = true;
+                }
+                if (formData[i].name == 'size' && formData[i].value) {
+                    size = true;
+                }
+                if (formData[i].name == 'color' && formData[i].value) {
+                    color = true;
+                }
+            }
+            if (!size) {
+                alert('{% trans %}SELECT SIZE{% endtrans %}');
+                return false;
+            }
+            if (!color) {
+                alert('{% trans %}SELECT COLOR{% endtrans %}');
+                return false;
+            }
+            if (!product) {
+                alert('{% trans %}ERROR PRODUCT ID{% endtrans %}');
+                return false;
+            }
+            if (size && color && product) {
+                return true;
+            }
+            return false;
+        }
+        function showResponse() {
+            var t = $('#image_target'), e = t.clone(), b = $('#bag-list'), o = t.position(), po = t.parent().offset(), bo = b.offset();
+            e.css({top: o.top + 'px', left: o.left + 'px', position: 'absolute'});
+            t.parent().append(e);
+            e.animate({
+                top: -po.top + bo.top + (b.height() - t.height()) / 500,
+                left: -po.left + bo.left + (b.width() - t.width()) / 500,
+                width: 25,
+                height: 25
+            }, 800, function () {
+                $(this).remove();
+            });
+            $('.bag').load('{{ path('site_cart') }}')
+        }
+        $(function () {
+            var options = {
+                target: '.bag',   // target element(s) to be updated with server response
+                beforeSubmit: validate,  // pre-submit callback
+                success: showResponse  // post-submit callback
+
+                // other available options:
+                //url:       url         // override for form's 'action' attribute
+                //type:      type        // 'get' or 'post', override for form's 'method' attribute
+                //dataType:  null        // 'xml', 'script', or 'json' (expected server response type)
+                //clearForm: true        // clear all form fields after successful submit
+                //resetForm: true        // reset the form after successful submit
+
+                // $.ajax options can be used here too, for example:
+                //timeout:   3000
+            };
+            $('#product_form').ajaxForm(options);
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+{% endblock %}

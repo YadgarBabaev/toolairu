@@ -1,0 +1,39 @@
+{% extends '::adminBase.html.twig' %}
+{% block content_header %}
+    <h1>
+        Каталог "{{ category }}"
+        <small>Shop By Look</small>
+    </h1>
+{% endblock content_header %}
+{% block content %}
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <a class="btn btn-primary" href="{{ path('admin_shop_shop_by_look_new', { 'id': category.id }) }}">
+                Добавить <i class="fa fa-fw fa-plus-square-o"></i>
+            </a>
+            <a class="btn btn-default" href="{{ path('admin_shop_category') }}">
+                Назад <i class="fa fa-undo"></i>
+            </a>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Наименование</th>
+                <th>Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for shopByLook in shopByLooks %}
+                <tr>
+                    <td>{{ shopByLook.id }}</td>
+                    <td><a href="{{ path('admin_shop_shop_by_look_edit', { 'id': shopByLook.id }) }}">{{ shopByLook }}</a></td>
+                    <td>
+                        <a class="btn btn-danger" href="{{ path('admin_shop_shop_by_look_delete', { 'id': shopByLook.id }) }}">Удалить <i class="fa fa-fw fa-minus-square-o"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

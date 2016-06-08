@@ -1,0 +1,83 @@
+{% extends "::adminBase.html.twig" %}
+{% block content_header %}
+    <h1>
+        Пользователи
+        {#<small>Редактирование</small>#}
+    </h1>
+{% endblock content_header %}
+{% block content %}
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Редактирование</h3>
+
+            <div class="box-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Поиск...">
+
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body table-responsive no-padding">
+            <div style="width: 80%; padding-left: 50px;">
+           {{ form_start(form) }}
+                {{ form_widget(form) }}
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                <input type="submit" class="btn btn-primary" value="Сохранить"/>
+                <a href="{{ path('admin_user') }}" class="btn btn-default">Отмена</a>
+                <br>
+           {{ form_end(form) }}
+            </div>
+            <br>
+            <br>
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <script>
+
+            {%  if user.legalPerson  %}
+            $(document).ready(function(){
+                changePassword();
+                $("#legal_person_admin_changePassword").on('change',function(){
+                    changePassword();
+                });
+            });
+            function changePassword()
+            {
+                if($('#legal_person_admin_changePassword').prop('checked')){
+                    $('#legal_person_admin_plain_password_first').removeAttr('disabled');
+                    $('#legal_person_admin_plain_password_second').removeAttr('disabled');
+                }
+                else {
+                    $('#legal_person_admin_plain_password_first').attr('disabled','disabled');
+                    $('#legal_person_admin_plain_password_second').attr('disabled','disabled');
+                }
+            }
+
+            {% else %}
+            $(document).ready(function(){
+                changePassword();
+                $("#user_changePassword").on('change',function(){
+                    changePassword();
+                });
+            });
+        function changePassword()
+        {
+            if($('#user_changePassword').prop('checked')){
+                $('#user_plainPassword_first').removeAttr('disabled');
+                $('#user_plainPassword_second').removeAttr('disabled');
+            }
+            else {
+                $('#user_plainPassword_first').attr('disabled','disabled');
+                $('#user_plainPassword_second').attr('disabled','disabled');
+            }
+        }
+            {% endif %}
+
+    </script>
+{% endblock content %}

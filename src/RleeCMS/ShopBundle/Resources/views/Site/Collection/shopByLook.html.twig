@@ -1,0 +1,53 @@
+{% extends "RleeCMSShopBundle::layout.html.twig" %}
+{% block content %}
+    <style>
+        .slick-initialized .slick-slide{
+            position: relative;
+        }
+        .carousel a.watch-now{
+            position: absolute;
+            color: #fff;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-block;
+            border: 2px solid #fff;
+            font-size: 24px;
+            z-index: 99999;
+            padding: 1px 10px;
+            transition-duration: .3s;
+            bottom: 25px;
+            right: 25px;
+            opacity: 1;
+            top:inherit;
+            margin: inherit;
+        }
+    </style>
+    <div class="carousel">
+        {% for shopByLook in shopByLooks %}
+            <div class="carousel-item">
+                {% if shopByLook.products|length > 0 %}
+                    <img src="/images/shop/{{ shopByLook.logo }}" alt="">
+                        {#<div class="shop-item-wishlist">#}
+                            <a href="/{{ alias }}.html?to={{ shopByLook.id }}" class="watch-now">
+                                {{ 'Shop By Look'|trans }}
+                            </a>
+                        {#</div>#}
+                {% else %}
+                    <img src="/images/shop/{{ shopByLook.logo }}" alt="">
+                {% endif %}
+
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+            $('.carousel').slick({
+                dots: false,
+                slidesToShow: 2,
+                slidesToScroll: 1
+            });
+        });
+    </script>
+{% endblock javascripts %}

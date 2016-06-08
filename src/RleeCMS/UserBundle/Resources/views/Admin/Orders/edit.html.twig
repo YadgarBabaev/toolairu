@@ -1,0 +1,41 @@
+{% extends "::adminBase.html.twig" %}
+{% block content_header %}
+    <h1>
+        Заказы
+        {#<small>Редактирование</small>#}
+    </h1>
+{% endblock content_header %}
+{% block content %}
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Редактирование</h3>
+
+            <div class="box-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Поиск...">
+
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body table-responsive no-padding">
+            <div style="width: 80%; padding-left: 50px;">
+           {{ form_start(form) }}
+                {{ form_widget(form) }}
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                <input type="submit" class="btn btn-primary" value="Сохранить"/>
+                <a href="{{ path('admin_orders') }}" class="btn btn-default">Отмена</a>
+                <br>
+           {{ form_end(form) }}
+            </div>
+            <br>
+            <br>
+        </div>
+        <!-- /.box-body -->
+    </div>
+{% endblock content %}

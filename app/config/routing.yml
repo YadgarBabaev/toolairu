@@ -1,0 +1,52 @@
+cms_pages_Extra:
+    resource: .
+    type: extra
+user:
+    resource: "@UserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+rlee_cms_admin:
+    resource: "@RleeCMSAdminBundle/Controller/"
+    type:     annotation
+    prefix:   /admin
+
+admin_cms:
+    resource: "@AdminCMSBundle/Controller/"
+    type:     annotation
+    prefix:   /admin/cms
+
+admin_reference:
+    resource: "@AdminReferenceBundle/Controller/"
+    type:     annotation
+    prefix:   /admin/reference
+
+rlee_cms_shop_admin:
+    resource: "@RleeCMSShopBundle/Controller/Admin"
+    type:     annotation
+    prefix:   /admin/shop
+
+rlee_cms_shop_site:
+    resource: "@RleeCMSShopBundle/Controller/Site"
+    type:     annotation
+#    prefix:   /
+
+rlee_cms_shop_settings:
+    resource: "@RleeCMSShopBundle/Controller/Admin/Settings"
+    type:     annotation
+    prefix:   /admin/shop/settings
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+cms:
+    resource: "@CMSBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+elfinder:
+    resource: "@FMElfinderBundle/Resources/config/routing.yml"

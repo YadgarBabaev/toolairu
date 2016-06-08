@@ -1,0 +1,17 @@
+{% extends "::base.html.twig" %}
+{% block content %}
+    <div class="container-fluid terms">
+        {% if cms_widget_count('left_menu') %}
+            <div class="col-sm-3 col-sm-offset-1 terms-menu">
+                {{ cms_widget('left_menu') }}
+            </div>
+        {% endif %}
+        <div class="terms-content {% if cms_widget_count('left_menu') %}col-sm-7{% endif %}">
+            {% block content_title %}
+            {% endblock content_title %}
+            {% block pagesContent %}
+            {% endblock pagesContent %}
+        </div>
+
+    </div>
+{% endblock content %}

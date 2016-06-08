@@ -1,0 +1,114 @@
+{% extends '::adminBase.html.twig' %}
+{% block content_header %}
+    <h1>Виджеты<small>Добавление</small></h1>
+{% endblock content_header %}
+{% block content %}
+    <div class="box box-info">
+    </div>
+    {{ form_start(form) }}
+    <div class="box-body">
+        {{ form_widget(form) }}
+    </div>
+
+    <div class="box-footer">
+        <div class="col-md-offset-3 col-md-9">
+            <button type="submit" class="btn btn-primary">Сохранить <i class="fa fa-fw fa-check-square-o"></i></button>
+            <a class="btn btn-default" href="{{ path('admin_cms_widget') }}">Отмена <i class="fa fa-fw fa-undo"></i></a>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock content %}
+{% block footer_script %}
+    <script type="text/javascript">
+        function changeMenuType() {
+            if ($('#widget_type').val() == 'html') {
+                $('#widget_hideMenu').parent().parent().hide('slow');
+                $('#widget_hideSliderCount').parent().parent().hide('slow');
+                $('#widget_hideSliderSpeed').parent().parent().hide('slow');
+                $('#widget_hideSliderTitle').parent().parent().hide('slow');
+                $('#widget_hideSliderHref').parent().parent().hide('slow');
+                $('#widget_hideCategory').parent().parent().hide('slow');
+                $('#widget_hideCategoryHref').parent().parent().hide('slow');
+                $('#widget_hideProduct').parent().parent().hide('slow');
+                $('#widget_hideProductHref').parent().parent().hide('slow');
+                $('#widget_titleHtml').parent().parent().hide('slow');
+
+                $('#widget_html').parent().parent().show('slow');
+            }
+            if ($('#widget_type').val() == 'menu') {
+                $('#widget_html').parent().parent().hide('slow');
+                $('#widget_hideSliderCount').parent().parent().hide('slow');
+                $('#widget_hideSliderSpeed').parent().parent().hide('slow');
+                $('#widget_hideSliderTitle').parent().parent().hide('slow');
+                $('#widget_hideSliderHref').parent().parent().hide('slow');
+                $('#widget_hideCategory').parent().parent().hide('slow');
+                $('#widget_hideCategoryHref').parent().parent().hide('slow');
+                $('#widget_hideProduct').parent().parent().hide('slow');
+                $('#widget_hideProductHref').parent().parent().hide('slow');
+                $('#widget_titleHtml').parent().parent().hide('slow');
+
+                $('#widget_hideMenu').parent().parent().show('slow');
+            }
+            if ($('#widget_type').val() == 'slider') {
+                $('#widget_html').parent().parent().hide('slow');
+                $('#widget_hideMenu').parent().parent().hide('slow');
+                $('#widget_hideCategory').parent().parent().hide('slow');
+                $('#widget_hideCategoryHref').parent().parent().hide('slow');
+                $('#widget_hideProduct').parent().parent().hide('slow');
+                $('#widget_hideProductHref').parent().parent().hide('slow');
+                $('#widget_titleHtml').parent().parent().hide('slow');
+
+                $('#widget_hideSliderCount').parent().parent().show('slow');
+                $('#widget_hideSliderSpeed').parent().parent().show('slow');
+                $('#widget_hideSliderTitle').parent().parent().show('slow');
+                $('#widget_hideSliderHref').parent().parent().show('slow');
+            }
+
+            if ($('#widget_type').val() == 'category') {
+                $('#widget_html').parent().parent().hide('slow');
+                $('#widget_hideMenu').parent().parent().hide('slow');
+                $('#widget_hideSliderCount').parent().parent().hide('slow');
+                $('#widget_hideSliderSpeed').parent().parent().hide('slow');
+                $('#widget_hideSliderTitle').parent().parent().hide('slow');
+                $('#widget_hideSliderHref').parent().parent().hide('slow');
+                $('#widget_hideProduct').parent().parent().hide('slow');
+                $('#widget_hideProductHref').parent().parent().hide('slow');
+
+                $('#widget_hideCategory').parent().parent().show('slow');
+                $('#widget_hideCategoryHref').parent().parent().show('slow');
+                $('#widget_titleHtml').parent().parent().show('slow');
+            }
+
+            if ($('#widget_type').val() == 'product') {
+                $('#widget_html').parent().parent().hide('slow');
+                $('#widget_hideMenu').parent().parent().hide('slow');
+                $('#widget_hideSliderCount').parent().parent().hide('slow');
+                $('#widget_hideSliderSpeed').parent().parent().hide('slow');
+                $('#widget_hideSliderTitle').parent().parent().hide('slow');
+                $('#widget_hideSliderHref').parent().parent().hide('slow');
+                $('#widget_hideCategory').parent().parent().hide('slow');
+                $('#widget_hideCategoryHref').parent().parent().hide('slow');
+
+                $('#widget_hideProduct').parent().parent().show('slow');
+                $('#widget_hideProductHref').parent().parent().show('slow');
+                $('#widget_titleHtml').parent().parent().show('slow');
+            }
+        }
+        $(function () {
+            changeMenuType();
+            $('#widget_type').change(function () {
+                changeMenuType();
+            });
+            $('#widget_hideCategory').select2({
+                tags: true,
+                allowClear: true,
+                theme: "classic"
+            });
+            $('#widget_hideProduct').select2({
+                tags: true,
+                allowClear: true,
+                theme: "classic"
+            });
+        });
+    </script>
+{% endblock footer_script %}

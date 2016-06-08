@@ -1,0 +1,43 @@
+{% extends '::adminBase.html.twig' %}
+{% block content_header %}
+    <h1>
+        Каталог
+        <small>Товары</small>
+    </h1>
+{% endblock content_header %}
+{% block content %}
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <a class="btn btn-primary" href="{{ path('admin_shop_product_new') }}">
+                Добавить <i class="fa fa-fw fa-plus-square-o"></i>
+            </a>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Наименование</th>
+                <th>Каталог</th>
+                <th>Склад</th>
+                <th>Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in products %}
+                <tr>
+                    <td>{{ product.id }}</td>
+                    <td><a href="{{ path('admin_shop_product_edit', { 'id': product.id }) }}">{{ product }}</a></td>
+                    <td>{{ product.category }}</td>
+                    <td>
+                        <a href="{{ path('admin_shop_product_store', {id: product.id}) }}" class="btn btn-default">Править</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger" href="{{ path('admin_shop_product_delete', { 'id': product.id }) }}">Удалить
+                            <i class="fa fa-fw fa-minus-square-o"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
