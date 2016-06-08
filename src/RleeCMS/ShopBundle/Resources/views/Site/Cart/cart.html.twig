@@ -4,8 +4,7 @@
     {% for product in products %}
         {% set sum = sum + product.price %}
         <li class="bag-item cart_product_{{ product.id }}">
-            {{ 'product_'~product.categoryB2b.id~'_'~product.id }}
-            {#<a class="bag-link" href="{{ router.get('product_'~product.category.id~'_'~product.id).path }}">{{ product.name }}</a>#}
+            <a class="bag-link" href="{{ router.get('product_1_'~product.id).path }}">{{ product.name }}</a>
             <div class="bag-price pull-right">
 
                 {% if currency %}
@@ -25,7 +24,7 @@
                     <img src="{{ srs }}" alt="">
                 </div>
                 <div class="col-sm-6 bag-button-container">
-                    {#<a href="{{ router.get('product_'~product.id).path }}" class="bag-button">{% trans %}detail{% endtrans %}</a>#}
+                    <a href="{{ router.get('product_1_'~product.id).path }}" class="bag-button">{% trans %}detail{% endtrans %}</a>
                     <button onclick="delProduct('{{ product.id }}')" class="bag-button">{% trans %}remove{% endtrans %}</button>
                 </div>
             </div>
