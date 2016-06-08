@@ -3,6 +3,7 @@
 namespace RleeCMS\CMSBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -169,6 +170,15 @@ class WidgetType extends AbstractType
                     'mapped' => false,
                 )
             )
+            ->add('youtubeSrc',TextType::class,array(
+                'label' => 'Сылка на видео',
+                    'attr' =>
+                        array(
+                            'class' => 'form-control'
+                        ),
+                    'required' => false,
+
+            ))
             ->add('titleHtml', CKEditorType::class, array(
                     'label' => 'Содержание заголовка',
                     'attr' =>

@@ -1,4 +1,4 @@
-<div class="bag-header">Shopping cart <span class="bag-header-price">({{ cart|length }} items)</span></div>
+<div class="bag-header">{% trans %}Shopping cart{% endtrans %}<span class="bag-header-price">({{ 'items'|trans }} {{ cart|length }})</span></div>
 <ol>
     {% set sum = 0 %}
     {% for product in products %}
@@ -24,14 +24,14 @@
                     <img src="{{ srs }}" alt="">
                 </div>
                 <div class="col-sm-6 bag-button-container">
-                    <a href="{{ router.get('product_'~product.id).path }}" class="bag-button">detail</a>
-                    <button onclick="delProduct('{{ product.id }}')" class="bag-button">remove</button>
+                    <a href="{{ router.get('product_'~product.id).path }}" class="bag-button">{% trans %}detail{% endtrans %}</a>
+                    <button onclick="delProduct('{{ product.id }}')" class="bag-button">{% trans %}remove{% endtrans %}</button>
                 </div>
             </div>
         </li>
     {% endfor %}
 </ol>
-<div class="total">Subtotal<span class="total-price pull-right">
+<div class="total">{% trans %}Subtotal{% endtrans %}<span class="total-price pull-right">
          {% if currency %}
              {{ (sum/currency.rate)|round(2,'floor') }} {{ currency.name }}
          {% elseif(shop.getMainCurrency().symbol) %}
@@ -39,7 +39,7 @@
              {{ shop.getMainCurrency().symbol }}
          {% endif %}
     </span></div>
-<a class="shop-btn shop-cart bag-btn" href="{{ path('site_order') }}">Check out</a>
+<a class="shop-btn shop-cart bag-btn" href="{{ path('site_order') }}">{% trans %}Check out{% endtrans %}</a>
 <script>
     $(function () {
         $('#total-in-cart').html($('.total-price').html());

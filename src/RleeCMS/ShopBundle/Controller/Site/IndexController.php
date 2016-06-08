@@ -67,9 +67,16 @@ class IndexController extends Controller
             ->createQueryBuilder('p')
             ->leftJoin('p.categories', 'c')
             ->leftJoin('p.filters', 'f')
-            ->andWhere('p.status = 1')
+            ->andWhere('p.status = 1');
+        if($catId == 6){
+            $products = $products
+                ->andWhere('p.categoryB2B = :catId')
+                ->setParameter('catId', $category->getId());
+        }else{
+            $products = $products
             ->andWhere('c.id = :catId')
-            ->setParameter('catId', $category->getId());
+                ->setParameter('catId', $category->getId());
+        }
         if (isset($filterId) and $filterId != 'all') {
             $products = $products
                 ->andWhere('f.id = :filterId')
@@ -169,6 +176,107 @@ class IndexController extends Controller
 //            $translator->trans('Shoulder width') => $shoulder_width,
 //            $translator->trans('Hand length') => $hand_length,
 
+        );
+
+        $flag = false;
+        if ($this->getUser()) {
+            $products = $this->getUser()->getProducts();
+            foreach ($products as $p) {
+                if ($p->getId() == $product->getId()) {
+                    $flag = true;
+                }
+            }
+        }
+        $stores = $em
+            ->getRepository('RleeCMSShopBundle:ProductStore')
+            ->createQueryBuilder('s')
+            ->andWhere('s.product = :pId')
+            ->andWhere('s.count != 0')
+            ->setParameter('pId', $product->getId())
+            ->getQuery()->getResult();
+        $countStores = count($stores);
+        $colorArray = array();
+        $sizeArray = array();
+        foreach ($stores as $store) {
+            $colorArray[] = $store->getColor()->getId();
+            $sizeArray[] = $store->getSize()->getId();
+        }
+        $sizeArray = array_unique($sizeArray);
+        $colorArray = array_unique($colorArray);
+        return array(
+            'product' => $product,
+            'table' => $table,
+            'flag' => $flag,
+            'stores' => $stores,
+            'countStores' => $countStores,
+            'sizeArray' => $sizeArray,
+            'colorArray' => $colorArray
+        );
+    }
+
+    /**
+     * @Template()
+     *
+     */
+    public function showProntoProductAction(Request $request, $alias)
+    {
+        /** @var $session \Symfony\Component\HttpFoundation\Session\Session */
+        $session = $request->getSession();
+        $session->set('alias', $alias);
+
+        $translator = $this->get('translator');
+        $em = $this->getDoctrine()->getManager();
+        /** @var  $menu \RleeCMS\CMSBundle\Entity\Menu */
+        $catId = $request->attributes->get('catId');
+        $productId = $request->attributes->get('productId');
+
+        $product = $em->getRepository('RleeCMSShopBundle:Product')->find($productId);
+        if (!$product) {
+            throw $this->createNotFoundException($translator->trans('page_not_found'));
+        }
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem('Главная', $this->generateUrl('site_index'));
+
+        $table = array();
+        /** @var  $size \RleeCMS\ShopBundle\Entity\Size */
+        $heights = array();
+        foreach ($product->getSizes() as $size) {
+            if ($size->getHeight()) {
+                $heights[] = $size->getHeight();
+            }
+            $name[] = $size->getSize();
+            $bust[] = $size->getBust();
+            $waist[] = $size->getWaist();
+            $hips[] = $size->getHips();
+            $front_waist_length[] = $size->getFrontWaistLength();
+            $bust_depth[] = $size->getBustDepth();
+            $back_length[] = $size->getBackLength();
+            $back_width[] = $size->getBackWidth();
+            $shoulder_width[] = $size->getShoulderWidth();
+            $hand_length[] = $size->getHandLength();
+        }
+        $minMaxHeight = '';
+        if (count($heights) > 0) {
+            $max = max($heights);
+            $min = min($heights);
+            if (isset($min) and isset($max)) {
+                if ($max == $min) {
+                    $minMaxHeight = $min;
+                } else {
+                    $minMaxHeight = $min . ' - ' . $max;
+                }
+            } else if (isset($min)) {
+                $minMaxHeight = $min;
+            } else if (isset($max)) {
+                $minMaxHeight = $max;
+            }
+        }
+        $table = array(
+            $translator->trans('HEIGHT') => $minMaxHeight,
+            $translator->trans('SIZE STABLE FABRICS') => $name,
+            $translator->trans('Bust') => $bust,
+            $translator->trans('Waist') => $waist,
+            $translator->trans('Hips') => $hips,
         );
 
         $flag = false;

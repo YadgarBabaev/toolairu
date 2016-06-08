@@ -1,6 +1,6 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 {% block fos_user_content %}
-{% trans_default_domain 'FOSUserBundle' %}
+{% trans_default_domain 'messages' %}
 <style>
     .reg-form .gender .radio{
         display: inline-block;
@@ -29,7 +29,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="col-md-6" style="padding-left: 80px; padding-right: 80px;">
-                <h3 class="text-center">{{ 'Информация о покупателе'|trans }}:</h3>
+                <h3 class="text-center">{{ 'Cutomer information'|trans }}:</h3>
                 {#{{ form_widget(form) }}#}
                 <label class="text-center">
                     {#<p>{{ 'Эл. почта'|trans }}</p>#}
@@ -48,12 +48,12 @@
                     {#</div>#}
                 {#</div>#}
                 <label>
-                    <strong>{{ 'Подписка на новости'|trans }}</strong>
+                    <strong>{{ 'Subscribe to news'|trans }}</strong>
                     {{ form_errors(form.news) }}
                     {{ form_widget(form.news) }}
                 </label>
                 <br>
-                <h3 class="text-center">{{ 'Информация о компании:'|trans }}</h3>
+                <h3 class="text-center">{{ 'Company information'|trans }}:</h3>
                 {#{{ form_widget(form) }}#}
                 <label class="text-center">
                     {#<p>{{ 'Эл. почта'|trans }}</p>#}
@@ -81,7 +81,7 @@
                     {{ form_row(form.directorFio) }}
                 </label>
                 <br>
-                <h3 class="text-center">{{ 'Юридический адрес предприятия:'|trans }} </h3>
+                <h3 class="text-center">{{ 'Company legal address'|trans }}: </h3>
                 {#{{ form_widget(form) }}#}
                 <label class="text-center">
                     {#<p>{{ 'Эл. почта'|trans }}</p>#}
@@ -111,7 +111,7 @@
                 <br>
                 </div>
                 <div class="col-md-6" style="padding-left: 80px; padding-right: 80px;">
-                <h3 class="text-center">{{ 'Банковские реквизиты предприятия:'|trans }} </h3>
+                <h3 class="text-center">{{ 'Company bank detail'|trans }} </h3>
                 {#{{ form_widget(form) }}#}
                 <label class="text-center">
                     {#<p>{{ 'Эл. почта'|trans }}</p>#}
@@ -124,7 +124,7 @@
                     {{ form_row(form.requisite2) }}
                 </label>
                 <br>
-                <h3 class="text-center">{{ 'Юридический адрес предприятия:'|trans }}</h3>
+                <h3 class="text-center">{{ 'Company legal address'|trans }}:</h3>
                 {#{{ form_widget(form) }}#}
                 <label class="text-center">
                     {#<p>{{ 'Эл. почта'|trans }}</p>#}
@@ -152,7 +152,7 @@
                     {{ form_row(form.factHouseNumber) }}
                 </label>
                 <br>
-                <h3 class="text-center">{{ 'Контактные данные:'|trans }}</h3>
+                <h3 class="text-center">{{ 'Contact details'|trans }}</h3>
                 {#{{ form_widget(form) }}#}
                 <label class="text-center">
                     {#<p>{{ 'Эл. почта'|trans }}</p>#}

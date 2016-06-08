@@ -1,4 +1,4 @@
-{% trans_default_domain 'FOSUserBundle' %}
+{% trans_default_domain 'messages' %}
 <style>
     .reg-form .gender .radio{
         display: inline-block;
@@ -25,7 +25,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
-                <h3 class="text-center">{{ 'Информация о покупателе'|trans }}:</h3>
+                <h3 class="text-center">{{ 'Cutomer information'|trans }}:</h3>
                 {#{{ form_widget(form) }}#}
                 <label class="text-center">
                     {#<p>{{ 'Имя'|trans }}</p>#}
@@ -47,14 +47,14 @@
                     {{ form_widget(form.plainPassword) }}
                 </label>
                 <div class="gender">
-                    <label><strong>{{ 'Пол'|trans }}</strong></label>
+                    <label><strong>{{ 'gender'|trans }}</strong></label>
                     <div class="gender-inner">
                         {{ form_errors(form.gender) }}
                         {{ form_widget(form.gender) }}
                     </div>
                 </div>
                 <label>
-                    <strong>{{ 'Подписка на новости'|trans }}</strong>
+                    <strong>{{ 'Subscribe to news'|trans }}</strong>
                     {{ form_errors(form.news) }}
                     {{ form_widget(form.news) }}
                 </label>

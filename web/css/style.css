@@ -751,6 +751,8 @@ footer .nav-item-link {
 .shop-wishlist {
     background-color: #ecf0f1;
     color: #2c2c2c;
+    text-decoration: none;
+    cursor: pointer;
 }
 #product_form .tooltip-inner{
     font-size: 18px !important;
@@ -1199,6 +1201,9 @@ form {
 .reg-form .forgot a {
     color: #000;
     text-decoration: underline;
+}
+.reg-form .register a{
+    padding-left: 35px;
 }
 .reg-form .remember label input[type="checkbox"]{
     float: none;

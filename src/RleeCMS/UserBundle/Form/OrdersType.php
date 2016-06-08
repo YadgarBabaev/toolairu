@@ -18,46 +18,48 @@ class OrdersType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $translator = $options['translator'];
+
         $builder
             ->add('email',EmailType::class,array(
                 "label" => "Email",
                 'horizontal' => false,
             ))
             ->add('fName',TextType::class,array(
-                "label" => "First name",
+                "label" => $translator->trans('Name'),
                 'horizontal' => false,
             ))
             ->add('lName',TextType::class,array(
-                "label" => "Last name",
+                "label" => $translator->trans('fName'),
                 'horizontal' => false,
             ))
             ->add('address',TextType::class,array(
-                "label" => "Address",
+                "label" => $translator->trans('Address'),
                 'horizontal' => false,
             ))
             ->add('houseNumber',TextType::class,array(
-                "label" => "Apt,suite,etc.",
+                "label" => $translator->trans('Apt,suite,etc.'),
                 'horizontal' => false,
             ))
             ->add('city',TextType::class,array(
-                "label" => "City",
+                "label" => $translator->trans('City'),
                 'horizontal' => false,
             ))
             ->add('country',TextType::class,array(
-                "label" => "Country",
+                "label" => $translator->trans('Country'),
                 'horizontal' => false,
             ))
             ->add('state',TextType::class,array(
-                "label" => "State",
+                "label" => $translator->trans('State'),
                 "required" => false,
                 'horizontal' => false,
             ))
             ->add('pIndex',TextType::class,array(
-                "label" => "Zip code",
+                "label" => $translator->trans('Zip code'),
                 'horizontal' => false,
             ))
             ->add('phone',TextType::class,array(
-                "label" => "Phone",
+                "label" => $translator->trans('Phone'),
                 "required" => true,
                 'horizontal' => false,
             ))
@@ -77,7 +79,8 @@ class OrdersType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'RleeCMS\UserBundle\Entity\Orders'
+            'data_class' => 'RleeCMS\UserBundle\Entity\Orders',
+            'translator' => null
         ));
     }
 }

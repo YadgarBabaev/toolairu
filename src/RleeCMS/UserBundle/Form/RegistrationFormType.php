@@ -38,8 +38,8 @@ class RegistrationFormType extends AbstractType
             ->add('gender', ChoiceType::class, array(
                 'label' => 'gender',
                 'choices'  => array(
-                    'Женский' => '1',
-                    'Мужской' => '2',
+                    'female' => '1',
+                    'male' => '2',
                 ),
                 'expanded'=>true,
                 'multiple'=>false,
@@ -52,7 +52,7 @@ class RegistrationFormType extends AbstractType
                 'translation_domain' => 'FOSUserBundle'
             ))
             ->add('news', null, array(
-                'label' => 'Подписка на новости',
+                'label' => 'Subscribe to news',
 //                'choice_label'=>false,
                 'horizontal' => false,
             ))

@@ -49,6 +49,15 @@ class UserType extends AbstractType
                 'label' => 'form.email',
                 'translation_domain' => 'FOSUserBundle'
             ))
+            ->add('roles',ChoiceType::class,array(
+              'label' => 'Роли',
+                'choices' => array(
+                    'Администратор' => 'ROLE_SUPER_ADMIN'
+                ),
+                'expanded' => true,
+                'multiple' => true,
+                'required' => false,
+            ))
             ->add('news', null, array(
                 'label' => 'Подписка на новости',
 //                'choice_label'=>false,

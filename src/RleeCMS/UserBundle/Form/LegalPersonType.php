@@ -18,6 +18,7 @@ class LegalPersonType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $translator = $options['translator'];
         $builder
             ->add('email',TextType::class,array(
                 'label' => "email",
@@ -37,107 +38,107 @@ class LegalPersonType extends AbstractType
                     'invalid_message' => 'fos_user.password.mismatch',
                 ))
             ->add('news', CheckboxType::class, array(
-                'label' => 'Подписка на новости',
+                'label' => $translator->trans('Subscribe to news'),
 //                'choice_label'=>false,
             ))
 
             ->add('companyName',TextType::class,array(
-                'label' => "Наименование компании",
+                'label' => $translator->trans('Company name'),
                 'required' => true,
                 'horizontal' => false,
             ))
             ->add('companyType',TextType::class,array(
-                'label' => "Вид предприятия",
+                'label' => $translator->trans('Type of enterprise'),
                 'required' => false,
                 'horizontal' => false,
             ))
             ->add('position',TextType::class,array(
-                'label' => "Должность(директор,менеджер,владелец)",
+                'label' => $translator->trans('Position(director, manager, owner)'),
                 'required' => false,
                 'horizontal' => false,
             ))
             ->add('fio',TextType::class,array(
-                'label' => "ФИО",
+                'label' => $translator->trans('Full name'),
                 'required' => true,
                 'horizontal' => false,
             ))
             ->add('inn',TextType::class,array(
-                'label' => "Налоговый регистрационный номер предприятия ИНН",
+                'label' => $translator->trans('Tax registration number'),
                 'required' => false,
                 'horizontal' => false,
             ))
             ->add('directorFio',TextType::class,array(
-                'label' => "ФИО Исполнительного директора",
+                'label' => $translator->trans('Director executive name'),
                 'required' => false,
                 'horizontal' => false,
             ))
             ->add('country',TextType::class,array(
-                'label' => "Страна",
+                'label' => $translator->trans('Country'),
                 'required' => false,
                 'horizontal' => false,
             ))
             ->add('pIndex',TextType::class,array(
-                'label' => "Почтовый индекс",
+                'label' => $translator->trans('Zip code'),
                 'required' => false,
                 'horizontal' => false,
             ))
             ->add('city',TextType::class,array(
-                'label' => "Город/Поселок",
+                'label' => $translator->trans('City/Town'),
                 'required' => false,
                 'horizontal' => false,
             ))
             ->add('street',TextType::class,array(
-                'label' => "Улица",
+                'label' => $translator->trans('Street'),
                 'required' => false,
                 'horizontal' => false,
             ))
             ->add('houseNumber',TextType::class,array(
-                'label' => "Номер дома",
+                'label' => $translator->trans('House number'),
                 'required' => false,
                 'horizontal' => false,
             ))
             ->add('requisite1',TextType::class,array(
-                'label' => "1-й Банк",
+                'label' => $translator->trans('1st Bank'),
                 'required' => false,
                 'horizontal' => false,
             ))
             ->add('requisite2',TextType::class,array(
-                'label' => "2-й Банк",
+                'label' => $translator->trans('2nd Bank'),
                 'required' => false,
                 'horizontal' => false,
             ))
             ->add('factCountry',TextType::class,array(
-                'label' => "Страна",
+                'label' => $translator->trans('Country'),
                 'required' => false,
                 'horizontal' => false,
             ))
             ->add('factPIndex',TextType::class,array(
-                'label' => "Почтовый индекс",
+                'label' => $translator->trans('Zip code'),
                 'required' => false,
                 'horizontal' => false,
             ))
             ->add('factCity',TextType::class,array(
-                'label' => "Город поселок",
+                'label' => $translator->trans('City/Town'),
                 'required' => false,
                 'horizontal' => false,
             ))
             ->add('factStreet',TextType::class,array(
-                'label' => "Улица",
+                'label' => $translator->trans('Street'),
                 'required' => false,
                 'horizontal' => false,
             ))
             ->add('factHouseNumber',TextType::class,array(
-                'label' => "Номер дома",
+                'label' => $translator->trans('House number'),
                 'required' => false,
                 'horizontal' => false,
             ))
             ->add('phoneNumber',TextType::class,array(
-                'label' => "Телефон",
+                'label' => $translator->trans('Phone'),
                 'required' => false,
                 'horizontal' => false,
             ))
             ->add('mobileNumber',TextType::class,array(
-                'label' => "Мобильный телефон",
+                'label' => $translator->trans('Mobile phone'),
                 'required' => false,
                 'horizontal' => false,
             ))
@@ -147,17 +148,17 @@ class LegalPersonType extends AbstractType
                 'horizontal' => false,
             ))
             ->add('email1',TextType::class,array(
-                'label' => "Электронная почта 2",
+                'label' => $translator->trans('Email 1'),
                 'required' => false,
                 'horizontal' => false,
             ))
             ->add('email2',TextType::class,array(
-                'label' => "Электронная почта 2",
+                'label' => $translator->trans('Email 2'),
                 'required' => false,
                 'horizontal' => false,
             ))
             ->add('site',TextType::class,array(
-                'label' => "Веб страница",
+                'label' => $translator->trans('WebPage'),
                 'required' => false,
                 'horizontal' => false,
             ))
@@ -171,7 +172,8 @@ class LegalPersonType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'RleeCMS\UserBundle\Entity\LegalPerson'
+            'data_class' => 'RleeCMS\UserBundle\Entity\LegalPerson',
+            'translator' => null
         ));
     }
 }

@@ -24,7 +24,7 @@
                                 {% set page_content = ((page.content|striptags)|slice(0,500))|raw %}
                                 <p>{{ page_content|raw }}</p>
                                 <div class="text-center">
-                                    <a href="{{alias}}" class="more"><strong>View more</strong></a>
+                                    <a href="{{alias}}" class="more"><strong>{% trans %}View more{% endtrans %}</strong></a>
                                 </div>
                             </div>
                             {#<h1>#}

@@ -52,7 +52,6 @@ class ExtraLoader implements LoaderInterface
                 $routes->add($routeName, $route);
             }
 
-
             if ($menu->getChildren()) {
                 foreach ($menu->getChildren() as $children) {
                     $path = $children->getAlias() . '.html';
@@ -96,10 +95,27 @@ class ExtraLoader implements LoaderInterface
             }
             if ($menu->getType() == 'shop') {
                 if (isset($menu->getParams()['cat_id'])) {
-
+                    $catId = $menu->getParams()['cat_id'];
                     /** @var \RleeCMS\ShopBundle\Entity\Category $category */
-                    $category = $em->getRepository('RleeCMSShopBundle:Category')->find($menu->getParams()['cat_id']);
+                    $category = $em->getRepository('RleeCMSShopBundle:Category')->find($catId);
+                    $showProductController = 'RleeCMSShopBundle:Site\Index:showProduct';
                     if ($category) {
+                        if($catId == 6){
+                            $products = $em
+                                ->getRepository('RleeCMSShopBundle:Product')
+                                ->createQueryBuilder('p')
+                                ->leftJoin('p.categories', 'c')
+                                ->leftJoin('p.filters', 'f')
+                                ->andWhere('p.status = 1')
+                                ->andWhere('p.categoryB2B = :catId')
+                                ->setParameter('catId', $category->getId())
+                                ->getQuery()->getResult();
+                            $showProductController = 'RleeCMSShopBundle:Site\Index:showProntoProduct';
+
+                        }
+                        else{
+                            $products = $category->getProducts();
+                        }
 
                         $path = $menu->getAlias() . '.html';
                         $defaults = array(
@@ -116,7 +132,7 @@ class ExtraLoader implements LoaderInterface
 
                             $path = $menu->getAlias() . '/' . $product->getAlias() . '.html';
                             $defaults = array(
-                                '_controller' => 'RleeCMSShopBundle:Site\Index:showProduct',
+                                '_controller' => $showProductController,
                                 'alias' => $menu->getAlias() . '/' . $product->getAlias(),
                                 'catId' => $menu->getParams()['cat_id'],
                                 'productId' => $product->getId(),
@@ -125,18 +141,16 @@ class ExtraLoader implements LoaderInterface
                             $route = new Route($path, $defaults);
                             $routes->add($routeName, $route);
                         }
-
                         /** @var \RleeCMS\ShopBundle\Entity\Product $product */
-                        foreach ($category->getProducts() as $product) {
-
+                        foreach ($products as $product) {
                             $path = $menu->getAlias() . '/' . $product->getAlias() . '.html';
                             $defaults = array(
-                                '_controller' => 'RleeCMSShopBundle:Site\Index:showProduct',
+                                '_controller' => $showProductController,
                                 'alias' => $menu->getAlias() . '/' . $product->getAlias(),
                                 'catId' => $menu->getParams()['cat_id'],
                                 'productId' => $product->getId(),
                             );
-                            $routeName = 'product_' . $product->getId();
+                            $routeName = 'product_' .$category->getId().'_'. $product->getId();
                             $route = new Route($path, $defaults);
                             $routes->add($routeName, $route);
                         }

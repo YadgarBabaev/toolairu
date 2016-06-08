@@ -95,10 +95,33 @@ class Widget
     private $class;
 
     /**
+     * @ORM\Column(name="youtube_src", type="string", length=400, nullable=true)
+     */
+    private $youtubeSrc;
+
+    /**
      * @var string
      * @ORM\Column(name="menu_check", type="string", nullable=true)
      */
     private $menuCheck;
+
+    /**
+     * @return mixed
+     */
+    public function getYoutubeSrc()
+    {
+        return $this->youtubeSrc;
+    }
+
+    /**
+     * @param mixed $youtubeSrc
+     */
+    public function setYoutubeSrc($youtubeSrc)
+    {
+        $this->youtubeSrc = $youtubeSrc;
+    }
+
+
     /**
      * Constructor
      */

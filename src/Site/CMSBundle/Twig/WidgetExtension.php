@@ -3,6 +3,7 @@
 namespace Site\CMSBundle\Twig;
 
 use Doctrine\ORM\EntityManager;
+use RleeCMS\ShopBundle\Entity\Product;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\SecurityContext;
@@ -169,10 +170,12 @@ class WidgetExtension extends \Twig_Extension
                 }
                 if ($widget->getType() == 'product') {
                     $params = $widget->getParams();
+                    $product = new Product();
                     if (isset($params['Product'])) {
                         $product =  $this->em->getRepository('RleeCMSShopBundle:Product')->find($params['Product']);
                     }
                     $arrayWidget = array(
+                        'iFrame'   => $widget->getYoutubeSrc(),
                         'title' => $widget->getTitle(),
                         'hideTitle' => $widget->getHideTitle(),
                         'params' => $widget->getParams(),

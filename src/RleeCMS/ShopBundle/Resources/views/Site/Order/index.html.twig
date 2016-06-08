@@ -75,7 +75,7 @@
                 </div>
             {% endfor %}
             <div class="shopping-row">
-                <div class="shopping-footer-total text-right">Subtotal: <span class="total-price">
+                <div class="shopping-footer-total text-right">{{ 'Subtotal'|trans }} <span class="total-price">
                         {% if currency %}
                         {{ (sum/currency.rate)|round(2,'floor') }} {{ currency.name }}
                         {% elseif(shop.getMainCurrency().symbol) %}

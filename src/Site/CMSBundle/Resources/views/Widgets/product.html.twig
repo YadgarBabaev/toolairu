@@ -9,15 +9,32 @@
 {% block widget %}
     <div class="cms_widget_content">
         <div class="category-item new-{{ widget.num }}">
-            <div class="absolute">
+            {#<div class="absolute">#}
+                {#{{ widget.titleHtml|raw }}#}
+                {#{% if widget.params.ProductHref is defined and widget.params.ProductHref == 1 %}#}
+                    {#<button class="btn btn-toolai btn-new-{{ widget.num }}">Shop now</button>#}
+                {#{% endif %}#}
+            {#</div>#}
+            {#{% if widget.product is defined %}#}
+                {#<img src="/images/shop/{{ widget.product.logo }}" alt="">#}
+            {#{% endif %}#}
+            <span style="position: absolute;">
+                <img src="{{ asset('images/play.png') }}" data-toggle="modal" data-target="#myModal"
+                     style="position: absolute; z-index: 55; left: 1%; top: 6%; cursor: pointer;"/>
                 {{ widget.titleHtml|raw }}
-                {% if widget.params.ProductHref is defined and widget.params.ProductHref == 1 %}
-                    <button class="btn btn-toolai btn-new-{{ widget.num }}">Shop now</button>
-                {% endif %}
+            </span>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1"
+         role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" style="padding: 0px; width: auto; background-color: black; text-align: center; ">
+                    {#<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>#}
+                    {{ widget.iFrame|raw }}
+                </div>
             </div>
-            {% if widget.product is defined %}
-                <img src="/images/shop/{{ widget.product.logo }}" alt="">
-            {% endif %}
         </div>
     </div>
 {% endblock widget %}

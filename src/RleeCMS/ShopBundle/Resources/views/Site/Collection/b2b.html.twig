@@ -9,7 +9,7 @@
                 <img src="{{ pronto.webPath }}" alt="">
                 {#{{ dump() }}#}
                 {% if app.user and app.user.legalPerson %}
-                    <a href="/{{ alias }}/{{ pronto.alias }}.html" class="watch-now"
+                    <a href="/maghazin-pronto.html" class="watch-now"
                        style="left: 167px;">{{ 'Watch now'|trans }}</a>
                 {% else %}
                     <a href="#login" data-toggle="modal" data-target="#login" class="watch-now"
@@ -47,61 +47,68 @@
         </div>
     </div>
     <div id="login" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">{{ 'Необходима авторизация юр. лица'|trans }}</h4>
+                    <h4 class="modal-title">{{ 'Authorization required legal. person'|trans }}</h4>
                 </div>
                 <div class="modal-body">
                     <div class="reg-form">
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-md-5">
-                                    <h3>{{ 'Зарегистрированный пользователь'|trans }}:</h3>
+                                {#<div class="col-md-5">#}
+                                    <h3>{{ 'Registered user'|trans }}:</h3>
                                     <form action="{{ path("fos_user_security_check") }}" method="post">
                                         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
                                         <label for="username">
-                                            <p>{{ 'Эл. почта'|trans }}</p>
+                                            <p>{{ 'Email'|trans }}</p>
                                             <input type="text" id="username" name="_username"
                                                    value="{{ last_username }}" required="required"/>
                                         </label>
-
                                         <label>
-                                            <p>{{ 'Пароль'|trans }}</p>
+                                            <p>{{ 'password'|trans }}</p>
                                             <input type="password" id="password" name="_password" required="required"/>
                                         </label>
-                                        <div class="forgot">
-                                            <a href="{{ path('fos_user_resetting_request') }}">{{ 'Забыли пароль'|trans }}
-                                                ?</a>
-                                        </div>
+                                        <table>
+                                            <tr>
+                                                <td><div class="forgot">
+                                                    <a href="{{ path('fos_user_resetting_request') }}">{{ 'forget password'|trans }}
+                                                        ?</a>
+                                                </div></td>
+                                                <td class="register">
+                                                    <a href="{{ path('legal_register') }}">{{ 'Register'|trans }}
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </table>
                                         <div class="remember">
                                             <label>
                                                 <input type="checkbox" id="remember_me" name="_remember_me" value="on"/>
-                                                {{ 'Запомнить меня'|trans }}
+                                                {{ 'Remember me'|trans }}
                                             </label>
                                         </div>
-                                        <button type="submit" class="reg-confirm">{{ 'Войти'|trans }}</button>
+                                        <button type="submit" class="reg-confirm">{{ 'Enter'|trans }}</button>
                                     </form>
-                                </div>
-                                <div class="col-md-1"></div>
-                                <div class="col-md-5">
-                                    <h3>{{ 'Новый пользователь'|trans }}:</h3>
-                                    <p class="text-center">
-                                        <strong>{{ 'Зарегестрировав свой аккаунт сейчас, Вы сможете'|trans }}:</strong>
-                                    </p>
-                                    <div class="reg-login-buttons">
-                                        <div class="text-center">
-                                            <a href="{{ path('fos_user_registration_register') }}"
-                                               class="btn reg-confirm">{{ 'Регистрация'|trans }}</a>
-                                        </div>
-                                        <div class="text-center">
-                                            <a href="{{ path('legal_register') }}"
-                                               class="btn reg-confirm">{{ 'Зарегистрироваться как юр.лицо'|trans }}</a>
-                                        </div>
-                                    </div>
-                                </div>
+                                {#</div>#}
+                                {#<div class="col-md-1"></div>#}
+                                {#<div class="col-md-5">#}
+                                    {#<h3>{{ 'Новый пользователь'|trans }}:</h3>#}
+                                    {#<p class="text-center">#}
+                                        {#<strong>{{ 'Зарегестрировав свой аккаунт сейчас, Вы сможете'|trans }}:</strong>#}
+                                    {#</p>#}
+                                    {#<div class="reg-login-buttons">#}
+                                        {#<div class="text-center">#}
+                                            {#<a href="{{ path('fos_user_registration_register') }}"#}
+                                               {#class="btn reg-confirm">{{ 'Регистрация'|trans }}</a>#}
+                                        {#</div>#}
+                                        {#<div class="text-center">#}
+                                            {#<a href="{{ path('legal_register') }}"#}
+                                               {#class="btn reg-confirm">{{ 'Зарегистрироваться как юр.лицо'|trans }}</a>#}
+                                        {#</div>#}
+                                    {#</div>#}
+                                {#</div>#}
                             </div>
                         </div>
                     </div>

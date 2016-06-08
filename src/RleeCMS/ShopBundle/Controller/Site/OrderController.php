@@ -63,8 +63,8 @@ class OrderController extends Controller
                 }
                 $products[$product->getId()]['id'] = $product->getId();
                 $products[$product->getId()]['name'] = $product->getName();
-                $products[$product->getId()]['size'] = $color->getName();
-                $products[$product->getId()]['color'] = $size->getSize();
+                $products[$product->getId()]['size'] = $size->getSize();
+                $products[$product->getId()]['color'] = $color->getName();
                 $products[$product->getId()]['price'] = $product->getPrice();
 
             }
@@ -158,6 +158,7 @@ class OrderController extends Controller
      * @return \Symfony\Component\Form\Form
      */
     private function createOrderForm(Orders $order){
+        $translator = $this->get('translator');
         /** @var User $user */
         $user  = $this->getUser();
         if($user){
@@ -176,7 +177,9 @@ class OrderController extends Controller
                 $order->setPhone($legalPerson->getPhoneNumber());
             }
         }
-        return $this->createForm('RleeCMS\UserBundle\Form\OrdersType', $order);
+        return $this->createForm('RleeCMS\UserBundle\Form\OrdersType', $order,array(
+            'translator'=>$translator
+        ));
     }
 
 }

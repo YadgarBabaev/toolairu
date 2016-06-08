@@ -26,8 +26,11 @@ class LegalPersonController extends Controller
      */
     public function registerAction(Request $request){
 
+        $translator = $this->get('translator');
         $legalPerson = new LegalPerson();
-        $form = $this->createForm('RleeCMS\UserBundle\Form\LegalPersonType', $legalPerson);
+        $form = $this->createForm('RleeCMS\UserBundle\Form\LegalPersonType', $legalPerson, array(
+            'translator' => $translator
+        ));
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             /** @var \FOS\UserBundle\Doctrine\UserManager $userManager */

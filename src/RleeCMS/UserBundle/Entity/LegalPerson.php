@@ -180,6 +180,28 @@ class LegalPerson
     private $user;
 
 
+    private $roles;
+
+    /**
+     * @return mixed
+     */
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+
+    /**
+     * @param mixed $roles
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+    }
+
+
+
+
+
     public function __construct()
     {
        return $this->companyName;

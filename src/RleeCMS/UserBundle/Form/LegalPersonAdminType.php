@@ -5,6 +5,7 @@ namespace RleeCMS\UserBundle\Form;
 use RleeCMS\UserBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -27,14 +28,16 @@ class LegalPersonAdminType extends AbstractType
                 'label' => "email",
                 'horizontal' => false,
                 'data' => $user->getEmail()
-            ))
-            ->add('changePassword',CheckboxType::class,array(
+            ));
+            if($user->getId()){
+            $builder->add('changePassword',CheckboxType::class,array(
                 'label' => 'Изменить пароль',
                 'mapped' => false,
                 'required' => false,
                 'horizontal' => false,
-            ))
-                ->add('plain_password', RepeatedType::class, array(
+            ));
+            }
+             $builder  ->add('plain_password', RepeatedType::class, array(
                     'type' => PasswordType::class,
                     'options' => array('translation_domain' => 'FOSUserBundle'),
                     'first_options' => array(
@@ -47,6 +50,16 @@ class LegalPersonAdminType extends AbstractType
                     ),
                     'invalid_message' => 'fos_user.password.mismatch',
                 ))
+            ->add('roles',ChoiceType::class,array(
+                'label' => 'Роли',
+                'choices' => array(
+                    'Администратор' => 'ROLE_SUPER_ADMIN'
+                ),
+                'horizontal' => false,
+                'required' => false,
+                'expanded' => true,
+                'multiple' => true,
+            ))
             ->add('news', CheckboxType::class, array(
                 'label' => 'Подписка на новости',
                 'horizontal' => false,
