@@ -9,7 +9,7 @@
                 <img src="{{ pronto.webPath }}" alt="">
                 {#{{ dump() }}#}
                 {% if app.user and app.user.legalPerson %}
-                    <a href="/maghazin-pronto.html" class="watch-now"
+                    <a href="{{ path('category_6') }}" class="watch-now"
                        style="left: 167px;">{{ 'Watch now'|trans }}</a>
                 {% else %}
                     <a href="#login" data-toggle="modal" data-target="#login" class="watch-now"
@@ -35,7 +35,7 @@
                     <div class="collection-item">
                         <img src="{{ stock.webPath }}" alt="">
                         {% if app.user and app.user.legalPerson %}
-                            <a href="/{{ alias }}/{{ stock.alias }}.html" class="watch-now"
+                            <a href="{{ path('category_7') }}" class="watch-now"
                                style="left: 187px;">{{ 'Watch now'|trans }}</a>
                         {% else %}
                             <a href="#login" data-toggle="modal" data-target="#login" class="watch-now"

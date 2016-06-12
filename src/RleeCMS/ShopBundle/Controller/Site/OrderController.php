@@ -29,6 +29,7 @@ class OrderController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $translator = $this->get('translator');
         $cart = unserialize($request->cookies->get('cart', serialize(array())));
         if ($request->request->get('id')) {
             $product = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Product')->find(intval($request->request->get('id')));
@@ -53,7 +54,12 @@ class OrderController extends Controller
         foreach($cart as $item){
           $product = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Product')->find($item['id']);
           $color = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Color')->find($item['color']);
+        if($item['size'] != 'all'){
           $size = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Size')->find($item['size']);
+          $sizeString = $size->getSize();
+        }else{
+            $sizeString = $translator->trans('ALL');
+        }
             if($product){
                 $images = $product->getImages();
                 if($product->getWebPath()){
@@ -63,7 +69,7 @@ class OrderController extends Controller
                 }
                 $products[$product->getId()]['id'] = $product->getId();
                 $products[$product->getId()]['name'] = $product->getName();
-                $products[$product->getId()]['size'] = $size->getSize();
+                $products[$product->getId()]['size'] = $sizeString;
                 $products[$product->getId()]['color'] = $color->getName();
                 $products[$product->getId()]['price'] = $product->getPrice();
 

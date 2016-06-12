@@ -68,7 +68,7 @@ class IndexController extends Controller
             ->leftJoin('p.categories', 'c')
             ->leftJoin('p.filters', 'f')
             ->andWhere('p.status = 1');
-        if($catId == 6){
+        if($catId == 6 || $catId == 7){
             $products = $products
                 ->andWhere('p.categoryB2B = :catId')
                 ->setParameter('catId', $category->getId());
@@ -219,6 +219,66 @@ class IndexController extends Controller
      *
      */
     public function showProntoProductAction(Request $request, $alias)
+    {
+        /** @var $session \Symfony\Component\HttpFoundation\Session\Session */
+        $session = $request->getSession();
+        $session->set('alias', $alias);
+
+        $translator = $this->get('translator');
+        $em = $this->getDoctrine()->getManager();
+        /** @var  $menu \RleeCMS\CMSBundle\Entity\Menu */
+        $catId = $request->attributes->get('catId');
+        $productId = $request->attributes->get('productId');
+
+        $product = $em->getRepository('RleeCMSShopBundle:Product')->find($productId);
+        if (!$product) {
+            throw $this->createNotFoundException($translator->trans('page_not_found'));
+        }
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem('Главная', $this->generateUrl('site_index'));
+
+
+
+        $flag = false;
+        if ($this->getUser()) {
+            $products = $this->getUser()->getProducts();
+            foreach ($products as $p) {
+                if ($p->getId() == $product->getId()) {
+                    $flag = true;
+                }
+            }
+        }
+        $stores = $em
+            ->getRepository('RleeCMSShopBundle:ProductStore')
+            ->createQueryBuilder('s')
+            ->andWhere('s.product = :pId')
+            ->andWhere('s.count != 0')
+            ->setParameter('pId', $product->getId())
+            ->getQuery()->getResult();
+        $countStores = count($stores);
+        $colorArray = array();
+        $sizeArray = array();
+        foreach ($stores as $store) {
+            $colorArray[] = $store->getColor()->getId();
+            $sizeArray[] = $store->getSize()->getId();
+        }
+        $sizeArray = array_unique($sizeArray);
+        $colorArray = array_unique($colorArray);
+        return array(
+            'product' => $product,
+            'flag' => $flag,
+            'stores' => $stores,
+            'countStores' => $countStores,
+            'sizeArray' => $sizeArray,
+            'colorArray' => $colorArray
+        );
+    }
+
+    /**
+     * @Template()
+     *
+     */
+    public function showStockProductAction(Request $request, $alias)
     {
         /** @var $session \Symfony\Component\HttpFoundation\Session\Session */
         $session = $request->getSession();

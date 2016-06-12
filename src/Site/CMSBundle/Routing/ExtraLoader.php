@@ -100,7 +100,7 @@ class ExtraLoader implements LoaderInterface
                     $category = $em->getRepository('RleeCMSShopBundle:Category')->find($catId);
                     $showProductController = 'RleeCMSShopBundle:Site\Index:showProduct';
                     if ($category) {
-                        if($catId == 6){
+                        if($catId == 6 || $catId == 7){
                             $products = $em
                                 ->getRepository('RleeCMSShopBundle:Product')
                                 ->createQueryBuilder('p')
@@ -110,7 +110,11 @@ class ExtraLoader implements LoaderInterface
                                 ->andWhere('p.categoryB2B = :catId')
                                 ->setParameter('catId', $category->getId())
                                 ->getQuery()->getResult();
-                            $showProductController = 'RleeCMSShopBundle:Site\Index:showProntoProduct';
+                            if($catId == 6){
+                                $showProductController = 'RleeCMSShopBundle:Site\Index:showProntoProduct';
+                            }else{
+                                $showProductController = 'RleeCMSShopBundle:Site\Index:showStockProduct';
+                            }
 
                         }
                         else{

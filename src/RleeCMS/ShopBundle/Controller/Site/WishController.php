@@ -23,18 +23,21 @@ class WishController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $translator = $this->get('translator');
-        $em = $this->getDoctrine()->getManager();
+        //$translator = $this->get('translator');
+        $ids = unserialize($request->cookies->get('wish', serialize(array())));
 
-        $user = $this->getUser();
-        if (!$user) {
-            throw $this->createNotFoundException('Unable to find User entity.');
-        }
+        $products = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Product')
+            ->createQueryBuilder('p')
+            ->where('p.id IN (:ids)')
+            ->setParameter(':ids',$ids)
+            ->getQuery()->getResult();
+
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem('Главная', $this->generateUrl('site_index'));
 
         return array(
-            'user' => $user
+            'products' => $products,
+
         );
     }
 
@@ -47,27 +50,25 @@ class WishController extends Controller
     {
         $translator = $this->get('translator');
         $id = $request->request->get('id');
-        $user = $this->getUser();
         $em = $this->getDoctrine()->getManager();
         $product = $em->getRepository('RleeCMSShopBundle:Product')->find($id);
         if (!$product) {
             throw $this->createNotFoundException('Unable to find Product entity.');
         }
-        $products = $user->getProducts();
         $flag = true;
-        foreach ($products as $p) {
-            if ($p->getId() == $product->getId()) {
-                $flag = false;
-            }
+        $ids = unserialize($request->cookies->get('wish', serialize(array())));
+        if(in_array($id,$ids)){
+            $flag = false;
         }
         $data = array(
             'flag' => 'error',
             'msg' => $translator->trans('error')
         );
         if ($flag) {
-            $product->addUser($user);
-            $em->persist($product);
-            $em->flush();
+            $ids[] = $product->getId();
+            $response = new Response();
+            $response->headers->setCookie(new Cookie( 'wish',serialize($ids),0, '/', null, false, false));
+            $response->send();
             $data = array(
                 'flag' => 'success',
                 'msg' => $translator->trans('PRODUCT ADD TO WISH LIST')
@@ -86,7 +87,7 @@ class WishController extends Controller
      *
      * @Route("/{id}/delete", name="site_wish_delete")
      */
-    public function deleteAction($id)
+    public function deleteAction(Request $request,$id)
     {
         $em = $this->getDoctrine()->getManager();
         $product = $em->getRepository('RleeCMSShopBundle:Product')->find($id);
@@ -94,11 +95,15 @@ class WishController extends Controller
         if (!$product) {
             throw $this->createNotFoundException('Unable to find Product entity.');
         }
-        $user = $this->getUser();
-        
-        $product->removeUser($user);
-        $em->persist($product);
-        $em->flush();
+        $ids = unserialize($request->cookies->get('wish', serialize(array())));
+        foreach($ids as $key => $value){
+            if($id == $value){
+                unset($ids[$key]);
+            }
+        }
+        $response = new Response();
+        $response->headers->setCookie(new Cookie( 'wish',serialize($ids),0, '/', null, false, false));
+        $response->send();
 
 
         return $this->redirect($this->generateUrl('site_wish'));

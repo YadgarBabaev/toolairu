@@ -10,14 +10,14 @@
                     <div class="text-center shopping-header-price">{% trans %}Price{% endtrans %}</div>
                 </div>
                 {% set sum = 0 %}
-                {% for product in user.products %}
+                {% for product in products %}
                     {% set sum = sum + product.price %}
                     {% set srs =  product.getWebPath() %}
                     {% if product.images and product.images[0] %}
                         {% set srs =  product.images[0] %}
                     {% endif %}
                     <div class="shopping-row">
-                        <div class="shopping-row-image"><img src="{{ srs }}" alt=""></div>
+                        <div class="shopping-row-image"><img src="{{ srs }}" alt="" style="width: 110px"></div>
                         <div class="shopping-row-name">{{ product }}</div>
                         <div class="shopping-row-quantity">
                             <a onclick="delete_wish('{{ path('site_wish_delete', { 'id': product.id }) }}')"
