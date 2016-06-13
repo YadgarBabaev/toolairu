@@ -50,11 +50,7 @@
                             <li class="navItemRight">
                                 <a class="nav-item-link" data-toggle="modal" data-target="#login-modal" data-toggle="tooltip" title="Личный кабинет" data-placement="bottom" href="#!"></a>
                             </li>
-                            <li class="navItemRight">
-                                <a id="wish-list" class="nav-item-link"
-                                   href="{{ path('site_wish') }}" data-toggle="tooltip"
-                                   title="Избранное" data-placement="bottom"></a>
-                            </li>
+                            {{ render(controller('RleeCMSShopBundle:Site/Wish:check')) }}
                             <li class="navItemRight">
                                 <a class="nav-item-link cart-btn" id="nav-item-bag" href="#!" data-toggle="tooltip" title="Корзина" data-placement="bottom">
                                     <span id="bag-list"></span>

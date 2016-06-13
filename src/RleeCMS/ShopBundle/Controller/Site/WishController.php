@@ -83,6 +83,19 @@ class WishController extends Controller
     }
 
     /**
+     * @Route("/", name="site_wish_check")
+     * @Template()
+     */
+    public  function checkAction(Request $request)
+    {
+        $ids = unserialize($request->cookies->get('wish', serialize(array())));
+        return array(
+            'count' => count($ids)
+        );
+        
+    }
+
+    /**
      * Deletes a Product entity from Wish list.
      *
      * @Route("/{id}/delete", name="site_wish_delete")
