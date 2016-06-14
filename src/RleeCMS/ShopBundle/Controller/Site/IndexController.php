@@ -46,7 +46,6 @@ class IndexController extends Controller
         /** @var  $menu \RleeCMS\CMSBundle\Entity\Menu */
         $menu = $repository->findOneBy(array('alias' => $alias, 'status' => 1));
         $catId = $request->attributes->get('catId');
-
         if (!$menu || !$catId) {
             throw $this->createNotFoundException($translator->trans('page_not_found'));
         }
@@ -86,13 +85,20 @@ class IndexController extends Controller
             ->orderBy('p.orderning', 'ASC')
             ->getQuery()->getResult();
 
-        return array(
+        $result = array(
             'category' => $category,
             'menu' => $menu,
             'alias' => $alias,
             'filters' => $filters,
             'products' => $products
         );
+        $view = "";
+        if($catId == 6 || $catId == 7){
+            $view = $this->renderView('@RleeCMSShop/Site/Index/routerB2B.html.twig',$result);
+        }else{
+            $view = $this->renderView('@RleeCMSShop/Site/Index/router.html.twig',$result);
+        }
+        return new Response($view);
     }
 
     /**

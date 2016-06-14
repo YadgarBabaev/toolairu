@@ -34,8 +34,6 @@
                 <div class="col-sm-5 shop-item-col-3">
                     <!-- Tab panes -->
                     <div class="page-content">
-                        <form id="product_form" action="{{ path('site_cart_add') }}" method="post">
-                            <input type="hidden" name="product_id" value="{{ product.id }}" required>
                             <div style="white-space: nowrap">
                                 <h4 class="page-title">{{ product }}</h4>
 
@@ -76,53 +74,82 @@
                                         <div class="col-sm-7 color-pink">{{ product.composition }}</div>
                                     </div>
                                 </div>
-                                <div class="col-sm-3"><span class="tabs-shop-text-size">{% trans %}
-                                        SIZE{% endtrans %}</span>
-                                </div>
-                                <div class="col-sm-9">
-                                    {% for size in product.sizes %}
-                                        <label class="tabs-size-label{% if size.id not in sizeArray %} disabled{% endif %}" for="size_{{ size.id }}">
-                                            {{ size }}
-                                            <input {% if size.id not in sizeArray %}disabled="disabled"{% endif %} id="size_{{ size.id }}" value="{{ size.id }}" type="radio"
-                                                   name="size">
-                                        </label>
-                                    {% endfor %}
-                                    <label class="tabs-size-label" for="size_all">
-                                        all
-                                        <input  id="size_all" value="all" type="radio"
-                                               name="size">
-                                    </label>
-                                </div>
-                                <div class="col-sm-3"><span class="tabs-shop-text-size">{% trans %}
-                                        QUANTITY{% endtrans %}</span>
-                                </div>
-                                <div class="col-sm-9" style="padding-top: 5px;">
-                                        <b>
-                                            <span onclick="countUp({{ product.id }})" class="glyphicon glyphicon-plus" style="cursor: pointer;"></span>
-                                            <input type="text" value="1" id="q_{{ product.id }}" name="count" style="width: 40px; border: 1px solid silver; text-align: center; margin: 0 auto;">
-                                            <span onclick="countDown({{ product.id }})" class="glyphicon glyphicon-minus" style="cursor: pointer;"></span>
-                                        </b>
-                                    <br>
-                                    <br>
-                                </div>
+
 
                                 <div class="col-sm-12" style="padding: 0;">
-                                    <div class="col-sm-3"><span class="tabs-shop-text-color">{% trans %}COLOR{% endtrans %}</span>
-                                    </div>
-                                    <div class="col-sm-9">
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th>{% trans %}COLOR{% endtrans %}</th>
+                                            {% for size in product.sizes %}
+                                                <th>
+                                                    <label>
+                                                        {{ size }}
+                                                    </label>
+                                                </th>
+                                            {% endfor %}
+                                            <th>
+                                                {% trans %}QUANTITY{% endtrans %}
+                                            </th>
+                                            <th>{% trans %}Price{% endtrans %}</th>
+                                            <th>{% trans %}SUM{% endtrans %}</th>
+                                        </tr>
                                         {% for color in product.colors %}
-                                            <label class="tabs-color-label" for="color_{{ color.id }}" title="{{ color }}"
-                                                   data-toggle="tooltip" data-placement="top">
-
-                                                <div class="label-img-container{% if color.id not in colorArray %} disabled{% endif %}">
-                                                    <img src="/{{ color.getWebPath() }}" alt="">
-                                                    <input id="color_{{ color.id }}" value="{{ color.id }}"
-                                                           {% if color.id not in colorArray %}disabled="disabled"{% endif %}
-                                                           type="radio" name="color">
-                                                </div>
-                                            </label>
+                                            <tr>
+                                                <td>
+                                                    <label class="tabs-color-label" style="margin: 0px;" for="color_{{ color.id }}" title="{{ color }}"
+                                                           data-toggle="tooltip" data-placement="top">
+                                                        <div class="label-img-container{% if color.id not in colorArray %} disabled{% endif %}">
+                                                            <img src="/{{ color.getWebPath() }}" alt="">
+                                                        </div>
+                                                    </label>
+                                                </td>
+                                                {% for size in product.sizes %}
+                                                    <td>
+                                                        {% if size.id in sizeArray and color.id in colorArray %}
+                                                            <span onclick="changeFormContent({{ color.id }},{{ size.id }},'down');"
+                                                                  class="glyphicon glyphicon-minus">
+                                                                </span>
+                                                        {% endif %}
+                                                        <label class="size_label{% if size.id not in sizeArray %} disabled{% endif %}"
+                                                               id="size_{{ color.id }}_{{ size.id }}" data-count="0">
+                                                            0
+                                                        </label>
+                                                        {% if size.id in sizeArray and color.id in colorArray %}
+                                                            <span onclick="changeFormContent({{ color.id }},{{ size.id }},'up');"
+                                                                  class="glyphicon glyphicon-plus">
+                                                            </span>
+                                                        {% endif %}
+                                                    </td>
+                                                {% endfor %}
+                                                <td>
+                                                    <label class="tabs-size-label" id="row_{{ color.id }}" data-count="0">0</label>
+                                                </td>
+                                                <td>
+                                                    <label class="tabs-size-label">
+                                                        {{ product.priceB2B }}
+                                                        {% if(shop.getMainCurrency().symbol) %}
+                                                            {{ shop.getMainCurrency().symbol }}
+                                                        {% endif %}
+                                                        {% if(shop.getMainCurrency().symbol is null) %}
+                                                            {{ shop.getMainCurrency().shortSign }}
+                                                        {% endif %}
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="tabs-size-label">
+                                                        <label id="sum_{{ color.id }}" data-price="{{ product.priceB2B }}">0</label>
+                                                        {% if(shop.getMainCurrency().symbol) %}
+                                                            {{ shop.getMainCurrency().symbol }}
+                                                        {% endif %}
+                                                        {% if(shop.getMainCurrency().symbol is null) %}
+                                                            {{ shop.getMainCurrency().shortSign }}
+                                                        {% endif %}
+                                                    </label>
+                                                </td>
+                                            </tr>
                                         {% endfor %}
-                                    </div>
+                                    </table>
+                                        <br>
                                 </div>
 
                                 <div class="col-sm-9">
@@ -151,34 +178,59 @@
                                 {#{% if countStores > 0 %}#}
                                     {#<a href="#" id="in_store" class="shop-btn shop-store">{% trans %}In store{% endtrans %}</a>#}
                                 {#{% endif %}#}
+                        <form id="product_form" action="{{ path('site_cart_add') }}" method="post" data-count="0" style="display: none;">
+                            <input type="hidden" name="product_id" value="{{ product.id }}" required>
+                            <span id="form_content">
+                            </span>
                         </form>
                     </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 {% endblock content %}
 {% block javascripts %}
     <script src="/js/jquery.elevatezoom.js" type="text/javascript"></script>
 
     <script>
+        function changeFormContent($colorId, $sizeId,$type){
+            var $label = $('#size_'+$colorId+'_'+$sizeId);
+            var globalCount =  parseInt($('#product_form').attr('data-count'));
+            var $rowCount = $('#row_'+$colorId).attr('data-count');
+            if($type == 'down'){
+                if($label.attr('data-count') > 0){
+                    var val = parseInt($label.attr('data-count'))-1;
+                    $label.html(val);
+                    $label.attr('data-count',val);
+                    if($rowCount > 0){
+                        $('#row_'+$colorId).attr('data-count',parseInt($rowCount)-1);
+                    }
+                    if(globalCount > 0){
+                        $('#item_'+globalCount).remove();
+                    $('#product_form').attr('data-count',globalCount - 1 );
+                        $('#row_'+$colorId).html(parseInt($rowCount)-1);
+                    }
+                }
+            }else {
+                var val = parseInt($label.attr('data-count'))+1;
+                $label.html(val);
+                $label.attr('data-count',val);
+                $('#product_form').attr('data-count',globalCount + 1 );
+                var $html = "<span id=\"item_"+(globalCount+1)+"\"> <input type='hidden' name='color["+(globalCount+1)+"]' value='"+$colorId+"'/>" +
+                        "<input type='hidden' name='size["+(globalCount+1)+"]' value='"+$sizeId+"'/></span>";
+                $('#form_content').append($html);
+                $('#row_'+$colorId).attr('data-count',parseInt($rowCount)+1);
+                $('#row_'+$colorId).html(parseInt($rowCount)+1);
+            }
+            if($label.attr('data-count') > 0){
+                $label.attr('class','size_label green');
+            }else {
+                $label.attr('class','size_label');
+            }
 
-        function countUp($id){
-            var cnt = parseInt($("#q_"+$id).val());
-            if(cnt){
-                $("#q_"+$id).val(cnt+1);
-            }else {
-                $("#q_"+$id).val(1);
-            }
-        }
-        function countDown($id){
-            var cnt = parseInt($("#q_"+$id).val());
-            if(cnt>1){
-                $("#q_"+$id).val(cnt-1);
-            }else {
-                $("#q_"+$id).val(1);
-            }
+            var $rowCount = $('#row_'+$colorId).attr('data-count');
+            $('#sum_'+$colorId).html(parseInt($rowCount)*parseFloat($('#sum_'+$colorId).attr('data-price').replace(/[,]+/g, '.')));
+
         }
 
         $(function () {
@@ -256,70 +308,33 @@
             });
         }
 
-        function validate(formData, jqForm, options) {
-            var size = false;
-            var color = false;
-            var product = false;
-            for (var i = 0; i < formData.length; i++) {
-                if (formData[i].name == 'product_id' && formData[i].value) {
-                    product = true;
-                }
-                if (formData[i].name == 'size' && formData[i].value) {
-                    size = true;
-                }
-                if (formData[i].name == 'color' && formData[i].value) {
-                    color = true;
-                }
-            }
-            if (!size) {
-                alert('{% trans %}SELECT SIZE{% endtrans %}');
-                return false;
-            }
-            if (!color) {
-                alert('{% trans %}SELECT COLOR{% endtrans %}');
-                return false;
-            }
-            if (!product) {
-                alert('{% trans %}ERROR PRODUCT ID{% endtrans %}');
-                return false;
-            }
-            if (size && color && product) {
-                return true;
-            }
-            return false;
-        }
-        function showResponse() {
-            var t = $('#image_target'), e = t.clone(), b = $('#bag-list'), o = t.position(), po = t.parent().offset(), bo = b.offset();
-            e.css({top: o.top + 'px', left: o.left + 'px', position: 'absolute'});
-            t.parent().append(e);
-            e.animate({
-                top: -po.top + bo.top + (b.height() - t.height()) / 500,
-                left: -po.left + bo.left + (b.width() - t.width()) / 500,
-                width: 25,
-                height: 25
-            }, 800, function () {
-                $(this).remove();
-            });
-            $('.bag').load('{{ path('site_cart') }}')
-        }
-        $(function () {
-            var options = {
-                target: '.bag',   // target element(s) to be updated with server response
-                beforeSubmit: validate,  // pre-submit callback
-                success: showResponse  // post-submit callback
 
-                // other available options:
-                //url:       url         // override for form's 'action' attribute
-                //type:      type        // 'get' or 'post', override for form's 'method' attribute
-                //dataType:  null        // 'xml', 'script', or 'json' (expected server response type)
-                //clearForm: true        // clear all form fields after successful submit
-                //resetForm: true        // reset the form after successful submit
-
-                // $.ajax options can be used here too, for example:
-                //timeout:   3000
-            };
-            $('#product_form').ajaxForm(options);
-            $('[data-toggle="tooltip"]').tooltip();
-        });
     </script>
+    <style>
+        .table-bordered td{
+            text-align: center;
+            padding: 2px;
+        }
+        .table-bordered{
+            margin: 0;
+        }
+        .size_label{
+            margin-top: 15px;;
+            cursor: pointer;
+        }
+        .disabled{
+            color: silver;
+            cursor: auto;
+        }
+        .green{
+            background-color: green;
+            color: white;
+            border-radius: 2px;
+            padding: 2px;
+        }
+        .glyphicon-plus , .glyphicon-minus{
+            cursor: pointer;
+            font-weight: 800;
+        }
+    </style>
 {% endblock %}
