@@ -33,7 +33,7 @@
                                             <div class="col-sm-4 tabs-shop-left">
                                                 <div>
                                             <span class="tabs-shop-check-size">
-                                                {% trans %}Size{% endtrans %}
+                                                {% trans %}SIZE{% endtrans %}
                                             </span>
                                                     {% set sizeArray = mainSizeArray[product.id] %}
                                                     {% for size in product.sizes %}
@@ -52,36 +52,52 @@
                                                 <a href="javascript:void(0)" onclick="openSizeTable('{{ product.id }}')"
                                                    id="open_size_table_{{ product.id }}">{% trans %}Size table{% endtrans %}</a>
                                                 <div id="size_table_{{ product.id }}" style="display: none;">
-                                                    <table class="table-bordered table-striped">
+                                                    <table class="table-striped">
                                                         {% for key, value in table %}
                                                             <tr>
-                                                                <td>{{ key }}</td>
+                                                                <td style="white-space: nowrap;">{{ key }}</td>
                                                                 {% if loop.index == 1 %}
-                                                                    <td colspan="3">{{ value }}</td>
+                                                                    <th>XS/42</th>
+                                                                    <th>S/44</th>
+                                                                    <th>M/46</th>
+                                                                    <th>L/48</th>
+                                                                    <th>XL/50</th>
                                                                 {% elseif loop.index == 2 %}
-                                                                    {% for val in value %}
-                                                                        <th>{{ val }}</th>
-                                                                    {% endfor %}
+                                                                    <td>80</td>
+                                                                    <td>85</td>
+                                                                    <td>91</td>
+                                                                    <td>96</td>
+                                                                    <td>102</td>
+                                                                    {#{% for val in value %}#}
+                                                                    {#<th>{{ val }}</th>#}
+                                                                    {#{% endfor %}#}
+                                                                {% elseif loop.index == 3 %}
+                                                                    <td>64</td>
+                                                                    <td>69</td>
+                                                                    <td>74</td>
+                                                                    <td>79</td>
+                                                                    <td>85</td>
                                                                 {% else %}
-                                                                    {% for val in value %}
-                                                                        <td>{{ val }}</td>
-                                                                    {% endfor %}
+                                                                    <td>89</td>
+                                                                    <td>94</td>
+                                                                    <td>99</td>
+                                                                    <td>104</td>
+                                                                    <td>110</td>
+                                                                    {#{% for val in value %}#}
+                                                                    {#<td>{{ val }}</td>#}
+                                                                    {#{% endfor %}#}
                                                                 {% endif %}
                                                             </tr>
                                                         {% endfor %}
                                                     </table>
+                                                    <br>
                                                 </div>
-                                            </div>
-                                            <div class="col-sm-4 tabs-shop-right">
-                                                <button class="shop-btn shop-cart">
-                                                    {% trans %}Add to cart{% endtrans %}
-                                                </button>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-5">
                                                     <span class="tabs-shop-check-color">
-                                                        {% trans %}Color{% endtrans %}
+                                                        {% trans %}COLOR{% endtrans %}
                                                     </span>
                                                 {% set colorArray = mainColorArray[product.id] %}
                                                 {% for color in product.colors %}
@@ -97,7 +113,7 @@
                                             </div>
                                             <div class="col-sm-3 tabs-shop-center">
                                                 <a class="tabs-shop-center-link"
-                                                   href="{{ router.getRouteCollection().get('product_'~product.id).path }}">
+                                                   href="{{ router.getRouteCollection().get('product_1_'~product.id).path }}">
                                                     {% trans %}In shop{% endtrans %}
                                                 </a>
                                             </div>
@@ -116,11 +132,20 @@
                                                     {% endif %}
                                                 {% endif %}
                                             </div>
+                                            <br>
+                                            <br>
+                                            <div class="col-sm-4">
+                                                <button class="shop-btn shop-cart">
+                                                    {% trans %}Add to cart{% endtrans %}
+                                                </button>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
                             {% endif %}
                         {% endfor %}
+
                     </div>
                     <!-- Nav tabs -->
                     <ul class="tabs list-unstyled">
