@@ -16,13 +16,31 @@ img {
 }
 .wraper {
     padding-bottom: 20px;
+    min-height: 100%;
+    margin-bottom: -50px; 
 }
 .container-fluid {
   max-width: 1300px;
 }
+.wraper:after {
+  content: "";
+  display: block;
+}
+footer, .wraper:after {
+  height: 50px; 
+}
 /*//////////////////////////////////////////////////////////////////////////*/
 /*                                      NAV                                     */
 /*//////////////////////////////////////////////////////////////////////////*/
+.tabs-color-label.active img {
+    border: 2px solid #e08283;
+}
+.look-table-link {
+    color: #e08283;
+    display: inline-block;
+    margin-top: 10px;
+    font-weight: bold;
+}
 .cart-close-btn {
 	font-size: 24px;
 	color: #000;
@@ -30,6 +48,11 @@ img {
 }
 .tabs-size-label.disabled {
 	color: #ccc;
+}
+#in_store {
+    color: #000;
+        font-size: 16px;
+    padding: 10px;
 }
 .nav img {
     vertical-align: baseline;
@@ -152,8 +175,11 @@ footer .nav-item-link {
 .bag-price {
 
 }
+.bag-button-container {
+	text-align: center;
+}
 .bag-button {
-       display: block;
+       display: inline-block;
     background-color: transparent;
     border: 1px solid black;
     font-weight: bold;
@@ -161,6 +187,12 @@ footer .nav-item-link {
     padding: 0 15px;
     margin-top: 38px;
     text-align: center;
+    text-decoration: none;
+    color: #000;
+}
+.bag-button:hover {
+	background: #e08283;
+	color: #fff;
 }
 .bag-link:focus,
 .bag-link:hover,
@@ -633,6 +665,9 @@ footer .nav-item-link {
 .shop-category-nav {
     background-color: #ecf0f1;
 }
+.category-item.new-1 img{
+    height: auto !important;
+}
 .shop-category-item {
     display: inline-block;
 }
@@ -824,7 +859,7 @@ padding: 10px 0px 6px;
     border: 5px solid red;
 }
 .tabs-shop-center {
-    margin-top: 60px;
+    margin-top: 5px;
 }
 .tabs-shop-center-link {
     font-size: 18px;
@@ -1169,6 +1204,7 @@ form {
     display: block;
     width: 100%;
     padding: 5px 10px;
+    border-radius: 0;
 }
 .reg-form input[type="checkbox"] {
     width: auto;
@@ -1203,6 +1239,7 @@ form {
     padding: 10px 20px;
     font-size: 18px;
     margin: 40px auto;
+    border-radius: 0;
 }
 .reg-form p {
     font-size: 14px;
@@ -1296,9 +1333,9 @@ form {
 /*//////////////////////////////////////////////////////////////////////////*/
 /*                                      STICKY FOOTER                                     */
 /*//////////////////////////////////////////////////////////////////////////*/
-/*body,html {*/
-    /*height: 100%;*/
-/*}*/
+body,html {
+    height: 100%;
+}
 /*.wraper {*/
     /*min-height:100%;*/
 /*}*/
@@ -1327,5 +1364,5 @@ form {
     top: auto!important;
     margin: auto;
     background: url(images/controls.png) no-repeat 0 -32px;
-    transform: rotate(180deg);
+    transform: rotate(90deg);
 }

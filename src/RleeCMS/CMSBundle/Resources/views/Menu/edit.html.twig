@@ -22,7 +22,7 @@
                             class="form-control form-control">
                         {% set cat_id = edit_form.params.vars['value'] %}
                         {% for category in categories %}
-                            <option {% if cat_id['cat_id'] == category.id %}selected="selected"{% endif %}
+                            <option {% if cat_id['cat_id'] is defined and cat_id['cat_id'] == category.id %}selected="selected"{% endif %}
                                     value="{{ category.id }}">{{ category }}</option>
                         {% endfor %}
                     </select>
@@ -40,7 +40,7 @@
                         {% set cat_id = edit_form.params.vars['value'] %}
                         {% for category in categories %}
                             {% if category.parent is null %}
-                                <option {% if cat_id['cat_id'] == category.id %}selected="selected"{% endif %}
+                                <option {% if cat_id['cat_id'] is defined and cat_id['cat_id'] == category.id %}selected="selected"{% endif %}
                                         value="{{ category.id }}">{{ category }}</option>
                             {% endif %}
                         {% endfor %}

@@ -64,7 +64,8 @@
                 },
                 success: function (data) {
                     if (data.flag == 'success') {
-                        location.reload();
+                        $('#li_wish').removeAttr('class');
+                        $('#wish-list').html('<img src="/images/heartWishlist.png">');
                     }
                     if (data.flag == 'warning') {
                         alert(data.msg);

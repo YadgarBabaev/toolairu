@@ -184,4 +184,12 @@ class OrderController extends Controller
         ));
     }
 
+    /**
+     * @Route("/preview", name="site_order_preview")
+     * @Template()
+     */
+    public function previewAction(){
+        return array();
+    }
+
 }

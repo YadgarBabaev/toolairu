@@ -19,20 +19,20 @@
                 {#<img src="/images/shop/{{ widget.product.logo }}" alt="">#}
             {#{% endif %}#}
             <span style="position: absolute;">
-                <img src="{{ asset('images/play.png') }}" data-toggle="modal" data-target="#myModal"
+                <img src="{{ asset('images/play.png') }}" onclick="$('#modal_content').html($('#video').html())" data-toggle="modal" data-target="#myModal"
                      style="position: absolute; z-index: 55; left: 1%; top: 6%; cursor: pointer;"/>
                 {{ widget.titleHtml|raw }}
             </span>
         </div>
     </div>
+    <span id="video" style="display: none;">{{ widget.iFrame|raw }}</span>
     <!-- Modal -->
-    <div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1"
+    <div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" onclick=" $('#modal_content').html(''); $('#myModal').modal('hide');"
          role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header" style="padding: 0px; width: auto; background-color: black; text-align: center; ">
+                <div class="modal-header" id="modal_content" style="padding: 0px; width: auto; background-color: black; text-align: center; "  onclick="return false;">
                     {#<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>#}
-                    {{ widget.iFrame|raw }}
                 </div>
             </div>
         </div>

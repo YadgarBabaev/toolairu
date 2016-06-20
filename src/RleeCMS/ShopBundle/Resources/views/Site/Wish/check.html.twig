@@ -1,12 +1,12 @@
 {% if count >0 %}
 
-    <li>
+    <li id="li_wish">
         <a id="wish-list" class="nav-item-link"
            href="{{ path('site_wish') }}" data-toggle="tooltip"
            title="Избранное" data-placement="bottom"><img src="{{ asset('images/heartWishlist.png') }}"></a>
     </li>
 {% else %}
-    <li class="navItemRight">
+    <li class="navItemRight" id="li_wish">
         <a id="wish-list" class="nav-item-link"
            href="{{ path('site_wish') }}" data-toggle="tooltip"
            title="Избранное" data-placement="bottom"></a>

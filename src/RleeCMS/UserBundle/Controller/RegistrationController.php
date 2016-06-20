@@ -2,6 +2,8 @@
 
 namespace RleeCMS\UserBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use FOS\UserBundle\Controller\RegistrationController as BaseController;
 use Symfony\Component\HttpFoundation\Request;
@@ -60,5 +62,14 @@ class RegistrationController extends BaseController
         return $this->render('FOSUserBundle:Registration:register.html.twig', array(
             'form' => $form->createView(),
         ));
+    }
+
+    /**
+     * @Route("/user_profile",name="user_profile")
+     * @Template()
+     */
+    public function userProfileAction(){
+
+        return array();
     }
 }
