@@ -51,27 +51,23 @@ class OrderController extends Controller
 //            ->getResult();
 
         $products = array();
-        foreach($cart as $item){
+        foreach($cart as $key => $item){
           $product = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Product')->find($item['id']);
           $color = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Color')->find($item['color']);
-        if($item['size'] != 'all'){
           $size = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Size')->find($item['size']);
-          $sizeString = $size->getSize();
-        }else{
-            $sizeString = $translator->trans('ALL');
-        }
+
             if($product){
                 $images = $product->getImages();
                 if($product->getWebPath()){
-                    $products[$product->getId()]['src'] = $images[0];
+                    $products[$key]['src'] = $images[0];
                 }else{
-                    $products[$product->getId()]['src'] = $product->getWebPath();
+                    $products[$key]['src'] = $product->getWebPath();
                 }
-                $products[$product->getId()]['id'] = $product->getId();
-                $products[$product->getId()]['name'] = $product->getName();
-                $products[$product->getId()]['size'] = $sizeString;
-                $products[$product->getId()]['color'] = $color->getName();
-                $products[$product->getId()]['price'] = $product->getPrice();
+                $products[$key]['id'] = $product->getId();
+                $products[$key]['name'] = $product->getName();
+                $products[$key]['size'] = $size->getSize();
+                $products[$key]['color'] = $color->getName();
+                $products[$key]['price'] = $item['type']==6?$product->getPriceB2B():$product->getPrice();
 
             }
 

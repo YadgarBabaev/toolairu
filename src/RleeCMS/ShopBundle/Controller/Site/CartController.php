@@ -5,6 +5,7 @@ namespace RleeCMS\ShopBundle\Controller\Site;
 use Doctrine\ORM\QueryBuilder;
 use RleeCMS\ShopBundle\Core\Shop;
 use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -41,13 +42,20 @@ class CartController extends Controller
     public function cartAction(Request $request)
     {
         $cart = unserialize($request->cookies->get('cart', serialize(array())));
-        $qb = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Product')->createQueryBuilder('p');
 
-        $products = $qb
-            ->where('p.id IN (:id)')
-            ->setParameter('id', $cart)
-            ->getQuery()
-            ->getResult();
+
+        $items = array();
+        if(is_array($cart)){
+            foreach($cart as $key => $cartItem){
+                if(isset($cartItem['id'])){
+                    $items[] = array(
+                        'product' =>  $this->getDoctrine()->getRepository('RleeCMSShopBundle:Product')->find($cartItem['id']),
+                        'type'    => $cartItem['type'],
+                        'id'  => $key
+                    ) ;
+                }
+            }
+        }
         $router = $this->get('router');
 
         $session = $request->getSession();
@@ -57,7 +65,7 @@ class CartController extends Controller
         $collection = $router->getRouteCollection();
         return array(
             'cart' => $cart,
-            'products' => $products,
+            'items' => $items,
             'router' => $collection,
             'shop' => $shop,
             'currency' => $currency
@@ -79,6 +87,7 @@ class CartController extends Controller
                     'id' => $product->getId(),
                     'size' => $request->request->get('size'),
                     'color' => $request->request->get('color'),
+                    'type'  => 1
                 );
                 if (!in_array($productCart, $cart)) {
                     $cart[] = $productCart;
@@ -95,24 +104,55 @@ class CartController extends Controller
     }
 
     /**
+     * @Route("/b2b_add", name="site_cart_b2b_add")
+     *
+     */
+    public function b2bAddAction(Request $request)
+    {
+        $response = new Response();
+        $colors = $request->request->get('color');
+        $sizes  = $request->request->get('size');
+        $productId = $request->request->get('product_id');
+
+        $cart = unserialize($request->cookies->get('cart', serialize(array())));
+        if ($request->request->get('product_id')) {
+            $product = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Product')
+                ->find($productId);
+            if ($product && is_array($colors) && is_array($sizes)) {
+                foreach($colors as $key => $value){
+                    if(isset($sizes[$key])){
+
+                        $productCart = array(
+                            'id' => $product->getId(),
+                            'size' => $sizes[$key],
+                            'color' => $value,
+                            'type'  => 6
+                        );
+                            $cart[] = $productCart;
+                            $cookie = new Cookie('cart', serialize($cart), 0, '/', null, false, false);
+                            $response->headers->setCookie($cookie);
+
+                    }
+                }
+                $response->send();
+            }
+        }
+        return $response;
+
+//        return $this->cartAction($request);
+    }
+
+    /**
      * @Route("/del", name="site_cart_del")
      * @Template("RleeCMSShopBundle:Site\Cart:cart.html.twig")
      */
     public function delAction(Request $request)
     {
         $cart = unserialize($request->cookies->get('cart', serialize(array())));
-        if ($request->request->get('product_id')) {
-            $i = 0;
-            foreach ($cart as $c) {
-                if ($request->request->get('product_id') == $c['id']) {
-                    unset($cart[$i]);
-                }
-                $i++;
-                $request->request->remove('product_id');
+            if(isset($cart[$request->request->get('product_id')])){
+                unset($cart[$request->request->get('product_id')]);
             }
-
-        }
-        $cookie = new Cookie('cart', serialize(array()), 0, '/', null, false, false);
+        $cookie = new Cookie('cart', serialize($cart), 0, '/', null, false, false);
         $response = new Response();
         $response->headers->setCookie($cookie);
         $response->send();

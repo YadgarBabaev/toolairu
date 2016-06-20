@@ -153,7 +153,7 @@
                                 </div>
 
                                 <div class="col-sm-9">
-                                    <button id="addBag" type="submit" class="shop-btn shop-cart">
+                                    <button id="addBag" type="submit" form="product_form" class="shop-btn shop-cart">
                                         <b><span class="glyphicon glyphicon-plus"></span></b>
                                         {% trans %}Add to cart{% endtrans %}
                                     </button>
@@ -178,7 +178,7 @@
                                 {#{% if countStores > 0 %}#}
                                     {#<a href="#" id="in_store" class="shop-btn shop-store">{% trans %}In store{% endtrans %}</a>#}
                                 {#{% endif %}#}
-                        <form id="product_form" action="{{ path('site_cart_add') }}" method="post" data-count="0" style="display: none;">
+                        <form id="product_form" action="{{ path('site_cart_b2b_add') }}" method="post" data-count="0" style="display: none;">
                             <input type="hidden" name="product_id" value="{{ product.id }}" required>
                             <span id="form_content">
                             </span>
@@ -306,6 +306,42 @@
                     }
                 }
             });
+        }
+
+
+        $(function () {
+            var options = {
+                target: '.bag',   // target element(s) to be updated with server response
+              //  beforeSubmit: validate,  // pre-submit callback
+                success: showResponse  // post-submit callback
+
+                // other available options:
+                //url:       url         // override for form's 'action' attribute
+                //type:      type        // 'get' or 'post', override for form's 'method' attribute
+                //dataType:  null        // 'xml', 'script', or 'json' (expected server response type)
+                //clearForm: true        // clear all form fields after successful submit
+                //resetForm: true        // reset the form after successful submit
+
+                // $.ajax options can be used here too, for example:
+                //timeout:   3000
+            };
+            $('#product_form').ajaxForm(options);
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+        function showResponse() {
+            var t = $('#image_target'), e = t.clone(), b = $('#bag-list'), o = t.position(), po = t.parent().offset(), bo = b.offset();
+            e.css({top: o.top + 'px', left: o.left + 'px', position: 'absolute'});
+            t.parent().append(e);
+            e.animate({
+                top: -po.top + bo.top + (b.height() - t.height()) / 500,
+                left: -po.left + bo.left + (b.width() - t.width()) / 500,
+                width: 25,
+                height: 25
+            }, 800, function () {
+                $(this).remove();
+            });
+            $('.bag').load('{{ path('site_cart') }}')
         }
 
 
