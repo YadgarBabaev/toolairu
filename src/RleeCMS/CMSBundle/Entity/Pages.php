@@ -131,6 +131,30 @@ class Pages implements Translatable
      */
     private $params;
 
+    /**
+     * @var array
+     * @ORM\Column(name="images", type="array", nullable=true)
+     */
+    private $images;
+
+    /**
+     * @return array
+     */
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+    /**
+     * @param array $images
+     */
+    public function setImages($images)
+    {
+        $this->images = $images;
+    }
+
+
+
     function __toString()
     {
         return $this->getFullName();

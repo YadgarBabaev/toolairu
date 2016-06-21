@@ -2,6 +2,7 @@
 
 namespace RleeCMS\CMSBundle\Form;
 
+use RleeCMS\ShopBundle\Form\Type\FileBrowserType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -109,7 +110,17 @@ class PagesType extends AbstractType
                             'class' => 'form-control'
                         ),
                 )
-            );
+            )
+            ->add('images', FileBrowserType::class, array(
+                'label' => 'Фотографии слайдера',
+
+                'allow_add' => true,
+                'widget_add_btn' => array(
+                    'class' => 'btn btn-default',
+                ),
+                'allow_delete' => true,
+                //'prototype' => true,
+            ));
     }
 
     /**

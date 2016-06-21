@@ -15,3 +15,14 @@
 
     </div>
 {% endblock content %}
+{% block javascripts %}
+    <script>
+    $(document).ready(function () {
+        $('.carousel').slick({
+            dots: false,
+            slidesToShow: 2,
+            slidesToScroll: 1
+        });
+    });
+</script>
+{% endblock %}

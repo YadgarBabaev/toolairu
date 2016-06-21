@@ -174,7 +174,8 @@ class PagesController extends Controller
                     'content' => $content->getContent(),
                     'description' => $content->getDescription(),
                     'keywords' => $content->getKeywords(),
-                    'published' => $content->getPublished()
+                    'published' => $content->getPublished(),
+                    'images'    => $content->getImages()
                 );
                 return $this->render('CMSBundle:Pages:router.html.twig',
                     array(

@@ -43,6 +43,13 @@
                     {% endif %}
                 {% endif %}
             </div>
+            <div class="carousel">
+                {% for image in content.images %}
+                <div class="carousel-item">
+                    <img src="{{ image }}">
+                </div>
+                {% endfor %}
+            </div>
         </div>
     {% endif %}
 {% endblock pagesContent %}
