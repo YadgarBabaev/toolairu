@@ -2,6 +2,7 @@
 
 namespace RleeCMS\UserBundle\Controller;
 
+use FOS\UserBundle\Model\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -71,5 +72,18 @@ class RegistrationController extends BaseController
     public function userProfileAction(){
 
         return array();
+    }
+
+    /**
+     * @Route("/check_type",name="user_check_type")
+     */
+    public function checkTypeAction(Request $request){
+        $arr = explode('/',$request->headers->get('referer'));
+        foreach($arr as $a){
+            if('dlia-bizniesa.html' == $a ){
+                return $this->redirect('/dlia-bizniesa.html');
+            }
+        }
+        return $this->redirect('/');
     }
 }

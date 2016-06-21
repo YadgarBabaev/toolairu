@@ -62,7 +62,26 @@
                                         <div class="col-sm-5">{% trans %}FABRIC COMPOSITION{% endtrans %}</div>
                                         <div class="col-sm-7 color-pink">{{ product.composition }}</div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-sm-5">{% trans %}Note{% endtrans %}</div>
+                                        <div class="col-sm-5">{{ product.note }}</div>
+                                    </div>
                                 </div>
+                                    <label class="tabs-size-label" for="6month">
+                                        6 {% trans %}MONTH{% endtrans %}
+                                        <input  id="6month" value="6" type="radio"
+                                               name="month[]">
+                                    </label>
+                                    <label class="tabs-size-label" for="3month">
+                                        3 {% trans %}MONTH{% endtrans %}
+                                        <input  id="3month" value="3" type="radio"
+                                               name="month[]">
+                                    </label>
+                                    <label class="tabs-size-label" for="1month">
+                                        1 {% trans %}MONTH{% endtrans %}
+                                        <input  id="1month" value="1" type="radio"
+                                               name="month[]">
+                                    </label>
 
 
                                 <div class="col-sm-12" style="padding: 0;">
@@ -309,7 +328,13 @@
         $(function () {
             var options = {
                 target: '.bag',   // target element(s) to be updated with server response
-              //  beforeSubmit: validate,  // pre-submit callback
+                beforeSubmit: function(){
+                    var globalCount =  parseInt($('#product_form').attr('data-count'));
+                    if(globalCount <= 0){
+                        alert('{% trans %}SELECT SIZE{% endtrans %} , {% trans %}SELECT COLOR{% endtrans %}');
+                        return false;
+                    }
+                },  // pre-submit callback
                 success: showResponse  // post-submit callback
 
                 // other available options:

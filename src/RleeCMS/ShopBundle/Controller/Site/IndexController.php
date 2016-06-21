@@ -2,6 +2,7 @@
 
 namespace RleeCMS\ShopBundle\Controller\Site;
 
+use RleeCMS\ShopBundle\Entity\ProductStore;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -324,9 +325,15 @@ class IndexController extends Controller
         $countStores = count($stores);
         $colorArray = array();
         $sizeArray = array();
+        $storeData = array();
+        /** @var ProductStore $store */
         foreach ($stores as $store) {
             $colorArray[] = $store->getColor()->getId();
             $sizeArray[] = $store->getSize()->getId();
+            $storeData[$store->getStore()->getId()] = array(
+               'name' => $store->getStore()->getName(),
+                'quantity' => $store->getCount()
+            );
         }
         $sizeArray = array_unique($sizeArray);
         $colorArray = array_unique($colorArray);
@@ -336,7 +343,8 @@ class IndexController extends Controller
             'stores' => $stores,
             'countStores' => $countStores,
             'sizeArray' => $sizeArray,
-            'colorArray' => $colorArray
+            'colorArray' => $colorArray,
+            'storeData' => $storeData
         );
     }
 }

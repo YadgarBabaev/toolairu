@@ -48,17 +48,6 @@
                                         {{ shop.getMainCurrency().shortSign }}
                                     {% endif %}
                                 </div>
-                                <div>
-                                    <label>{% trans %}PRET-A-PORTER{% endtrans %}</label>
-                                    &nbsp;
-                                    &nbsp;
-                                    <label>{% trans %}PRONTO{% endtrans %}</label>
-                                    &nbsp;
-                                    &nbsp;
-                                    <label  style="color: pink;">{% trans %}STOCK{% endtrans %}</label>
-                                    &nbsp;
-                                    &nbsp;
-                                </div>
                                 <br>
                                 <div class="page-desc">{{ product.description|raw }}
                                 </div>
@@ -75,6 +64,18 @@
                                         <div class="col-sm-5">{% trans %}FABRIC COMPOSITION{% endtrans %}</div>
                                         <div class="col-sm-7 color-pink">{{ product.composition }}</div>
                                     </div>
+                                    <div class="row page-info">
+                                        <div class="col-sm-5">{% trans %}STORES{% endtrans %}</div>
+                                        <div class="col-sm-7 color-pink">
+                                            {% for store in storeData %}
+                                                {{ store.name }}<br>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-5">{% trans %}Note{% endtrans %}</div>
+                                        <div class="col-sm-5">{{ product.note }}</div>
+                                    </div>
                                 </div>
                                 <div class="col-sm-3"><span class="tabs-shop-text-size">{% trans %}
                                         SIZE{% endtrans %}</span>
@@ -87,20 +88,15 @@
                                                    name="size">
                                         </label>
                                     {% endfor %}
-                                    <label class="tabs-size-label" for="size_all">
-                                        all
-                                        <input  id="size_all" value="all" type="radio"
-                                               name="size">
-                                    </label>
                                 </div>
                                 <div class="col-sm-3"><span class="tabs-shop-text-size">{% trans %}
                                         QUANTITY{% endtrans %}</span>
                                 </div>
                                 <div class="col-sm-9" style="padding-top: 5px;">
                                         <b>
-                                            <span onclick="countUp({{ product.id }})" class="glyphicon glyphicon-plus" style="cursor: pointer;"></span>
-                                            <input type="text" value="1" id="q_{{ product.id }}" name="count" style="width: 40px; border: 1px solid silver; text-align: center; margin: 0 auto;">
                                             <span onclick="countDown({{ product.id }})" class="glyphicon glyphicon-minus" style="cursor: pointer;"></span>
+                                            <input type="text" value="1" id="q_{{ product.id }}" name="count" style="width: 40px; border: 1px solid silver; text-align: center; margin: 0 auto;">
+                                            <span onclick="countUp({{ product.id }})" class="glyphicon glyphicon-plus" style="cursor: pointer;"></span>
                                         </b>
                                     <br>
                                     <br>
