@@ -222,10 +222,33 @@ class Product
     private $users;
 
     /**
+     * @ORM\Column(name="note", type="string", nullable=true)
+     */
+    private $note;
+
+    /**
      * @Assert\Image(maxSize="10M")
      */
     private $image;
     private $image_temp;
+
+    /**
+     * @return mixed
+     */
+    public function getNote()
+    {
+        return $this->note;
+    }
+
+    /**
+     * @param mixed $note
+     */
+    public function setNote($note)
+    {
+        $this->note = $note;
+    }
+
+
 
     /**
      * Sets image

@@ -8,9 +8,10 @@
             <div class="collection-item">
                 <img src="{{ pronto.webPath }}" alt="">
                 {#{{ dump() }}#}
+
                 {% if app.user and app.user.legalPerson %}
-                    <a href="{{ path('category_6') }}" class="watch-now"
-                       style="left: 167px;">{{ 'Watch now'|trans }}</a>
+                    <a href="/{{ alias }}/{{ pret_a_porter.alias }}.html" class="watch-now"
+                       style="left: 259.5px;">{{ 'Watch now'|trans }}</a>
                 {% else %}
                     <a href="#login" data-toggle="modal" data-target="#login" class="watch-now"
                        style="left: 167px;">{{ 'Watch now'|trans }}</a>
@@ -23,8 +24,8 @@
                     <div class="collection-item">
                         <img src="{{ pret_a_porter.webPath }}" alt="">
                         {% if app.user and app.user.legalPerson %}
-                            <a href="/{{ alias }}/{{ pret_a_porter.alias }}.html" class="watch-now"
-                               style="left: 259.5px;">{{ 'Watch now'|trans }}</a>
+                            <a href="{{ path('category_6') }}" class="watch-now"
+                               style="left: 167px;">{{ 'Watch now'|trans }}</a>
                         {% else %}
                             <a href="#login" data-toggle="modal" data-target="#login" class="watch-now"
                                style="left: 167px;">{{ 'Watch now'|trans }}</a>

@@ -65,6 +65,16 @@ class ProductType extends AbstractType
                     'required' => false,
                 )
             )
+            ->add('note', TextareaType::class,
+                array(
+                    'label' => 'Примечание',
+                    'attr' =>
+                        array(
+                            'class' => 'form-control'
+                        ),
+                    'required' => false,
+                )
+            )
             ->add('metaTagTitle', null,
                 array(
                     'label' => 'Заголовки (мета-тэги)',
