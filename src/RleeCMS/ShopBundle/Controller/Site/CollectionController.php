@@ -282,17 +282,11 @@ class CollectionController extends Controller
                     }
                 }
                 $table = array(
-                    $translator->trans('HEIGHT') => $minMaxHeight,
-                    $translator->trans('SIZE STABLE FABRICS') => $name,
-                    $translator->trans('Bust') => $bust,
-                    $translator->trans('Waist') => $waist,
-                    $translator->trans('Hips') => $hips,
-//                    $translator->trans('Front waist length') => $front_waist_length,
-//                    $translator->trans('Bust depth') => $bust_depth,
-//                    $translator->trans('Back length') => $back_length,
-//                    $translator->trans('Bask width') => $back_width,
-//                    $translator->trans('Shoulder width') => $shoulder_width,
-//                    $translator->trans('Hand length') => $hand_length,
+                    $translator->trans('HEIGHT').' 167-174' => '',//$minMaxHeight,
+                    //$translator->trans('SIZE STABLE FABRICS') => $name,
+                    $translator->trans('Bust') => '',//$bust,
+                    $translator->trans('Waist') => '',//$waist,
+                    $translator->trans('Hips') => '',//$hips,
 
                 );
                 $product_table[$product->getId()] = $table;

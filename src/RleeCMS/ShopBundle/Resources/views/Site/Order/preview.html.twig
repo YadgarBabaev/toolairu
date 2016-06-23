@@ -1,4 +1,50 @@
 {% extends "base.html.twig" %}
 {% block content %}
-    Тут содержимое страницы
+    <h2 class="page-title">Корзина</h2>
+    <div class="container">
+    	<table class="table checkout-table">
+    		<thead class="text-center">
+    			<tr>
+    				<th>Предмет</th>
+    				<th>Цвет</th>
+    				<th>Размер</th>
+    				<th>Количество</th>
+    				<th>Цена</th>
+    				<th>Сумма</th>
+    				<th>Предзаказ</th>
+    			</tr>
+    		</thead>
+    		<tbody class="text-center">
+    			<tr>
+    				<td><img src="http://dev.toolai-fashion.ru/images/shop/e9f67b58be2936067212ee6e67a9bd8bb0c45033.jpeg" alt="" class="img-responsive center-block" width="150"><h5>Dress Three Layers-printed cotton</h5></td>
+    				<td class="color">
+    					<div><img src="/images/shop/2b3701d33b53be6a1cf09bf828330e693a3a633d.jpeg" alt="" class="img-responsive center-block"></div>
+    					<div><img src="/images/shop/2b3701d33b53be6a1cf09bf828330e693a3a633d.jpeg" alt="" class="img-responsive center-block"></div>
+    					<div><img src="/images/shop/2b3701d33b53be6a1cf09bf828330e693a3a633d.jpeg" alt="" class="img-responsive center-block"></div>
+    				</td>
+    				<td class="size">
+    					<span>S</span>
+    					<span class="active">M</span>
+    					<span>L</span>
+    					<span>XL</span>
+    				</td>
+    				<td class="count">1</td>
+    				<td class="price">$250</td>
+    				<td class="total">$250</td>
+    				<td class="preorder"><input type="checkbox"></td>
+    			</tr>
+    		</tbody>
+    	</table>
+    	<div class="sub-total text-right">
+    		<h4>Subtotal: <span>$480</span></h4>
+    	</div>
+    	<div class="row result-links">
+    		<div class="col-md-10 col-md-offset-1">
+    			<div class="row">
+    				<div class="col-md-6 text-left"><a href="#" class="tomag">В магазин</a></div>
+    				<div class="col-md-6 text-right"><a href="#" class="checkout-btn">Оформить заказ</a></div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
 {% endblock %}

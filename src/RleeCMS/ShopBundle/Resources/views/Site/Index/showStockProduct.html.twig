@@ -120,6 +120,36 @@
                                         {% endfor %}
                                     </div>
                                 </div>
+                                <div class="col-sm-9">
+                                    <strong>{% trans %}IN_STOCK_INFO{% endtrans %}</strong><br>
+                                    {% for store in storeData %}
+                                        <table class="table-bordered">
+                                            <thead>
+                                                <th colspan="{{ (product.sizes|length)+1 }}">{{ store.name }}</th>
+                                            </thead>
+                                            <tr>
+                                                <th>{% trans %}COLOR{% endtrans %}</th>
+                                                {% for size in product.sizes %}
+                                                    <th>{{ size.size }}</th>
+                                                {% endfor %}
+                                            </tr>
+                                            {% for color in product.colors %}
+                                            <tr>
+                                                <td><img src="/{{ color.getWebPath() }}" alt="" style="width: 30px;"></td>
+                                                {% for size in product.sizes %}
+                                                    {% if data[store.id][color.id][size.id] is defined %}
+                                                    <td>{{ data[store.id][color.id][size.id].count }}</td>
+                                                    {% else %}
+                                                        <td>&#10006;</td>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </tr>
+                                            {% endfor %}
+                                        </table>
+                                    {% endfor %}
+                                    <br>
+                                    <br>
+                                </div>
 
                                 <div class="col-sm-9">
                                     <button id="addBag" type="submit" class="shop-btn shop-cart">
@@ -153,7 +183,6 @@
                 </div>
             </div>
         </div>
-    </div>
 {% endblock content %}
 {% block javascripts %}
     <script src="/js/jquery.elevatezoom.js" type="text/javascript"></script>
@@ -318,4 +347,12 @@
             $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
+    <style>
+        .table-bordered td,th{
+            padding: 8px;
+        }
+        .table-bordered{
+            display: inline-block;
+        }
+    </style>
 {% endblock %}

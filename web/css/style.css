@@ -148,7 +148,6 @@ footer .nav-item-link {
     right:0;
     top: 0;
     bottom: 0;
-    left: 100%;
     width:400px;
     background-color: rgb(233, 236, 237);
     z-index: 9999999;
@@ -761,6 +760,9 @@ footer .nav-item-link {
 	width: 50%;
 	margin: 0 auto;
 }
+.collection-img {
+    height: 320px;
+}
 .shop-inside {
     padding-top: 20px;
     padding-bottom: 20px;
@@ -1365,4 +1367,83 @@ body,html {
     margin: auto;
     background: url(images/controls.png) no-repeat 0 -32px;
     transform: rotate(90deg);
+}
+.page-title {
+    background: #f5f7f8;
+    padding: 15px;
+    margin-bottom: 30px;
+    color: #2c2c2c;
+    font-size: 18px;
+}
+.checkout-table {
+    vertical-align: middle;
+    font-weight: bold;
+}
+.checkout-table td{
+    vertical-align: middle!important;
+}
+.checkout-table thead tr {
+    background: none;
+    text-align: center;
+}
+.checkout-table thead tr th {
+    width: 100%;
+    text-align: center;
+}
+.checkout-table tr{
+    border-bottom: 1px solid #111;
+    margin: 10px 0;
+    background: #f5f7f8;
+}
+.checkout-table .price,
+.checkout-table .total {
+    color: #e08283;
+    font-size: 15px;
+    font-weight: bold;
+}
+.checkout-table .price,
+.checkout-table .total,
+.checkout-table .sizes,
+.checkout-table .count {
+    padding-left: 60px;
+    padding-right: 60px;
+}
+.checkout-table .color img {
+    margin: 10px 0;
+}
+.checkout-table h5 {
+    font-weight: bold;
+    color: #e08283;
+}
+.checkout-table .sizes .active {
+    color: #e08283;
+}
+.sub-total h4 {
+    font-size: 18px;
+    color: #111;
+    font-weight: bold;
+}
+.sub-total h4 span {
+    color: #e08283;
+}
+.tomag, .checkout-btn {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 18px;
+}
+.tomag {
+    background: #ecf0f1;
+    color: #111;
+}
+.checkout-btn {
+    background: #e08283;
+    color: #fff;
+}
+.result-links {
+    margin: 30px 0;
+}
+@media (max-width: 768px){
+    .collection-img {
+        height: auto;
+    }
 }

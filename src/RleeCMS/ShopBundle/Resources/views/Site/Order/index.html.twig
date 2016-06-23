@@ -59,9 +59,9 @@
                     </div>
                     <div class="shopping-total-quantity">
                         <b>
-                        <span onclick="countUp({{ product.id }})" class="glyphicon glyphicon-plus" style="cursor: pointer;"></span>
-                          <input type="text" value="1" id="q_{{ product.id }}" name="count[{{ product.id }}]" style="width: 60px; margin: 0 auto;">
-                        <span onclick="countDown({{ product.id }})" class="glyphicon glyphicon-minus" style="cursor: pointer;"></span>
+                        <span onclick="countUp({{ loop.index }})" class="glyphicon glyphicon-plus" style="cursor: pointer;"></span>
+                          <input type="text" class="quantityItem" data-price="{{ product.price }}" value="1" id="q_{{ loop.index }}" name="count[{{ loop.index }}]" style="width: 60px; margin: 0 auto;">
+                        <span onclick="countDown({{ loop.index }})" class="glyphicon glyphicon-minus" style="cursor: pointer;"></span>
                         </b>
                     </div>
                     <div class="shopping-total-price float">
@@ -77,12 +77,13 @@
             <div class="shopping-row">
                 <div class="shopping-footer-total text-right">{{ 'Subtotal'|trans }} <span class="total-price">
                         {% if currency %}
-                        {{ (sum/currency.rate)|round(2,'floor') }} {{ currency.name }}
+                        <span class="total_sum">{{ (sum/currency.rate)|round(2,'floor') }}</span> {{ currency.name }}
                         {% elseif(shop.getMainCurrency().symbol) %}
-                            {{ sum }}
+                        <span class="total_sum">{{ sum }}</span>
                             {{ shop.getMainCurrency().symbol }}
                         {% endif %}
-                    </span></div>
+                    </span>
+                </div>
 
             </div>
             <div class="shopping-footer">
@@ -104,6 +105,7 @@
           var cnt = parseInt($("#q_"+$id).val());
             if(cnt){
                 $("#q_"+$id).val(cnt+1);
+                changeTotal();
             }else {
                 $("#q_"+$id).val(1);
             }
@@ -112,9 +114,21 @@
           var cnt = parseInt($("#q_"+$id).val());
             if(cnt>1){
                 $("#q_"+$id).val(cnt-1);
+                changeTotal();
             }else {
                 $("#q_"+$id).val(1);
             }
+        }
+
+        function changeTotal(){
+            var $total = 0;
+            $('.quantityItem').each(function($i){
+                var $quantity = parseInt($(this).val());
+                var $price = parseFloat($(this).data('price'));
+                $total = $total+($quantity * $price );
+            });
+
+            $('.shopping-footer-total .total_sum').html($total);
         }
     </script>
 {% endblock content %}

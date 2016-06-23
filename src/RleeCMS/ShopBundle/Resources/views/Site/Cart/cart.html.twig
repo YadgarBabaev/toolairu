@@ -7,15 +7,15 @@
         {% if item.type == 6 %}
             {% set price = product.priceB2B %}
         {% endif %}
-        {% set sum = sum + price %}
+        {% set sum = sum + price * item.quantity %}
         <li class="bag-item cart_product_{{ product.id }}">
             <a class="bag-link" href="{{ router.get('product_1_'~product.id).path }}">{{ product.name }}</a>
             <div class="bag-price pull-right">
 
                 {% if currency %}
-                    {{ (price/currency.rate)|round(2,'floor') }} {{ currency.name }}
+                  {{ item.quantity }} * {{ (price/currency.rate)|round(2,'floor') }} = {{ ((item.quantity * price)/currency.rate)|round(2,'floor') }} {{ currency.name }}
                 {% elseif(shop.getMainCurrency().symbol) %}
-                    {{ price }} {{ shop.getMainCurrency().symbol }}
+                    {{ item.quantity }} * {{ price }} = {{ price * item.quantity }} {{ shop.getMainCurrency().symbol }}
                 {% endif %}
             </div>
             <div class="clearfix bag-content">

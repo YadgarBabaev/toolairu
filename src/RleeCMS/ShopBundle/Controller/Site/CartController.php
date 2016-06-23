@@ -48,11 +48,17 @@ class CartController extends Controller
         if(is_array($cart)){
             foreach($cart as $key => $cartItem){
                 if(isset($cartItem['id'])){
-                    $items[] = array(
-                        'product' =>  $this->getDoctrine()->getRepository('RleeCMSShopBundle:Product')->find($cartItem['id']),
-                        'type'    => $cartItem['type'],
-                        'id'  => $key
-                    ) ;
+                    $product = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Product')->find($cartItem['id']);
+                    $quantity = 1;
+                    if(isset($items[$product->getId()]) and $items[$product->getId()]['type'] == $cartItem['type']){
+                        $quantity =  intval($items[$product->getId()]['quantity']) + 1;
+                    }
+                        $items[$product->getId()] = array(
+                            'product' =>  $product,
+                            'type'    => $cartItem['type'],
+                            'id'  => $key,
+                            'quantity' => $quantity
+                        ) ;
                 }
             }
         }

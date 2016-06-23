@@ -47,11 +47,13 @@
     {% endif %}
 {% endblock pagesContent %}
 {% block slider %}
-    <div class="carousel">
-        {% for image in content.images %}
-            <div class="carousel-item">
-                <img src="{{ image }}" alt="">
-            </div>
-        {% endfor %}
-    </div>
+    {% if content.images is defined %}
+        <div class="blog_carousel">
+            {% for image in content.images %}
+                <div class="carousel-item">
+                    <img src="{{ image }}" alt="">
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}

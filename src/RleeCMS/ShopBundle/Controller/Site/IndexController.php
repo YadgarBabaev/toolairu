@@ -326,14 +326,33 @@ class IndexController extends Controller
         $colorArray = array();
         $sizeArray = array();
         $storeData = array();
+        $data = array();
         /** @var ProductStore $store */
         foreach ($stores as $store) {
             $colorArray[] = $store->getColor()->getId();
             $sizeArray[] = $store->getSize()->getId();
             $storeData[$store->getStore()->getId()] = array(
                'name' => $store->getStore()->getName(),
-                'quantity' => $store->getCount()
+                'id' => $store->getStore()->getId()
             );
+        }
+        foreach($storeData as $sd){
+            $results
+                =  $em
+                ->getRepository('RleeCMSShopBundle:ProductStore')
+                ->createQueryBuilder('s')
+                ->andWhere('s.product = :pId')
+                ->andWhere('s.store = :store')
+                ->andWhere('s.count != 0')
+                ->setParameter('pId', $product->getId())
+                ->setParameter('store', $sd['id'])
+                ->getQuery()->getResult();
+            /** @var ProductStore $result */
+            foreach($results as $result){
+                $data[$result->getStore()->getId()][$result->getColor()->getId()][$result->getSize()->getId()]
+                =
+                $result;
+            }
         }
         $sizeArray = array_unique($sizeArray);
         $colorArray = array_unique($colorArray);
@@ -344,7 +363,9 @@ class IndexController extends Controller
             'countStores' => $countStores,
             'sizeArray' => $sizeArray,
             'colorArray' => $colorArray,
-            'storeData' => $storeData
+            'storeData' => $storeData,
+            'data'      => $data,
+            'store' => new ProductStore
         );
     }
 }

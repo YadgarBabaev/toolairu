@@ -34,7 +34,7 @@ var watchNow = $('.watch-now');
     }
      $('#nav-item-bag').on('click', function(ev){
          ev.preventDefault();
-         $('.bag').css('left','inherit');
+         $('.bag').toggleClass('hidden');
      });
 
 
@@ -112,12 +112,7 @@ $(window).resize(function(){
                 });
             
     $('.cart-close-btn').click(function(){
-        /*$(this).parent().css({
-            "left": "100%"
-        });*/
-        $('.bag').css({
-            'left': '100%'
-        });
+        $('.bag').toggleClass('hidden');
         return false;
     });
 
@@ -126,6 +121,27 @@ $(window).resize(function(){
 			pager: false,
 			maxSlides: 3,
 			minSlides: 3,
-			moveSlides: 1
+			moveSlides: 1,
+			slideWidth: 160
 		});
+
+
+
+        $('.tabs-color-label').click(function () {
+                    $('.tabs-color-label').not(this).removeClass('active');
+                    $(this).addClass('active');
+                });
+
+
+
+                
+                $(window).resize(function(){
+
+                    if ($(window).width() <= 767) {  
+
+                    $('.zoomContainer').remove();
+
+                }     
+
+});
 });
