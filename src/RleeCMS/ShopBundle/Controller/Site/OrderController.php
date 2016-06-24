@@ -188,8 +188,70 @@ class OrderController extends Controller
      * @Route("/preview", name="site_order_preview")
      * @Template()
      */
-    public function previewAction(){
-        return array();
+    public function previewAction(Request $request){
+        $translator = $this->get('translator');
+        $cart = unserialize($request->cookies->get('cart', serialize(array())));
+        if ($request->request->get('id')) {
+            $product = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Product')->find(intval($request->request->get('id')));
+            if ($product) {
+                $cart[] = $product->getId();
+                $cookie = new Cookie('cart', serialize($cart), 0, '/', null, false, false);
+                $response = new Response();
+                $response->headers->setCookie($cookie);
+                $response->send();
+            }
+        }
+//        /** @var QueryBuilder $qb */
+//        $qb = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Product')->createQueryBuilder('p');
+//        $products = $qb
+////            ->select('p')
+//            ->where('p.id IN (:id)')
+//            ->setParameter('id', $cart)
+//            ->getQuery()
+//            ->getResult();
+
+        $products = array();
+        foreach($cart as $key => $item){
+            $product = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Product')->find($item['id']);
+            $color = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Color')->find($item['color']);
+            $size = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Size')->find($item['size']);
+
+            if($product){
+                $images = $product->getImages();
+                if($product->getWebPath()){
+                    $products[$key]['src'] = $images[0];
+                }else{
+                    $products[$key]['src'] = $product->getWebPath();
+                }
+                $products[$key]['id'] = $product->getId();
+                $products[$key]['name'] = $product->getName();
+                $products[$key]['size'] = $size->getSize();
+                $products[$key]['object'] = $product;
+                $products[$key]['color'] = $color->getName();
+                $products[$key]['price'] = $item['type']==6?$product->getPriceB2B():$product->getPrice();
+
+            }
+
+        }
+
+        $router = $this->get('router');
+        $collection = $router->getRouteCollection();
+        $order = new Orders();
+        $form = $this->createOrderForm($order);
+        $form->handleRequest($request);
+
+
+        $session = $request->getSession();
+        $currency = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Currency')
+            ->find(intval($session->get('currency')));
+        return array(
+            'cart' => $cart,
+            'products' => $products,
+            'router' => $collection,
+            'form'   => $form->createView(),
+            'shop'   => new Shop($this->container,$this->getDoctrine()->getManager()),
+            'currency' => $currency
+        );
     }
 
 }

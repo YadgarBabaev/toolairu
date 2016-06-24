@@ -1,50 +1,119 @@
 {% extends "base.html.twig" %}
+{% trans_default_domain 'messages' %}
 {% block content %}
-    <h2 class="page-title">Корзина</h2>
+    <h2 class="page-title">{{ 'Shopping cart'|trans }}</h2>
     <div class="container">
     	<table class="table checkout-table">
     		<thead class="text-center">
     			<tr>
-    				<th>Предмет</th>
-    				<th>Цвет</th>
-    				<th>Размер</th>
-    				<th>Количество</th>
-    				<th>Цена</th>
-    				<th>Сумма</th>
-    				<th>Предзаказ</th>
+    				<th>{{ 'Item'|trans }}</th>
+    				<th>{{ 'COLOR'|trans }}</th>
+    				<th>{{ 'SIZE'|trans }}</th>
+    				<th>{{ 'QUANTITY'|trans }}</th>
+    				<th>{{ 'Price'|trans }}</th>
+    				<th>{{ 'Sum'|trans }}</th>
+    				<th>{{ 'PRONTO'|trans }}</th>
     			</tr>
     		</thead>
     		<tbody class="text-center">
+	{% set sum = 0 %}
+	{% for product in products %}
+		{% set sum = sum + product.price %}
     			<tr>
-    				<td><img src="http://dev.toolai-fashion.ru/images/shop/e9f67b58be2936067212ee6e67a9bd8bb0c45033.jpeg" alt="" class="img-responsive center-block" width="150"><h5>Dress Three Layers-printed cotton</h5></td>
+    				<td><img src="{{ product.src }}" alt="" class="img-responsive center-block" width="150"><h5>{{ product.name }}</h5></td>
     				<td class="color">
-    					<div><img src="/images/shop/2b3701d33b53be6a1cf09bf828330e693a3a633d.jpeg" alt="" class="img-responsive center-block"></div>
-    					<div><img src="/images/shop/2b3701d33b53be6a1cf09bf828330e693a3a633d.jpeg" alt="" class="img-responsive center-block"></div>
-    					<div><img src="/images/shop/2b3701d33b53be6a1cf09bf828330e693a3a633d.jpeg" alt="" class="img-responsive center-block"></div>
-    				</td>
+						{% for color in product.object.colors %}
+    					<div><img src="/{{ color.getWebPath() }}" alt="" class="img-responsive center-block"></div>
+    					{% endfor %}
+					</td>
     				<td class="size">
-    					<span>S</span>
-    					<span class="active">M</span>
-    					<span>L</span>
-    					<span>XL</span>
+						{% for size in product.object.sizes %}
+							<span>{{ size }}</span>
+						{% endfor %}
     				</td>
-    				<td class="count">1</td>
-    				<td class="price">$250</td>
-    				<td class="total">$250</td>
+    				<td class="count">
+						<b>
+							<span onclick="countUp({{ loop.index }})" class="glyphicon glyphicon-plus" style="cursor: pointer;"></span>
+							<input type="text" class="quantityItem" data-price="{{ product.price }}" data-index="{{ loop.index }}" value="1" id="q_{{ loop.index }}" name="count[{{ loop.index }}]" style="width: 60px; margin: 0 auto;">
+							<span onclick="countDown({{ loop.index }})" class="glyphicon glyphicon-minus" style="cursor: pointer;"></span>
+						</b>
+					</td>
+    				<td class="price">
+						{% if currency %}
+							{{ (product.price/currency.rate)|round(2,'floor') }} {{ currency.name }}
+						{% elseif(shop.getMainCurrency().symbol) %}
+							{{ product.price }}
+							{{ shop.getMainCurrency().symbol }}
+						{% endif %}
+					</td>
+    				<td class="total">
+						<span id="total_item_{{ loop.index }}"></span>
+						{% if currency %}
+							 {{ currency.name }}
+						{% elseif(shop.getMainCurrency().symbol) %}
+							{{ shop.getMainCurrency().symbol }}
+						{% endif %}
+					</td>
     				<td class="preorder"><input type="checkbox"></td>
     			</tr>
+		{% endfor %}
     		</tbody>
     	</table>
     	<div class="sub-total text-right">
-    		<h4>Subtotal: <span>$480</span></h4>
+    		<h4>{{ 'Subtotal'|trans }}: <span>
+					 {% if currency %}
+						 <span class="total_sum">{{ (sum/currency.rate)|round(2,'floor') }}</span> {{ currency.name }}
+                        {% elseif(shop.getMainCurrency().symbol) %}
+						 <span class="total_sum">{{ sum }}</span>
+						 {{ shop.getMainCurrency().symbol }}
+					 {% endif %}
+				</span></h4>
     	</div>
     	<div class="row result-links">
     		<div class="col-md-10 col-md-offset-1">
     			<div class="row">
-    				<div class="col-md-6 text-left"><a href="#" class="tomag">В магазин</a></div>
-    				<div class="col-md-6 text-right"><a href="#" class="checkout-btn">Оформить заказ</a></div>
+    				<div class="col-md-6 text-left"><a href="{{ path('category_1') }}" class="tomag">{{ 'In shop'|trans }}</a></div>
+    				<div class="col-md-6 text-right"><a href="{{ path('site_order') }}" class="checkout-btn">{{ 'Check out'|trans }}</a></div>
     			</div>
     		</div>
     	</div>
     </div>
+{% endblock %}
+{% block javascripts %}
+	<script>
+		function countUp($id){
+			var cnt = parseInt($("#q_"+$id).val());
+			if(cnt){
+				$("#q_"+$id).val(cnt+1);
+				changeTotal();
+			}else {
+				$("#q_"+$id).val(1);
+			}
+		}
+		function countDown($id){
+			var cnt = parseInt($("#q_"+$id).val());
+			if(cnt>1){
+				$("#q_"+$id).val(cnt-1);
+				changeTotal();
+			}else {
+				$("#q_"+$id).val(1);
+			}
+		}
+
+		function changeTotal(){
+			var $total = 0;
+			$('.quantityItem').each(function($i){
+				var $quantity = parseInt($(this).val());
+				var $price = parseFloat($(this).data('price'));
+				var $index = $(this).data('index');
+				$('#total_item_'+$index).html($quantity * $price);
+				$total = $total+($quantity * $price );
+			});
+
+			$('.total_sum').html($total);
+		}
+		$(document).ready(function(){
+			changeTotal();
+		});
+	</script>
 {% endblock %}

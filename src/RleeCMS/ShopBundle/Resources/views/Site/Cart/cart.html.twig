@@ -29,7 +29,7 @@
                     <img src="{{ srs }}" alt="">
                 </div>
                 <div class="col-sm-6 bag-button-container">
-                    <a href="{{ router.get('product_1_'~product.id).path }}" class="bag-button">{% trans %}detail{% endtrans %}</a>
+                    <a href="{{ path('site_order_preview') }}" class="bag-button">{% trans %}detail{% endtrans %}</a>
                     <button onclick="delProduct('{{ product.id }}')" class="bag-button">{% trans %}remove{% endtrans %}</button>
                 </div>
             </div>

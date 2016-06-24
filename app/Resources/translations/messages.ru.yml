@@ -85,7 +85,7 @@ forget password: Забыли пароль
 Remember me: Запомнить меня
 Enter: Войти
 Watch now: СМОТРЕТЬ
-PRONTO: PRONTO
+PRONTO: Предзаказ
 STOCK: STOCK
 PRET-A-PORTER: PRET-A-PORTER
 ALL: Все
@@ -100,3 +100,5 @@ Note: Примечание
 STORES: Склады
 MONTH: Мес.
 IN_STOCK_INFO: Наличие на складах
+ITEM: Предмет
+Sum: Сумма
