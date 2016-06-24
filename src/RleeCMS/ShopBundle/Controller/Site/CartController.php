@@ -155,9 +155,13 @@ class CartController extends Controller
     public function delAction(Request $request)
     {
         $cart = unserialize($request->cookies->get('cart', serialize(array())));
-            if(isset($cart[$request->request->get('product_id')])){
-                unset($cart[$request->request->get('product_id')]);
-            }
+                $id = $request->request->get('product_id');
+                foreach($cart as $key => $c){
+                    if($c['id'] == $id){
+                        unset($cart[$key]);
+                    }
+                }
+
         $cookie = new Cookie('cart', serialize($cart), 0, '/', null, false, false);
         $response = new Response();
         $response->headers->setCookie($cookie);

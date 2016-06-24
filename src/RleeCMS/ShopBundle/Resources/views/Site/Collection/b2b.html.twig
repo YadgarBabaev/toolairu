@@ -8,14 +8,19 @@
             <div class="collection-item">
                 <img src="{{ pronto.webPath }}" alt="">
                 {#{{ dump() }}#}
-
-                {% if app.user and app.user.legalPerson %}
-                    <a href="/{{ alias }}/{{ pret_a_porter.alias }}.html" class="watch-now"
-                       style="left: 259.5px;">{{ 'Watch now'|trans }}</a>
-                {% else %}
-                    <a href="#login" data-toggle="modal" data-target="#login" class="watch-now"
-                       style="left: 167px;">{{ 'Watch now'|trans }}</a>
-                {% endif %}
+                <div class="watch-overlay">
+                    <div class="abs-center">
+                        <div class="cell">
+                            {% if app.user and app.user.legalPerson %}
+                                <a href="/{{ alias }}/{{ pret_a_porter.alias }}.html" class="watch-now"
+                                   >{{ 'Watch now'|trans }}</a>
+                            {% else %}
+                                <a href="#login" data-toggle="modal" data-target="#login" class="watch-now"
+                                   >{{ 'Watch now'|trans }}</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row b2b-row-2">
@@ -23,25 +28,37 @@
                 <div class="col-sm-7 b2b-item col-xs-6">
                     <div class="collection-item">
                         <img src="{{ pret_a_porter.webPath }}" alt="">
-                        {% if app.user and app.user.legalPerson %}
-                            <a href="{{ path('category_6') }}" class="watch-now"
-                               style="left: 167px;">{{ 'Watch now'|trans }}</a>
-                        {% else %}
-                            <a href="#login" data-toggle="modal" data-target="#login" class="watch-now"
-                               style="left: 167px;">{{ 'Watch now'|trans }}</a>
-                        {% endif %}
+                        <div class="watch-overlay">
+                            <div class="abs-center">
+                                <div class="cell">
+                            {% if app.user and app.user.legalPerson %}
+                                <a href="{{ path('category_6') }}" class="watch-now"
+                                   >{{ 'Watch now'|trans }}</a>
+                            {% else %}
+                                <a href="#login" data-toggle="modal" data-target="#login" class="watch-now"
+                                   >{{ 'Watch now'|trans }}</a>
+                            {% endif %}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-5 b2b-item col-xs-6">
                     <div class="collection-item">
                         <img src="{{ stock.webPath }}" alt="">
-                        {% if app.user and app.user.legalPerson %}
-                            <a href="{{ path('category_7') }}" class="watch-now"
-                               style="left: 187px;">{{ 'Watch now'|trans }}</a>
-                        {% else %}
-                            <a href="#login" data-toggle="modal" data-target="#login" class="watch-now"
-                               style="left: 167px;">{{ 'Watch now'|trans }}</a>
-                        {% endif %}
+                        <div class="watch-overlay">
+                            <div class="abs-center">
+                                <div class="cell">
+                                {% if app.user and app.user.legalPerson %}
+                                    <a href="{{ path('category_7') }}" class="watch-now"
+                                       >{{ 'Watch now'|trans }}</a>
+                                {% else %}
+                                    <a href="#login" data-toggle="modal" data-target="#login" class="watch-now"
+                                       >{{ 'Watch now'|trans }}</a>
+                                {% endif %}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

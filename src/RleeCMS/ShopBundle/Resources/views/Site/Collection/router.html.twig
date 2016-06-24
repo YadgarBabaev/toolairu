@@ -11,10 +11,17 @@
                         {% for sale in sales %}
                             <div class="collection-item new-{{ loop.index }}">
                                 <img src="/images/shop/{{ sale.logo }}" alt="">
-                                {% if sale.shopbylook %}
-                                    <a href="/{{ alias }}/{{ sale.alias }}.html" class="watch-now">{{ sale }}</a>
-                                {% else %}
-                                {% endif %}
+                                <div class="watch-overlay">
+                                    <div class="abs-center">
+                                        <div class="cell">
+                                            {% if sale.shopbylook %}
+                                        <a href="/{{ alias }}/{{ sale.alias }}.html" class="watch-now">{{ sale }}</a>
+                                    {% else %}
+                                    {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                
                             </div>
                         {% endfor %}
                     {% endif %}

@@ -1,4 +1,4 @@
-<div class="bag-header">{% trans %}Shopping cart{% endtrans %}<span class="bag-header-price">({{ 'items'|trans }} {{ cart|length }})</span><a href="#" class="cart-close-btn pull-right">&times</a></div>
+<div class="bag-header">{% trans %}Shopping cart{% endtrans %}<span class="bag-header-price">({{ 'items'|trans }} {{ cart|length }})</span><button class="cart-close-btn pull-right" onclick="$('.bag').toggleClass('hidden');">&times</button></div>
 <ol>
     {% set sum = 0 %}
     {% for item in items %}
@@ -30,7 +30,7 @@
                 </div>
                 <div class="col-sm-6 bag-button-container">
                     <a href="{{ router.get('product_1_'~product.id).path }}" class="bag-button">{% trans %}detail{% endtrans %}</a>
-                    <button onclick="delProduct('{{ item.id }}')" class="bag-button">{% trans %}remove{% endtrans %}</button>
+                    <button onclick="delProduct('{{ product.id }}')" class="bag-button">{% trans %}remove{% endtrans %}</button>
                 </div>
             </div>
         </li>
