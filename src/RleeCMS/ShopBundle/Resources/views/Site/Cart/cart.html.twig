@@ -36,7 +36,7 @@
         </li>
     {% endfor %}
 </ol>
-<div class="total">{% trans %}Subtotal{% endtrans %}<span class="total-price pull-right">
+<div class="total">{% trans %}Subtotal{% endtrans %}<span id="total_price_in_cart" class="total-price pull-right">
          {% if currency %}
              {{ (sum/currency.rate)|round(2,'floor') }} {{ currency.name }}
          {% elseif(shop.getMainCurrency().symbol) %}
@@ -47,7 +47,7 @@
 <a class="shop-btn shop-cart bag-btn" href="{{ path('site_order') }}">{% trans %}Check out{% endtrans %}</a>
 <script>
     $(function () {
-        $('#total-in-cart').html($('.total-price').html());
+        $('#total-in-cart').html($('#total_price_in_cart').html());
     });
     function delProduct(id) {
         $.ajax({

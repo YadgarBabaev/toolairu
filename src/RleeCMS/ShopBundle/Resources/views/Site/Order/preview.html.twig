@@ -19,22 +19,25 @@
 	{% set sum = 0 %}
 	{% for product in products %}
 		{% set sum = sum + product.price %}
+		{% set index = loop.index %}
     			<tr>
     				<td><img src="{{ product.src }}" alt="" class="img-responsive center-block" width="150"><h5>{{ product.name }}</h5></td>
     				<td class="color">
 						{% for color in product.object.colors %}
-    					<div><img src="/{{ color.getWebPath() }}" alt="" class="img-responsive center-block"></div>
+    					<div><img src="/{{ color.getWebPath() }}" alt="" class="label-img-container color_{{ index }} {% if color.id == product.color %}active{% endif %}"
+								  data-id="{{ color.id }}" onclick="colorChange({{ index }},this);"></div>
     					{% endfor %}
 					</td>
     				<td class="size">
 						{% for size in product.object.sizes %}
-							<span>{{ size }}</span>
+							<label class="tabs-size-label size_{{ index }} {% if size.id == product.size %}active{% endif %}"
+								   onclick="sizeChange({{ index }},this);" data-id="{{ size.id }}">{{ size }}</label>
 						{% endfor %}
     				</td>
     				<td class="count">
 						<b>
 							<span onclick="countUp({{ loop.index }})" class="glyphicon glyphicon-plus" style="cursor: pointer;"></span>
-							<input type="text" class="quantityItem" data-price="{{ product.price }}" data-index="{{ loop.index }}" value="1" id="q_{{ loop.index }}" name="count[{{ loop.index }}]" style="width: 60px; margin: 0 auto;">
+							<input type="text" form="form_{{ loop.index }}" class="quantityItem" data-price="{{ product.price }}" data-index="{{ loop.index }}" value="{{ product.quantity }}" id="q_{{ loop.index }}" name="count[{{ loop.index }}]" style="width: 60px; margin: 0 auto;">
 							<span onclick="countDown({{ loop.index }})" class="glyphicon glyphicon-minus" style="cursor: pointer;"></span>
 						</b>
 					</td>
@@ -54,7 +57,28 @@
 							{{ shop.getMainCurrency().symbol }}
 						{% endif %}
 					</td>
-    				<td class="preorder"><input type="checkbox"></td>
+    				<td class="preorder">
+						{% if product.type == 6 %}
+							{% for type in prontoTypes %}
+								<label class="tabs-size-label preorder_{{ index }} {% if type == product.prontoType %}active{% endif %}"
+									   for="{{ type }}month_{{ index }}"
+									   onclick="preorderChange({{ index }},this);" data-value="{{ type }}">
+									{{ type }} {% trans %}MONTH{% endtrans %}
+									<input  id="{{ type }}month_{{ index }}" value="{{ type }}" type="radio"
+											name="month_{{ index }}[]">
+								</label>
+							{% endfor %}
+						{% endif %}
+						<form id="form_{{ loop.index }}" class="cart_form" method="POST" action="{{ path('site_cart_update') }}">
+							<input type="hidden" name="id" value="{{ product.id }}"/>
+							<input type="hidden" name="color" value="{{ product.color }}"/>
+							<input type="hidden" name="key" value="{{ product.key }}">
+							<input type="hidden" name="size" value="{{ product.size }}"/>
+							<input type="hidden" name='quantity' value="{{ product.quantity }}"/>
+							<input type="hidden" name='prontoType' value="{{ product.prontoType }}"/>
+							<input type="hidden" name='type' value="{{ product.type }}"/>
+						</form>
+					</td>
     			</tr>
 		{% endfor %}
     		</tbody>
@@ -86,6 +110,8 @@
 			if(cnt){
 				$("#q_"+$id).val(cnt+1);
 				changeTotal();
+				$("#form_"+$id+" [name='quantity']").val($("#q_"+$id).val());
+				postData($id);
 			}else {
 				$("#q_"+$id).val(1);
 			}
@@ -95,6 +121,8 @@
 			if(cnt>1){
 				$("#q_"+$id).val(cnt-1);
 				changeTotal();
+				$("#form_"+$id+" [name='quantity']").val($("#q_"+$id).val());
+				postData($id);
 			}else {
 				$("#q_"+$id).val(1);
 			}
@@ -115,5 +143,42 @@
 		$(document).ready(function(){
 			changeTotal();
 		});
+
+		function preorderChange($index,$id){
+			$('.preorder_'+$index).not($id).removeClass('active');
+			$($id).addClass('active');
+			$('#form_'+$index+" [name='prontoType']").val($($id).data('value'));
+			postData($index);
+		}
+
+		function colorChange($index,$id){
+			$('.color_'+$index).not($id).removeClass('active');
+			$($id).addClass('active');
+			$('#form_'+$index+" [name='color']").val($($id).data('id'));
+			postData($index);
+		}
+
+		function sizeChange($index,$id){
+			$('.size_'+$index).not($id).removeClass('active');
+			$($id).addClass('active');
+			$('#form_'+$index+" [name='size']").val($($id).data('id'));
+			postData($index);
+		}
+
+		function postData($index){
+			var form = $("#form_"+$index);
+			$.ajax({
+				url: form.attr('action'),
+				type: form.attr('method'),
+				dataType: 'json',
+				data: form.serialize(),
+				success:function(){
+					console.log('Успешно');
+				},
+				errors:function(){
+					alert('Ошибка отправки данных')
+				}
+			});
+		}
 	</script>
 {% endblock %}

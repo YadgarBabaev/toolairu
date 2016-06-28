@@ -34,7 +34,7 @@
                 <div class="col-sm-5 shop-item-col-3">
                     <!-- Tab panes -->
                     <div class="page-content">
-                        <form id="product_form" action="{{ path('site_cart_add') }}" method="post">
+                        <form id="product_form" action="{{ path('site_cart_add') }}" method="post" data-color="0" data-size="0">
                             <input type="hidden" name="product_id" value="{{ product.id }}" required>
                             <div style="white-space: nowrap">
                                 <h4 class="page-title">{{ product }}</h4>
@@ -82,7 +82,8 @@
                                 </div>
                                 <div class="col-sm-9">
                                     {% for size in product.sizes %}
-                                        <label class="tabs-size-label{% if size.id not in sizeArray %} disabled{% endif %}" for="size_{{ size.id }}">
+                                        <label class="tabs-size-label{% if size.id not in sizeArray %} disabled{% endif %}" for="size_{{ size.id }}"
+                                               onclick="$('#product_form').data('size',{{ size.id }});">
                                             {{ size }}
                                             <input {% if size.id not in sizeArray %}disabled="disabled"{% endif %} id="size_{{ size.id }}" value="{{ size.id }}" type="radio"
                                                    name="size">
@@ -95,7 +96,7 @@
                                 <div class="col-sm-9" style="padding-top: 5px;">
                                         <b>
                                             <span onclick="countDown({{ product.id }})" class="glyphicon glyphicon-minus" style="cursor: pointer;"></span>
-                                            <input type="text" value="1" id="q_{{ product.id }}" name="count" style="width: 40px; border: 1px solid silver; text-align: center; margin: 0 auto;">
+                                            <input type="text" value="0" id="q_{{ product.id }}" name="count" style="width: 40px; border: 1px solid silver; text-align: center; margin: 0 auto;">
                                             <span onclick="countUp({{ product.id }})" class="glyphicon glyphicon-plus" style="cursor: pointer;"></span>
                                         </b>
                                     <br>
@@ -108,6 +109,7 @@
                                     <div class="col-sm-9">
                                         {% for color in product.colors %}
                                             <label class="tabs-color-label" for="color_{{ color.id }}" title="{{ color }}"
+                                                   onclick="$('#product_form').data('color',{{ color.id }});"
                                                    data-toggle="tooltip" data-placement="top">
 
                                                 <div class="label-img-container{% if color.id not in colorArray %} disabled{% endif %}">
@@ -138,7 +140,9 @@
                                                 <td><img src="/{{ color.getWebPath() }}" alt="" style="width: 30px;"></td>
                                                 {% for size in product.sizes %}
                                                     {% if data[store.id][color.id][size.id] is defined %}
-                                                    <td>{{ data[store.id][color.id][size.id].count }}</td>
+                                                    <td class="color_{{ color.id }}_size_{{ size.id }}">
+                                                        {{ data[store.id][color.id][size.id].count }}
+                                                    </td>
                                                     {% else %}
                                                         <td>&#10006;</td>
                                                     {% endif %}
@@ -191,10 +195,17 @@
 
         function countUp($id){
             var cnt = parseInt($("#q_"+$id).val());
-            if(cnt){
+            var $sizeId = $("#product_form").data('size');
+            var $colorId = $("#product_form").data('color');
+            var sum = 0;
+            $('.color_'+$colorId+'_size_'+$sizeId).each(function(){
+                sum = sum+ parseInt($(this).text());
+            });
+
+            if(cnt < sum){
                 $("#q_"+$id).val(cnt+1);
             }else {
-                $("#q_"+$id).val(1);
+                $("#q_"+$id).val(sum);
             }
         }
         function countDown($id){
@@ -202,7 +213,7 @@
             if(cnt>1){
                 $("#q_"+$id).val(cnt-1);
             }else {
-                $("#q_"+$id).val(1);
+                $("#q_"+$id).val(0);
             }
         }
 
@@ -296,6 +307,10 @@
                     color = true;
                 }
             }
+            if($("[name='count']").val() <= 0){
+                alert('{{ 'message'|trans }}');
+                return false;
+            }
             if (!size) {
                 alert('{% trans %}SELECT SIZE{% endtrans %}');
                 return false;
@@ -346,6 +361,19 @@
             $('#product_form').ajaxForm(options);
             $('[data-toggle="tooltip"]').tooltip();
         });
+
+        $(document).ready(function(){
+            $('.tabs-size-label').click(function () {
+                $('.tabs-size-label').not(this).removeClass('active');
+                $(this).addClass('active');
+            });
+
+            $('.label-img-container').click(function () {
+                $('.label-img-container').not(this).removeClass('active');
+                $(this).addClass('active');
+            });
+        });
+
     </script>
     <style>
         .table-bordered td,th{

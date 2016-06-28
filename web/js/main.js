@@ -102,15 +102,6 @@ $(window).resize(function(){
                 $('.shop-item-wishlist').click(function(){
       $.notify("Добавлено в Избранное", "info");
     });
-
-                $('.label-img-container').click(function () {
-                    $('.label-img-container').not(this).removeClass('active');
-                    $(this).addClass('active');
-                });
-                $('.tabs-size-label').click(function () {
-                    $('.tabs-size-label').not(this).removeClass('active');
-                    $(this).addClass('active');
-                });
             
     
 

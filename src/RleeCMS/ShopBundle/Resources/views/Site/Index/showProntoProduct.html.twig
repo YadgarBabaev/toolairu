@@ -67,21 +67,13 @@
                                         <div class="col-sm-5">{{ product.note }}</div>
                                     </div>
                                 </div>
-                                    <label class="tabs-size-label" for="6month">
-                                        6 {% trans %}MONTH{% endtrans %}
-                                        <input  id="6month" value="6" type="radio"
+                                {% for type in prontoTypes %}
+                                    <label class="tabs-size-label preorder" for="{{ type }}month" onclick="$('#pronto_type').val({{ type }});">
+                                        {{ type }} {% trans %}MONTH{% endtrans %}
+                                        <input  id="{{ type }}month" value="{{ type }}" type="radio"
                                                name="month[]">
                                     </label>
-                                    <label class="tabs-size-label" for="3month">
-                                        3 {% trans %}MONTH{% endtrans %}
-                                        <input  id="3month" value="3" type="radio"
-                                               name="month[]">
-                                    </label>
-                                    <label class="tabs-size-label" for="1month">
-                                        1 {% trans %}MONTH{% endtrans %}
-                                        <input  id="1month" value="1" type="radio"
-                                               name="month[]">
-                                    </label>
+                                {% endfor %}
 
 
                                 <div class="col-sm-12" style="padding: 0;">
@@ -188,6 +180,7 @@
                                 {#{% endif %}#}
                         <form id="product_form" action="{{ path('site_cart_b2b_add') }}" method="post" data-count="0" style="display: none;">
                             <input type="hidden" name="product_id" value="{{ product.id }}" required>
+                            <input type="hidden" name="pronto_type" id="pronto_type"/>
                             <span id="form_content">
                             </span>
                         </form>
@@ -365,6 +358,13 @@
             });
             $('.bag').load('{{ path('site_cart') }}')
         }
+
+        $(document).ready(function(){
+            $('.preorder').click(function () {
+                $('.preorder').not(this).removeClass('active');
+                $(this).addClass('active');
+            });
+        });
 
 
     </script>

@@ -191,25 +191,6 @@ class OrderController extends Controller
     public function previewAction(Request $request){
         $translator = $this->get('translator');
         $cart = unserialize($request->cookies->get('cart', serialize(array())));
-        if ($request->request->get('id')) {
-            $product = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Product')->find(intval($request->request->get('id')));
-            if ($product) {
-                $cart[] = $product->getId();
-                $cookie = new Cookie('cart', serialize($cart), 0, '/', null, false, false);
-                $response = new Response();
-                $response->headers->setCookie($cookie);
-                $response->send();
-            }
-        }
-//        /** @var QueryBuilder $qb */
-//        $qb = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Product')->createQueryBuilder('p');
-//        $products = $qb
-////            ->select('p')
-//            ->where('p.id IN (:id)')
-//            ->setParameter('id', $cart)
-//            ->getQuery()
-//            ->getResult();
-
         $products = array();
         foreach($cart as $key => $item){
             $product = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Product')->find($item['id']);
@@ -223,12 +204,16 @@ class OrderController extends Controller
                 }else{
                     $products[$key]['src'] = $product->getWebPath();
                 }
+                $products[$key]['key'] = $key;
                 $products[$key]['id'] = $product->getId();
                 $products[$key]['name'] = $product->getName();
-                $products[$key]['size'] = $size->getSize();
+                $products[$key]['size'] = $size->getId();
                 $products[$key]['object'] = $product;
-                $products[$key]['color'] = $color->getName();
+                $products[$key]['color'] = $color->getId();
+                $products[$key]['type'] = $item['type'];
+                $products[$key]['quantity'] = intval($item['quantity']);
                 $products[$key]['price'] = $item['type']==6?$product->getPriceB2B():$product->getPrice();
+                $products[$key]['prontoType'] = isset($item['prontoType'])?$item['prontoType']:0;
 
             }
 
@@ -250,7 +235,8 @@ class OrderController extends Controller
             'router' => $collection,
             'form'   => $form->createView(),
             'shop'   => new Shop($this->container,$this->getDoctrine()->getManager()),
-            'currency' => $currency
+            'currency' => $currency,
+            'prontoTypes' => CartController::getProntoTypes()
         );
     }
 

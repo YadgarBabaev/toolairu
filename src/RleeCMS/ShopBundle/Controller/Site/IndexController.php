@@ -277,7 +277,8 @@ class IndexController extends Controller
             'stores' => $stores,
             'countStores' => $countStores,
             'sizeArray' => $sizeArray,
-            'colorArray' => $colorArray
+            'colorArray' => $colorArray,
+            'prontoTypes' => CartController::getProntoTypes()
         );
     }
 

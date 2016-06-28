@@ -49,9 +49,9 @@ class CartController extends Controller
             foreach($cart as $key => $cartItem){
                 if(isset($cartItem['id'])){
                     $product = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Product')->find($cartItem['id']);
-                    $quantity = 1;
+                    $quantity = $cartItem['quantity'];
                     if(isset($items[$product->getId()]) and $items[$product->getId()]['type'] == $cartItem['type']){
-                        $quantity =  intval($items[$product->getId()]['quantity']) + 1;
+                        $quantity =  intval($items[$product->getId()]['quantity']) + $quantity;
                     }
                         $items[$product->getId()] = array(
                             'product' =>  $product,
@@ -84,6 +84,7 @@ class CartController extends Controller
      */
     public function addAction(Request $request)
     {
+        $count = $request->request->get('count');
         $response = new Response();
         $cart = unserialize($request->cookies->get('cart', serialize(array())));
         if ($request->request->get('product_id')) {
@@ -93,7 +94,8 @@ class CartController extends Controller
                     'id' => $product->getId(),
                     'size' => $request->request->get('size'),
                     'color' => $request->request->get('color'),
-                    'type'  => 1
+                    'type'  => 1,
+                    'quantity' => $count>1?$count:1
                 );
                 if (!in_array($productCart, $cart)) {
                     $cart[] = $productCart;
@@ -119,22 +121,34 @@ class CartController extends Controller
         $colors = $request->request->get('color');
         $sizes  = $request->request->get('size');
         $productId = $request->request->get('product_id');
+        $prontoType = $request->request->get('pronto_type');
 
-        $cart = unserialize($request->cookies->get('cart', serialize(array())));
         if ($request->request->get('product_id')) {
             $product = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Product')
                 ->find($productId);
+        $cart = unserialize($request->cookies->get('cart', serialize(array())));
+
             if ($product && is_array($colors) && is_array($sizes)) {
                 foreach($colors as $key => $value){
                     if(isset($sizes[$key])){
-
-                        $productCart = array(
-                            'id' => $product->getId(),
-                            'size' => $sizes[$key],
-                            'color' => $value,
-                            'type'  => 6
-                        );
+                        $isset = false;
+                        foreach($cart as $k => $v){
+                            if($v['color'] == $value && $v['id'] == $product->getId() && $v['size'] == $sizes[$key]){
+                                $cart[$k]['quantity'] =  intval($v['quantity'])+1;
+                                $isset = true;
+                            }
+                        }
+                        if(!$isset){
+                            $productCart = array(
+                                'id' => $product->getId(),
+                                'size' => $sizes[$key],
+                                'color' => $value,
+                                'type'  => 6,
+                                'prontoType' => $prontoType,
+                                'quantity' => 1
+                            );
                             $cart[] = $productCart;
+                        }
                             $cookie = new Cookie('cart', serialize($cart), 0, '/', null, false, false);
                             $response->headers->setCookie($cookie);
 
@@ -210,5 +224,49 @@ class CartController extends Controller
             );
         }
         return new \Symfony\Component\HttpFoundation\JsonResponse($data);
+    }
+
+
+    public static function getProntoTypes(){
+        return array(
+            0 => 6,
+            1 => 3,
+            2 => 1
+        );
+    }
+
+    /**
+     * Add wish
+     *
+     * @Route("/update", name="site_cart_update")
+     */
+    public function updateAction(Request $request)
+    {
+        $response = new Response();
+        $id = $request->request->get('id');
+        $key = $request->request->get('key');
+        $size = $request->request->get('size');
+        $color = $request->request->get('color');
+        $type = $request->request->get('type');
+        $prontoType = $request->request->get('prontoType');
+        $quantity = $request->request->get('quantity');
+        $cart = unserialize($request->cookies->get('cart', serialize(array())));
+
+        if($id && $key && $size && $color && $quantity && $type && isset($cart[$key])){
+
+            $data['id'] = $id;
+            $data['size'] = $size;
+            $data['color'] = $color;
+            $data['type'] = $type;
+            $data['quantity'] = $quantity;
+            $data['prontoType'] =  $prontoType;
+            $cart[$key] = $data;
+            $cookie = new Cookie('cart', serialize($cart), 0, '/', null, false, false);
+            $response->headers->setCookie($cookie);
+            $response->send();
+
+        }
+        return $response;
+
     }
 }
