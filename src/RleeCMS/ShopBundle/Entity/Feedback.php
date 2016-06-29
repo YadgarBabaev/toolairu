@@ -35,6 +35,14 @@ class Feedback
      */
     private $organization;
 
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="mail", type="string", length=255)
+     */
+    private $mail;
+
     /**
      * @var string
      *
@@ -65,6 +73,24 @@ class Feedback
     {
         return $this->id;
     }
+
+    /**
+     * @return string
+     */
+    public function getMail()
+    {
+        return $this->mail;
+    }
+
+    /**
+     * @param string $mail
+     */
+    public function setMail($mail)
+    {
+        $this->mail = $mail;
+    }
+
+
 
     /**
      * Set name

@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 class FeedbackController extends Controller
 {
     /**
-     * Route("/", name="site_feedback")
+     * @Route("/feedback", name="site_feedback")
      */
     public function indexAction(Request $request, $alias)
     {
@@ -79,4 +79,32 @@ class FeedbackController extends Controller
             'flag' => $flag
         ));
     }
+
+    /**
+     * @Route("/contacts", name="site_contacts")
+     */
+    public function contactsAction(Request $request)
+    {
+        $feedback = new Feedback();
+        $translator = $this->get('translator');
+        $session  = $request->getSession();
+        $message = $session->get('message');
+        $session->remove('message');
+        $form = $this->createForm('RleeCMS\ShopBundle\Form\FeedbackType', $feedback);
+        $form->handleRequest($request);
+        if($form->isSubmitted() and  $form->isValid()){
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($feedback);
+            $em->flush();
+            $session->set('message',$translator->trans('feedback_success_message'));
+            return $this->redirectToRoute('site_contacts');
+        }
+
+        return $this->render('RleeCMSShopBundle:Site/Feedback:contacts.html.twig',
+            array(
+                'form' => $form->createView(),
+                'message' => $message
+            ));
+    }
+
 }

@@ -61,6 +61,8 @@ class Builder implements ContainerAwareInterface
                 $menu[$item->getTitle()]->setCurrent(true);
             }
         }
+        $menu->addChild('Контакты', array('route' => 'site_contacts'));
+        $menu['Контакты']->setLinkAttribute('class', 'nav-item-link');
         return $menu;
 
     }

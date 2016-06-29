@@ -103,3 +103,6 @@ IN_STOCK_INFO: Наличие на складах
 ITEM: Предмет
 Sum: Сумма
 message: Нужно выбрать цвет и размер и указать количество
+message_text: Текст сообщения
+contact_form_title: Оставьте нам сообщение
+feedback_success_message: Ваше сообщение отправлено

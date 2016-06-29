@@ -1,0 +1,71 @@
+{% extends '::base.html.twig' %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-md-7">
+			<div class="col-sm-3 col-sm-offset-1 terms-menu">
+				<ul>
+					<li><a class="terms-link" href="#">Магазины <!--span class="terms-link-span">(Copyrights & Trademark)</span--></a></li>
+					<li><a class="terms-link" href="#">Агенты</a></li>
+				</ul>
+			</div>
+
+			<div class="col-sm-7 terms-content">
+				<h4>Контакты</h4>
+
+				<p><strong>TOOLAI-FASHION</strong></p>
+
+				<p>ИП БЕЙШЕНОВА С.К</p>
+
+				<p>ИНН: 11911197800749</p>
+
+				<p>ОКПО: 29175022</p>
+
+				<p>ДЗЕРЖИНСКОГО 30, Г.БАЛЫКЧЫ</p>
+
+				<p>КЫРГЫЗСТАН</p>
+
+				<p>Т: +996 3944 70590</p>
+
+				<p>М: +996 707 91 43 35</p>
+
+				<p>Е: toolai.fashion@gmail.com , aseleleonora.b@gmail.com</p>
+
+				<p>W: www.tоolai-fashion.com , www.toolai-fashion.ru</p>
+			</div>
+
+		</div>
+		<div class="col-md-5">
+			<div class="reg-form contact-form">
+				<h2 class="pink-text">{{ 'contact_form_title'|trans }}</h2>
+				{% if message %}
+					<br>
+					<span class="alert alert-success">{{ message }}</span>
+					<br>
+					<br>
+				{% endif %}
+				{{ form_start(form) }}
+					<div class="form-group">
+						{{ form_errors(form.name) }}
+						{{ form_widget(form.name) }}
+					</div>
+					<div class="form-group">
+						{{ form_errors(form.contact) }}
+						{{ form_widget(form.contact) }}
+					</div>
+					<div class="form-group">
+						{{ form_errors(form.mail) }}
+						{{ form_widget(form.mail) }}
+					</div>
+					<div class="form-group">
+						{{ form_errors(form.message) }}
+						{{ form_widget(form.message) }}
+					</div>
+					<button type="submit" class="btn">Отправить</button>
+				{{ form_end(form) }}
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
+
