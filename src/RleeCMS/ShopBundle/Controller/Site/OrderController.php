@@ -68,6 +68,7 @@ class OrderController extends Controller
                 $products[$key]['size'] = $size->getSize();
                 $products[$key]['color'] = $color->getName();
                 $products[$key]['price'] = $item['type']==6?$product->getPriceB2B():$product->getPrice();
+                $products[$key]['quantity'] = $item['quantity'];
 
             }
 

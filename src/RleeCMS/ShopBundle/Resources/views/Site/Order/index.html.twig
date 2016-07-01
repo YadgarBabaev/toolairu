@@ -60,7 +60,7 @@
                     <div class="shopping-total-quantity">
                         <b>
                         <span onclick="countUp({{ loop.index }})" class="glyphicon glyphicon-plus" style="cursor: pointer;"></span>
-                          <input type="text" class="quantityItem" data-price="{{ product.price }}" value="1" id="q_{{ loop.index }}" name="count[{{ loop.index }}]" style="width: 60px; margin: 0 auto;">
+                          <input type="text" class="quantityItem" data-price="{{ product.price }}" value="{{ product.quantity }}" id="q_{{ loop.index }}" name="count[{{ loop.index }}]" style="width: 60px; margin: 0 auto;">
                         <span onclick="countDown({{ loop.index }})" class="glyphicon glyphicon-minus" style="cursor: pointer;"></span>
                         </b>
                     </div>
@@ -100,9 +100,14 @@
     </div>
     {{ form_end(form) }}
 </div>
-    <script>
+{% endblock content %}
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            changeTotal();
+        });
         function countUp($id){
-          var cnt = parseInt($("#q_"+$id).val());
+            var cnt = parseInt($("#q_"+$id).val());
             if(cnt){
                 $("#q_"+$id).val(cnt+1);
                 changeTotal();
@@ -111,7 +116,7 @@
             }
         }
         function countDown($id){
-          var cnt = parseInt($("#q_"+$id).val());
+            var cnt = parseInt($("#q_"+$id).val());
             if(cnt>1){
                 $("#q_"+$id).val(cnt-1);
                 changeTotal();
@@ -131,4 +136,4 @@
             $('.shopping-footer-total .total_sum').html($total);
         }
     </script>
-{% endblock content %}
+{% endblock %}
