@@ -1,0 +1,33 @@
+{% extends "base.html.twig" %}
+{% block content %}
+    <h2 class="page-title">{{ 'my_profile'|trans }}</h2>
+    <div class="container">
+        <div class="row profile">
+            <div class="col-md-6 col-md-offset-3">
+                <h3>{{ app.user }} <a href="{{ path('fos_user_security_logout') }}" class="pull-right">{{ 'logout'|trans }}</a></h3>
+                {#<address>#}
+                    {#<p>Адрес: <span>{{ user.adress }}</span></p>#}
+                {#</address>#}
+                {#<p>#}
+                    {#<a href="#" class="edit change">Редактировать</a>#}
+                    {#<a href="#" class="remove change">Удалить</a>#}
+                {#</p>#}
+                {#<p>#}
+                    {#<a href="#" class="add change">Добавить новый адрес</a>#}
+                {#</p>#}
+                <p>
+                    <a href="{{ path('user_profile_edit') }}" class="edit-profile">{{ 'edit_profile'|trans }}</a>
+                </p>
+                <p>
+                    <a href="{{ path('user_profile_orders') }}" class="edit-profile">{{ 'my_orders'|trans }}</a>
+                </p>
+                {#<p>#}
+                    {#<a href="#" class="wishlist">Избранное</a>#}
+                {#</p>#}
+                {#<div class="text-center">#}
+                    {#<a href="#" class="main-link">На главную</a>#}
+                {#</div>#}
+            </div>
+        </div>
+    </div>
+{% endblock %}

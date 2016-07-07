@@ -1,0 +1,36 @@
+{% extends "base.html.twig" %}
+{% block content %}
+    <h2 class="page-title">{{ 'my_orders'|trans }}</h2>
+    <div class="container">
+        <div class="row profile">
+            <div class="col-md-6 col-md-offset-3">
+                <h3>{{ app.user }} <a href="{{ path('fos_user_security_logout') }}" class="pull-right">{{ 'logout'|trans }}</a></h3>
+               <table class="table table-bordered table-striped">
+                   <thead>
+                        <tr>
+                            <td>{{ 'Email'|trans }}</td>
+                            <td>{{ 'Address'|trans }}</td>
+                            <td>{{ 'Shipping method'|trans }}</td>
+                            <td>{{ 'ITEM'|trans }}</td>
+                        </tr>
+                        {% for order in orders %}
+                            <tr>
+                                <td>{{ order.email }}</td>
+                                <td>{{ order.address }}</td>
+                                <td>{{ order.shippingMethod }}</td>
+                                <td>
+                                    {% for product in order.products %}
+                                        <label>{{ product.product }}</label><br>
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                   </thead>
+               </table>
+                <br>
+                <a href="{{ path('user_profile_index') }}">{{ 'my_profile'|trans }}</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

@@ -26,17 +26,18 @@ class IndexController extends Controller
     {
         /** @var $session \Symfony\Component\HttpFoundation\Session\Session */
         $session = $request->getSession();
+        $catId = $request->attributes->get('catId');
         $session->set('alias', $alias);
-//        $request->cookies->set('test', 2);
-//        var_dump($_COOKIE);
-//        var_dump(opcache_get_status());
-//        opcache_reset();
-//        $cookie = new Cookie('wish', serialize(array('test',1,2)), 0, '/', null, false, false);
-//        $response = new Response();
-//        $response->headers->setCookie($cookie);
-//        $response->headers->clearCookie('foo');
-//        $response->send();
-//        var_dump($request->cookies);
+
+        if($session->get('store')){
+            if($request->get('store')){
+                $session->set('store',$request->get('store'));
+                return $this->redirectToRoute('category_1');
+            }
+        }else{
+            $session->set('store',1);
+        }
+
 
         $translator = $this->get('translator');
 
@@ -46,7 +47,6 @@ class IndexController extends Controller
         $repository = $em->getRepository('AdminCMSBundle:Menu');
         /** @var  $menu \RleeCMS\CMSBundle\Entity\Menu */
         $menu = $repository->findOneBy(array('alias' => $alias, 'status' => 1));
-        $catId = $request->attributes->get('catId');
         if (!$menu || !$catId) {
             throw $this->createNotFoundException($translator->trans('page_not_found'));
         }
@@ -67,7 +67,12 @@ class IndexController extends Controller
             ->createQueryBuilder('p')
             ->leftJoin('p.categories', 'c')
             ->leftJoin('p.filters', 'f')
+            ->leftJoin('RleeCMSShopBundle:ProductStore','ps', 'WITH','p.id =ps.product')
             ->andWhere('p.status = 1');
+        if($session->get('store')){
+            $products = $products ->andWhere('ps.store = :store')
+                ->setParameter('store', $session->get('store'));
+        }
         if($catId == 6 || $catId == 7){
             $products = $products
                 ->andWhere('p.categoryB2B = :catId')
@@ -86,12 +91,19 @@ class IndexController extends Controller
             ->orderBy('p.orderning', 'ASC')
             ->getQuery()->getResult();
 
+        $currency = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Currency')
+            ->find(intval($session->get('currency')));
+
+        $stores = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Store')->findAll();
+
         $result = array(
             'category' => $category,
             'menu' => $menu,
             'alias' => $alias,
             'filters' => $filters,
-            'products' => $products
+            'products' => $products,
+            'currency' => $currency,
+            'stores' => $stores
         );
         $view = "";
         if($catId == 6 || $catId == 7){
@@ -210,6 +222,8 @@ class IndexController extends Controller
         }
         $sizeArray = array_unique($sizeArray);
         $colorArray = array_unique($colorArray);
+        $currency = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Currency')
+            ->find(intval($session->get('currency')));
         return array(
             'product' => $product,
             'table' => $table,
@@ -217,7 +231,8 @@ class IndexController extends Controller
             'stores' => $stores,
             'countStores' => $countStores,
             'sizeArray' => $sizeArray,
-            'colorArray' => $colorArray
+            'colorArray' => $colorArray,
+            'currency' => $currency
         );
     }
 
@@ -271,6 +286,8 @@ class IndexController extends Controller
         }
         $sizeArray = array_unique($sizeArray);
         $colorArray = array_unique($colorArray);
+        $currency = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Currency')
+            ->find(intval($session->get('currency')));
         return array(
             'product' => $product,
             'flag' => $flag,
@@ -278,7 +295,8 @@ class IndexController extends Controller
             'countStores' => $countStores,
             'sizeArray' => $sizeArray,
             'colorArray' => $colorArray,
-            'prontoTypes' => CartController::getProntoTypes()
+            'prontoTypes' => CartController::getProntoTypes(),
+            'currency' => $currency
         );
     }
 
@@ -357,6 +375,9 @@ class IndexController extends Controller
         }
         $sizeArray = array_unique($sizeArray);
         $colorArray = array_unique($colorArray);
+        $currency = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Currency')
+            ->find(intval($session->get('currency')));
+
         return array(
             'product' => $product,
             'flag' => $flag,
@@ -366,7 +387,8 @@ class IndexController extends Controller
             'colorArray' => $colorArray,
             'storeData' => $storeData,
             'data'      => $data,
-            'store' => new ProductStore
+            'store' => new ProductStore,
+            'currency' => $currency
         );
     }
 }

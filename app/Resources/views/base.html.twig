@@ -48,7 +48,7 @@
                                 </a>
                             </li>
                             <li class="navItemRight">
-                                <a class="nav-item-link" data-toggle="modal" data-target="#login-modal" data-toggle="tooltip" title="Личный кабинет" data-placement="bottom" href="#!"></a>
+                                <a class="nav-item-link" {#data-toggle="modal"#} {#data-target="#login-modal"#} data-toggle="tooltip" title="Личный кабинет" data-placement="bottom" href="{{ path('user_profile_index') }}"></a>
                             </li>
                             {{ render(controller('RleeCMSShopBundle:Site/Wish:check')) }}
                             <li class="navItemRight">

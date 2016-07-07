@@ -117,28 +117,28 @@
                                                     {% trans %}In shop{% endtrans %}
                                                 </a>
                                             </div>
-                                            <div class="col-sm-4">
-                                                {% set countStores = mainCountStores[product.id] %}
-                                                {% if countStores > 0 %}
-                                                    <a href="#" id="in_store" class="shop-btn shop-store">{% trans %}In store{% endtrans %}</a>
-                                                {% endif %}
-                                                {% if app.user %}
-                                                    {% set flag = flagArray[product.id] %}
-                                                    {% if flag == false %}
-                                                        <a id="addWish_{{ product.id }}" class="shop-btn shop-wishlist"
-                                                           onclick="addWish('{{ product.id }}')">{% trans %}Add to wish list{% endtrans %}</a>
-                                                    {% else %}
-                                                        <a href="#" class="shop-btn shop-wishlist">{% trans %}PRODUCT HAS BEEN ADDED TO WISH LIST{% endtrans %}</a>
-                                                    {% endif %}
-                                                {% endif %}
-                                            </div>
+                                            {#<div class="col-sm-4">#}
+                                                {#{% set countStores = mainCountStores[product.id] %}#}
+                                                {#{% if countStores > 0 %}#}
+                                                    {#<a href="#" id="in_store" class="shop-btn shop-store">{% trans %}In store{% endtrans %}</a>#}
+                                                {#{% endif %}#}
+                                                {#{% if app.user %}#}
+                                                    {#{% set flag = flagArray[product.id] %}#}
+                                                    {#{% if flag == false %}#}
+                                                        {#<a id="addWish_{{ product.id }}" class="shop-btn shop-wishlist"#}
+                                                           {#onclick="addWish('{{ product.id }}')">{% trans %}Add to wish list{% endtrans %}</a>#}
+                                                    {#{% else %}#}
+                                                        {#<a href="#" class="shop-btn shop-wishlist">{% trans %}PRODUCT HAS BEEN ADDED TO WISH LIST{% endtrans %}</a>#}
+                                                    {#{% endif %}#}
+                                                {#{% endif %}#}
+                                            {#</div>#}
                                             <br>
                                             <br>
-                                            <div class="col-sm-4">
-                                                <button class="shop-btn shop-cart">
-                                                    {% trans %}Add to cart{% endtrans %}
-                                                </button>
-                                            </div>
+                                            {#<div class="col-sm-4">#}
+                                                {#<button class="shop-btn shop-cart">#}
+                                                    {#{% trans %}Add to cart{% endtrans %}#}
+                                                {#</button>#}
+                                            {#</div>#}
 
                                         </div>
                                     </div>

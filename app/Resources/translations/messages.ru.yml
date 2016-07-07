@@ -43,7 +43,7 @@ Address: Адрес
 Cutomer information: Информация о покупателе
 City: Город
 Country: Страна
-State: Штат
+State: Область
 Zip code: Почтовый индекс
 Phone: Телефон
 Shipping method: Способ доставки
@@ -106,3 +106,9 @@ message: Нужно выбрать цвет и размер и указать к
 message_text: Текст сообщения
 contact_form_title: Оставьте нам сообщение
 feedback_success_message: Ваше сообщение отправлено
+prepayment: Предоплата
+logout: Выйти
+my_profile: Мой аккаунт
+edit_profile: Редактировать профиль
+cancel: Отмена
+my_orders: Мои заказы

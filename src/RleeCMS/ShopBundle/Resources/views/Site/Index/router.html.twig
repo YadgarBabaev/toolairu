@@ -13,6 +13,11 @@
                         <a href="?filter={{ filter.id }}" class="shop-item-link">{{ filter }}</a>
                     </li>
                 {% endfor %}
+                {% for store in stores %}
+                    <li  class="shop-category-item">
+                        <a href="?store={{ store.id }}" {% if app.session.get('store') == store.id %}style="color: pink" {% endif %} class="shop-item-link">{{ store.name }}</a>
+                    </li>
+                {% endfor %}
             </ul>
         </div>
     </div>
@@ -36,12 +41,11 @@
                                 </div>
                                 {{ product }}</a>
                             <div class="shop-price">
-                                {% if(shop.getMainCurrency().symbol) %}
+                                {% if currency %}
+                                    {{ product.price|number_format() }} {{ currency.name }}
+                                {% elseif(shop.getMainCurrency().symbol) %}
+                                    {{ product.price|number_format() }}
                                     {{ shop.getMainCurrency().symbol }}
-                                {% endif %}
-                                {{ product.price|number_format() }}
-                                {% if(shop.getMainCurrency().symbol is null) %}
-                                    {{ shop.getMainCurrency().shortSign }}
                                 {% endif %}
                             </div>
                         </li>

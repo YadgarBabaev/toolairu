@@ -229,9 +229,18 @@ class CartController extends Controller
 
     public static function getProntoTypes(){
         return array(
-            0 => 6,
-            1 => 3,
-            2 => 1
+            0 => array(
+                'length' => 6,
+                'percent' => '50'
+            ),
+            1 =>array(
+                'length' => 3,
+                'percent' => '30'
+            ),
+            2 => array(
+                'length' => 1,
+                'percent' => '100'
+            ),
         );
     }
 
@@ -252,7 +261,7 @@ class CartController extends Controller
         $quantity = $request->request->get('quantity');
         $cart = unserialize($request->cookies->get('cart', serialize(array())));
 
-        if($id && $key && $size && $color && $quantity && $type && isset($cart[$key])){
+        if($id && $key != null && $size && $color && $quantity && $type && isset($cart[$key])){
 
             $data['id'] = $id;
             $data['size'] = $size;

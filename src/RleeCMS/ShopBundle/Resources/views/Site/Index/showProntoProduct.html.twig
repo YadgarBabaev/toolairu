@@ -38,12 +38,11 @@
                                 <h4 class="page-title">{{ product }}</h4>
 
                                 <div class="page-price">
-                                    {% if(shop.getMainCurrency().symbol) %}
+                                    {% if currency %}
+                                        {{ product.price|number_format() }} {{ currency.name }}
+                                    {% elseif(shop.getMainCurrency().symbol) %}
+                                        {{ product.price|number_format() }}
                                         {{ shop.getMainCurrency().symbol }}
-                                    {% endif %}
-                                    {{ product.priceB2B|number_format() }}
-                                    {% if(shop.getMainCurrency().symbol is null) %}
-                                        {{ shop.getMainCurrency().shortSign }}
                                     {% endif %}
                                 </div>
                                 <br>
@@ -68,12 +67,14 @@
                                     </div>
                                 </div>
                                 {% for type in prontoTypes %}
-                                    <label class="tabs-size-label preorder" for="{{ type }}month" onclick="$('#pronto_type').val({{ type }});">
-                                        {{ type }} {% trans %}MONTH{% endtrans %}
-                                        <input  id="{{ type }}month" value="{{ type }}" type="radio"
+                                    <label class="tabs-size-label preorder" for="{{ type.length }}month"
+                                           onclick="$('#pronto_type').val({{ type.length }});$('#percent_message').html('{{ 'prepayment'|trans }} {{ type.percent }}%');">
+                                        {{ type.length }} {% trans %}MONTH{% endtrans %}
+                                        <input  id="{{ type.length }}month" value="{{ type.length }}" type="radio"
                                                name="month[]">
                                     </label>
                                 {% endfor %}
+                                <label id="percent_message"></label>
 
 
                                 <div class="col-sm-12" style="padding: 0;">
@@ -126,23 +127,21 @@
                                                 </td>
                                                 <td>
                                                     <label class="tabs-size-label">
-                                                        {{ product.priceB2B }}
-                                                        {% if(shop.getMainCurrency().symbol) %}
+                                                        {% if currency %}
+                                                            {{ product.priceB2B }} {{ currency.name }}
+                                                        {% elseif(shop.getMainCurrency().symbol) %}
+                                                            {{ product.priceB2B }}
                                                             {{ shop.getMainCurrency().symbol }}
-                                                        {% endif %}
-                                                        {% if(shop.getMainCurrency().symbol is null) %}
-                                                            {{ shop.getMainCurrency().shortSign }}
                                                         {% endif %}
                                                     </label>
                                                 </td>
                                                 <td>
                                                     <label class="tabs-size-label">
                                                         <label id="sum_{{ color.id }}" data-price="{{ product.priceB2B }}">0</label>
-                                                        {% if(shop.getMainCurrency().symbol) %}
+                                                        {% if currency %}
+                                                            {{ currency.name }}
+                                                        {% elseif(shop.getMainCurrency().symbol) %}
                                                             {{ shop.getMainCurrency().symbol }}
-                                                        {% endif %}
-                                                        {% if(shop.getMainCurrency().symbol is null) %}
-                                                            {{ shop.getMainCurrency().shortSign }}
                                                         {% endif %}
                                                     </label>
                                                 </td>

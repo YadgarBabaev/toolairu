@@ -37,10 +37,10 @@ class OrdersType extends AbstractType
                 "label" => $translator->trans('Address'),
                 'horizontal' => false,
             ))
-            ->add('houseNumber',TextType::class,array(
-                "label" => $translator->trans('Apt,suite,etc.'),
-                'horizontal' => false,
-            ))
+//            ->add('houseNumber',TextType::class,array(
+//                "label" => $translator->trans('Apt,suite,etc.'),
+//                'horizontal' => false,
+//            ))
             ->add('city',TextType::class,array(
                 "label" => $translator->trans('City'),
                 'horizontal' => false,

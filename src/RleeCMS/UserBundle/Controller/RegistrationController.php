@@ -66,15 +66,6 @@ class RegistrationController extends BaseController
     }
 
     /**
-     * @Route("/user_profile",name="user_profile")
-     * @Template()
-     */
-    public function userProfileAction(){
-
-        return array();
-    }
-
-    /**
      * @Route("/check_type",name="user_check_type")
      */
     public function checkTypeAction(Request $request){

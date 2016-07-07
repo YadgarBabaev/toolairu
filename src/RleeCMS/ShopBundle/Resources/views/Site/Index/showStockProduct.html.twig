@@ -40,12 +40,11 @@
                                 <h4 class="page-title">{{ product }}</h4>
 
                                 <div class="page-price">
-                                    {% if(shop.getMainCurrency().symbol) %}
+                                    {% if currency %}
+                                        {{ product.priceB2B|number_format }} {{ currency.name }}
+                                    {% elseif(shop.getMainCurrency().symbol) %}
+                                        {{ product.priceB2B|number_format }}
                                         {{ shop.getMainCurrency().symbol }}
-                                    {% endif %}
-                                    {{ product.priceB2B|number_format() }}
-                                    {% if(shop.getMainCurrency().symbol is null) %}
-                                        {{ shop.getMainCurrency().shortSign }}
                                     {% endif %}
                                 </div>
                                 <br>

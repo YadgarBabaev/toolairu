@@ -30,6 +30,7 @@ class OrderController extends Controller
     public function indexAction(Request $request)
     {
         $translator = $this->get('translator');
+        $user = $this->getUser();
         $cart = unserialize($request->cookies->get('cart', serialize(array())));
         if ($request->request->get('id')) {
             $product = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Product')->find(intval($request->request->get('id')));
@@ -95,6 +96,9 @@ class OrderController extends Controller
                     $em->persist($orderingProduct);
                     $order->addProduct($orderingProduct);
                 }
+            }
+            if($user){
+              $order->setUser($user);
             }
             $em->persist($order);
             $em->flush();
@@ -197,13 +201,22 @@ class OrderController extends Controller
             $product = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Product')->find($item['id']);
             $color = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Color')->find($item['color']);
             $size = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Size')->find($item['size']);
-
+            $quantity  = intval($item['quantity']);
+            $infoTable = array(
+                $color->getId().'_'.$size->getId() => $item['quantity']
+            );
             if($product){
-                $images = $product->getImages();
-                if($product->getWebPath()){
-                    $products[$key]['src'] = $images[0];
-                }else{
-                    $products[$key]['src'] = $product->getWebPath();
+                foreach($products as $p){
+                    if($p['type'] == $item['type'] and $p['id'] == $product->getId() and $item['type']==6/* and $p['color'] == $item['color']*/){
+                        $key = $p['key'];
+                        $quantity = $quantity + intval($p['quantity']);
+                        $info = $p['infoTable'];
+                        $quantityInfo = isset($info[$color->getId().'_'.$size->getId()])?intval($info[$color->getId().'_'.$size->getId()])+intval($item['quantity'])
+                            :$item['quantity'];
+                        $info[$color->getId().'_'.$size->getId()] = $quantityInfo;
+                        $infoTable = $info;
+                        break;
+                    }
                 }
                 $products[$key]['key'] = $key;
                 $products[$key]['id'] = $product->getId();
@@ -212,14 +225,21 @@ class OrderController extends Controller
                 $products[$key]['object'] = $product;
                 $products[$key]['color'] = $color->getId();
                 $products[$key]['type'] = $item['type'];
-                $products[$key]['quantity'] = intval($item['quantity']);
+                $products[$key]['quantity'] = $quantity;
                 $products[$key]['price'] = $item['type']==6?$product->getPriceB2B():$product->getPrice();
                 $products[$key]['prontoType'] = isset($item['prontoType'])?$item['prontoType']:0;
+                $products[$key]['infoTable']  = $infoTable;
+
+                $images = $product->getImages();
+                if($product->getWebPath()){
+                    $products[$key]['src'] = $images[0];
+                }else{
+                    $products[$key]['src'] = $product->getWebPath();
+                }
 
             }
 
         }
-
         $router = $this->get('router');
         $collection = $router->getRouteCollection();
         $order = new Orders();

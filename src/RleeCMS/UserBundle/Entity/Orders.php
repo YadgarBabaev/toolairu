@@ -92,6 +92,12 @@ class Orders
      */
     private $shippingMethod;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="RleeCMS\UserBundle\Entity\User")
+     * @ORM\JoinColumn(referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     */
+    private $user;
+
 
     /**
      * @ORM\ManyToMany(targetEntity="RleeCMS\UserBundle\Entity\OrderingProducts")
@@ -447,5 +453,29 @@ class Orders
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \RleeCMS\UserBundle\Entity\User $user
+     *
+     * @return Orders
+     */
+    public function setUser(\RleeCMS\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \RleeCMS\UserBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

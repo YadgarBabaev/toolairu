@@ -1,0 +1,39 @@
+{% extends "base.html.twig" %}
+{% block content %}
+    <h2 class="page-title">{{ 'my_profile'|trans }}</h2>
+    <div class="container">
+        <div class="row profile">
+            <div class="col-md-6 col-md-offset-3">
+                <h3>{{ app.user }} <a href="{{ path('fos_user_security_logout') }}" class="pull-right">{{ 'logout'|trans }}</a></h3>
+                {{ form_start(form)}}
+                {{ form_widget(form) }}
+                <input type="submit" value="{{ 'save'|trans }}" class="btn btn-primary"/>
+                <a href="{{ path('user_profile_index') }}"  class="btn btn-default">
+                    {{ 'cancel'|trans }}
+                </a>
+                {{ form_end(form)}}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $(document).ready(function(){
+            changePassword();
+            $("#profile_changePassword").on('change',function(){
+                changePassword();
+            });
+        });
+        function changePassword()
+        {
+            if($('#profile_changePassword').prop('checked')){
+                $('#profile_plainPassword_first').removeAttr('disabled');
+                $('#profile_plainPassword_second').removeAttr('disabled');
+            }
+            else {
+                $('#profile_plainPassword_first').attr('disabled','disabled');
+                $('#profile_plainPassword_second').attr('disabled','disabled');
+            }
+        }
+    </script>
+{% endblock %}
