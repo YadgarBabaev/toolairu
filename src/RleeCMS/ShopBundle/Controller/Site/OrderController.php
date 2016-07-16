@@ -29,15 +29,15 @@ class OrderController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $translator = $this->get('translator');
+//        $translator = $this->get('translator');
         $user = $this->getUser();
+        $response = new Response();
         $cart = unserialize($request->cookies->get('cart', serialize(array())));
         if ($request->request->get('id')) {
             $product = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Product')->find(intval($request->request->get('id')));
             if ($product) {
                 $cart[] = $product->getId();
                 $cookie = new Cookie('cart', serialize($cart), 0, '/', null, false, false);
-                $response = new Response();
                 $response->headers->setCookie($cookie);
                 $response->send();
             }
@@ -64,12 +64,15 @@ class OrderController extends Controller
                 }else{
                     $products[$key]['src'] = $product->getWebPath();
                 }
+                $products[$key]['key'] = $key;
                 $products[$key]['id'] = $product->getId();
                 $products[$key]['name'] = $product->getName();
                 $products[$key]['size'] = $size->getSize();
                 $products[$key]['color'] = $color->getName();
                 $products[$key]['price'] = $item['type']==6?$product->getPriceB2B():$product->getPrice();
                 $products[$key]['quantity'] = $item['quantity'];
+                $products[$key]['type'] = $item['type'];
+                $products[$key]['prontoType'] = isset($item['prontoType'])?$item['prontoType']:0;
 
             }
 
@@ -81,18 +84,21 @@ class OrderController extends Controller
         $form = $this->createOrderForm($order);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid() && count($cart)>0){
+            $cnt = $request->get('count');
             $em = $this->getDoctrine()->getManager();
-            foreach($cart as $item){
+            foreach($cart as $key => $item){
                 $product = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Product')->find($item['id']);
                 $color = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Color')->find($item['color']);
                 $size = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Size')->find($item['size']);
+                $type = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Category')->find($item['type']);
                 if($product){
                     $orderingProduct =  new OrderingProducts();
                     $orderingProduct->setProduct($product);
                     $orderingProduct->setColor($color);
                     $orderingProduct->setSize($size);
-                    $cnt = $request->get('count');
-                    $orderingProduct->setCount(isset($cnt[$item['id']])?$cnt[$item['id']]:1);
+                    $orderingProduct->setCount(isset($cnt[$key])?$cnt[$key]:1);
+                    $orderingProduct->setType($type);
+                    $orderingProduct->setProntoType( isset($item['prontoType'])?$item['prontoType']:0);
                     $em->persist($orderingProduct);
                     $order->addProduct($orderingProduct);
                 }
@@ -102,8 +108,11 @@ class OrderController extends Controller
             }
             $em->persist($order);
             $em->flush();
+            $cookie = new Cookie('cart', serialize(array()), 0, '/', null, false, false);
+            $response->headers->setCookie($cookie);
+            $response->send();
             $this->sendMail($order);
-            return $this->redirectToRoute('index');
+            return $this->redirectToRoute('user_profile_orders');
         }
 
         $session = $request->getSession();
@@ -115,7 +124,7 @@ class OrderController extends Controller
             'router' => $collection,
             'form'   => $form->createView(),
             'shop'   => new Shop($this->container,$this->getDoctrine()->getManager()),
-            'currency' => $currency
+            'currency' => $currency,
         );
     }
 
@@ -145,7 +154,7 @@ class OrderController extends Controller
             $message = \Swift_Message::newInstance()
                 ->setSubject('Вы успешно оформили заказ')
                 /** @TODO Указать реальный mail */
-                ->setFrom('service@toolai-fashion.ru')
+                ->setFrom('toolai.fashion@gmail.com')
                 ->setTo($order->getEmail())
                 ->setBody('<h1>Вы заказали:</h1>'.$html,
                     /** @TODO Содержимое письма письма */
@@ -203,17 +212,18 @@ class OrderController extends Controller
             $size = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Size')->find($item['size']);
             $quantity  = intval($item['quantity']);
             $infoTable = array(
-                $color->getId().'_'.$size->getId() => $item['quantity']
+               $size->getId() => $item['quantity']
             );
             if($product){
+
                 foreach($products as $p){
-                    if($p['type'] == $item['type'] and $p['id'] == $product->getId() and $item['type']==6/* and $p['color'] == $item['color']*/){
+                    if($p['type'] == $item['type'] and $p['id'] == $product->getId() and $item['type']==6 and $p['color'] == $item['color']){
                         $key = $p['key'];
                         $quantity = $quantity + intval($p['quantity']);
                         $info = $p['infoTable'];
-                        $quantityInfo = isset($info[$color->getId().'_'.$size->getId()])?intval($info[$color->getId().'_'.$size->getId()])+intval($item['quantity'])
+                        $quantityInfo = isset($info[$size->getId()])?intval($info[$size->getId()])+intval($item['quantity'])
                             :$item['quantity'];
-                        $info[$color->getId().'_'.$size->getId()] = $quantityInfo;
+                        $info[$size->getId()] = $quantityInfo;
                         $infoTable = $info;
                         break;
                     }
@@ -223,7 +233,7 @@ class OrderController extends Controller
                 $products[$key]['name'] = $product->getName();
                 $products[$key]['size'] = $size->getId();
                 $products[$key]['object'] = $product;
-                $products[$key]['color'] = $color->getId();
+                $products[$key]['color'] = $color;
                 $products[$key]['type'] = $item['type'];
                 $products[$key]['quantity'] = $quantity;
                 $products[$key]['price'] = $item['type']==6?$product->getPriceB2B():$product->getPrice();

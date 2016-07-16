@@ -2,6 +2,7 @@
 
 namespace RleeCMS\UserBundle\Controller;
 
+use RleeCMS\ShopBundle\Controller\Site\CartController;
 use RleeCMS\UserBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -64,9 +65,14 @@ class UserProfileController extends BaseController
                 'user' => $user->getId()
             )
         );
+        $session = $request->getSession();
+        $currency = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Currency')
+            ->find(intval($session->get('currency')));
 
         return array(
-            'orders' => $orders
+            'orders' => $orders,
+            'currency'=> $currency,
+            'prontoTypes' => CartController::getProntoTypes()
         );
 
     }

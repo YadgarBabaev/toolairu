@@ -32,7 +32,7 @@ class IndexController extends Controller
         if($session->get('store')){
             if($request->get('store')){
                 $session->set('store',$request->get('store'));
-                return $this->redirectToRoute('category_1');
+                return $this->redirectToRoute('category_'.$catId);
             }
         }else{
             $session->set('store',1);
@@ -73,6 +73,7 @@ class IndexController extends Controller
             $products = $products ->andWhere('ps.store = :store')
                 ->setParameter('store', $session->get('store'));
         }
+
         if($catId == 6 || $catId == 7){
             $products = $products
                 ->andWhere('p.categoryB2B = :catId')
@@ -103,7 +104,8 @@ class IndexController extends Controller
             'filters' => $filters,
             'products' => $products,
             'currency' => $currency,
-            'stores' => $stores
+            'stores' => $stores,
+            'catId'  => $catId
         );
         $view = "";
         if($catId == 6 || $catId == 7){
@@ -198,13 +200,9 @@ class IndexController extends Controller
         );
 
         $flag = false;
-        if ($this->getUser()) {
-            $products = $this->getUser()->getProducts();
-            foreach ($products as $p) {
-                if ($p->getId() == $product->getId()) {
-                    $flag = true;
-                }
-            }
+        $ids = unserialize($request->cookies->get('wish', serialize(array())));
+        if (in_array($productId, $ids)) {
+            $flag = true;
         }
         $stores = $em
             ->getRepository('RleeCMSShopBundle:ProductStore')
@@ -262,14 +260,11 @@ class IndexController extends Controller
 
 
         $flag = false;
-        if ($this->getUser()) {
-            $products = $this->getUser()->getProducts();
-            foreach ($products as $p) {
-                if ($p->getId() == $product->getId()) {
-                    $flag = true;
-                }
-            }
+        $ids = unserialize($request->cookies->get('wish', serialize(array())));
+        if (in_array($productId, $ids)) {
+            $flag = true;
         }
+
         $stores = $em
             ->getRepository('RleeCMSShopBundle:ProductStore')
             ->createQueryBuilder('s')
@@ -324,16 +319,12 @@ class IndexController extends Controller
         $breadcrumbs->addItem('Главная', $this->generateUrl('site_index'));
 
 
-
         $flag = false;
-        if ($this->getUser()) {
-            $products = $this->getUser()->getProducts();
-            foreach ($products as $p) {
-                if ($p->getId() == $product->getId()) {
-                    $flag = true;
-                }
-            }
+        $ids = unserialize($request->cookies->get('wish', serialize(array())));
+        if (in_array($productId, $ids)) {
+            $flag = true;
         }
+
         $stores = $em
             ->getRepository('RleeCMSShopBundle:ProductStore')
             ->createQueryBuilder('s')

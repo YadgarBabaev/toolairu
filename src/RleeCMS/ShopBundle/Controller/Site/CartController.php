@@ -231,7 +231,7 @@ class CartController extends Controller
         return array(
             0 => array(
                 'length' => 6,
-                'percent' => '50'
+                'percent' => '30'
             ),
             1 =>array(
                 'length' => 3,
@@ -239,7 +239,7 @@ class CartController extends Controller
             ),
             2 => array(
                 'length' => 1,
-                'percent' => '100'
+                'percent' => '50'
             ),
         );
     }

@@ -46,6 +46,18 @@ class OrderingProducts
      */
     private $count;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="RleeCMS\ShopBundle\Entity\Category")
+     * @ORM\JoinColumn(referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     */
+    private $type;
+
+
+    /**
+     * @ORM\Column(type="integer", name="pronto_type", nullable=true)
+     */
+    private $prontoType;
+
 
 
     /**
@@ -152,5 +164,53 @@ class OrderingProducts
     public function getSize()
     {
         return $this->size;
+    }
+
+    /**
+     * Set prontoType
+     *
+     * @param integer $prontoType
+     *
+     * @return OrderingProducts
+     */
+    public function setProntoType($prontoType)
+    {
+        $this->prontoType = $prontoType;
+
+        return $this;
+    }
+
+    /**
+     * Get prontoType
+     *
+     * @return integer
+     */
+    public function getProntoType()
+    {
+        return $this->prontoType;
+    }
+
+    /**
+     * Set type
+     *
+     * @param \RleeCMS\ShopBundle\Entity\Category $type
+     *
+     * @return OrderingProducts
+     */
+    public function setType(\RleeCMS\ShopBundle\Entity\Category $type = null)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return \RleeCMS\ShopBundle\Entity\Category
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

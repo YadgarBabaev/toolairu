@@ -59,9 +59,9 @@
                     </div>
                     <div class="shopping-total-quantity">
                         <b>
-                        <span onclick="countUp({{ loop.index }})" class="glyphicon glyphicon-plus" style="cursor: pointer;"></span>
-                          <input type="text" onchange="changeTotal();" class="quantityItem" data-price="{{ product.price }}" value="{{ product.quantity }}" id="q_{{ loop.index }}" name="count[{{ loop.index }}]" style="width: 60px; margin: 0 auto;">
-                        <span onclick="countDown({{ loop.index }})" class="glyphicon glyphicon-minus" style="cursor: pointer;"></span>
+                        <span onclick="countUp({{ product.key }})" class="glyphicon glyphicon-plus" style="cursor: pointer;"></span>
+                          <input type="text" onchange="changeTotal();" class="quantityItem" data-price="{{ product.price }}" value="{{ product.quantity }}" id="q_{{ product.key }}" name="count[{{ product.key }}]" style="width: 60px; margin: 0 auto;">
+                        <span onclick="countDown({{ product.key }})" class="glyphicon glyphicon-minus" style="cursor: pointer;"></span>
                         </b>
                     </div>
                     <div class="shopping-total-price float">

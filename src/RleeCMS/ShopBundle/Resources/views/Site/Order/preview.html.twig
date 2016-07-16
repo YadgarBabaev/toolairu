@@ -25,20 +25,21 @@
     				<td><img src="{{ product.src }}" alt="" class="img-responsive center-block" width="150"><h5>{{ product.name }}</h5></td>
     				<td class="color">
 						{% if product.type != 6 %}
-							{% for color in product.object.colors %}
+							{#{% for color in product.object.colors %}#}
 							<div>
-								<img src="/{{ color.getWebPath() }}" alt="" class="label-img-container color_{{ index }} {% if color.id == product.color %}active{% endif %}" data-id="{{ color.id }}" onclick="colorChange({{ index }},this);"/>
+								<img src="/{{ product.color.getWebPath() }}" alt="" class="label-img-container color_{{ index }} {#{% if color.id == product.color.id %}active{% endif %} #} active"
+									 data-id="{{ product.color.id }}" onclick="colorChange({{ index }},this);"/>
 							</div>
-							{% endfor %}
+							{#{% endfor %}#}
 						{% endif %}
 					</td>
     				<td class="size">
 						{% if product.type != 6 %}
-							{% for size in product.object.sizes %}
-								<label class="tabs-size-label size_{{ index }} {% if size.id == product.size %}active{% endif %}"
+							{#{% for size in product.object.sizes %}#}
+								<label class="tabs-size-label size_{{ index }} {#{% if size.id == product.size %}active{% endif %}#}"
 									   onclick="sizeChange({{ index }},this);"
-									   data-id="{{ size.id }}">{{ size }}</label>
-							{% endfor %}
+									   data-id="{{ product.size }}">{{ product.size }}</label>
+							{#{% endfor %}#}
 						{% else %}
 							<div>
 								<table class="table-bordered table-striped">
@@ -48,29 +49,27 @@
 											<td>{{ size }}</td>
 										{% endfor %}
 									</tr>
-									{% for color in product.object.colors %}
 										<tr>
 											<td>
-												<img src="/{{ color.getWebPath() }}" alt="" class="label-img-container">
+												<img src="/{{ product.color.getWebPath() }}" alt="" class="label-img-container">
 											</td>
 											{% for size in product.object.sizes %}
 												<td>
-													{% if product.infoTable[color.id~'_'~size.id] is defined %}
-														{{ product.infoTable[color.id~'_'~size.id] }}
+													{% if product.infoTable[size.id] is defined %}
+														{{ product.infoTable[size.id] }}
 													{% else %}
 														&times;
 													{% endif %}
 												</td>
 											{% endfor %}
 										</tr>
-									{% endfor %}
 								</table>
 							</div>
 						{% endif %}
     				</td>
     				<td class="count">
-						{% if product.type == 6 %}<b>{{ product.quantity }}</b>{% endif %}
-						<b {% if product.type == 6 %}style="display: none;" {% endif %}>
+						{#{% if product.type == 6 %}#}<b>{{ product.quantity }}</b>{#{% endif %}#}
+						<b {#{% if product.type == 6 %}#}style="display: none;" {#{% endif %}#}>
 							<span onclick="countUp({{ loop.index }})" class="glyphicon glyphicon-plus" style="cursor: pointer;"></span>
 							<input type="text" form="form_{{ loop.index }}" onchange="changeCount({{ index }});" class="quantityItem" data-price="{{ product.price }}" data-index="{{ loop.index }}" value="{{ product.quantity }}" id="q_{{ loop.index }}" name="count[{{ loop.index }}]" style="width: 60px; margin: 0 auto;">
 							<span onclick="countDown({{ loop.index }})" class="glyphicon glyphicon-minus" style="cursor: pointer;"></span>
@@ -98,7 +97,7 @@
 								<label class="tabs-size-label preorder_{{ index }} {% if type.length == product.prontoType %}active{% endif %}"
 									   for="{{ type.length }}month_{{ index }}"
 									   onclick="preorderChange({{ index }},this);" data-value="{{ type.length }}">
-									{{ type.length }} {% trans %}MONTH{% endtrans %}
+									 {{ 'prepayment'|trans }} {{ type.percent }}%
 									<input  id="{{ type.length }}month_{{ index }}" value="{{ type.length }}" type="radio"
 											name="month_{{ index }}[]">
 								</label>
@@ -192,6 +191,7 @@
 				data: {product_id: id},
 				success: function () {
 					$('#tr_'+$index).remove();
+					changeTotal(0);
 				}
 			});
 		}

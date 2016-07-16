@@ -108,7 +108,7 @@
                                     <div class="col-sm-9">
                                         {% for color in product.colors %}
                                             <label class="tabs-color-label" for="color_{{ color.id }}" title="{{ color }}"
-                                                   onclick="$('#product_form').data('color',{{ color.id }});"
+                                                   onclick="$('#product_form').data('color',{{ color.id }}); $('#q_{{ product.id }}').val(0);"
                                                    data-toggle="tooltip" data-placement="top">
 
                                                 <div class="label-img-container{% if color.id not in colorArray %} disabled{% endif %}">
@@ -159,22 +159,20 @@
                                         <b><span class="glyphicon glyphicon-plus"></span></b>
                                         {% trans %}Add to cart{% endtrans %}
                                     </button>
-                                    {% if app.user %}
-                                        <span id="wish_span">
-                                    {% if flag == false %}
+                                     <span id="wish_span">
+                                    {% if flag %}
+                                        <button id="" type="button" class="shop-btn shop-wishlist">
+                                            <img src="{{ asset('images/wishlist.png') }}"/>
+                                            {% trans %}ADD TO WISH{% endtrans %}
+                                        </button>
+                                    {% else %}
                                         <a id="addWish" class="shop-btn shop-wishlist"
                                            onclick="addWish('{{ product.id }}')">
                                             <b><span class="glyphicon glyphicon-plus"></span></b>
                                             {% trans %}ADD TO WISH {% endtrans %}
                                         </a>
-                                    {% else %}
-                                        <button id="" type="button" class="shop-btn shop-wishlist">
-                                            <img src="{{ asset('images/wishlist.png') }}"/>
-                                            {% trans %}ADD TO WISH{% endtrans %}
-                                        </button>
                                     {% endif %}
                                         </span>
-                                    {% endif %}
                                 </div>
                             </div>
                                 {#{% if countStores > 0 %}#}
