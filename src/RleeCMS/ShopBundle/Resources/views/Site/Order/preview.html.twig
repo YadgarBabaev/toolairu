@@ -94,13 +94,15 @@
     				<td class="preorder">
 						{% if product.type == 6 %}
 							{% for type in prontoTypes %}
-								<label class="tabs-size-label preorder_{{ index }} {% if type.length == product.prontoType %}active{% endif %}"
-									   for="{{ type.length }}month_{{ index }}"
-									   onclick="preorderChange({{ index }},this);" data-value="{{ type.length }}">
-									 {{ 'prepayment'|trans }} {{ type.percent }}%
-									<input  id="{{ type.length }}month_{{ index }}" value="{{ type.length }}" type="radio"
-											name="month_{{ index }}[]">
-								</label>
+								{% if type.length == product.prontoType %}
+									<label class="tabs-size-label preorder_{{ index }} active"
+										   for="{{ type.length }}month_{{ index }}"
+										   onclick="preorderChange({{ index }},this);" data-value="{{ type.length }}">
+										 {{ 'prepayment'|trans }} {{ type.percent }}%
+										<input  id="{{ type.length }}month_{{ index }}" value="{{ type.length }}" type="radio"
+												name="month_{{ index }}[]">
+									</label>
+								{% endif %}
 							{% endfor %}
 						{% endif %}
 						<form id="form_{{ loop.index }}" onsubmit="return false;" class="cart_form" method="POST" action="{{ path('site_cart_update') }}">
@@ -113,7 +115,9 @@
 							<input type="hidden" name='type' value="{{ product.type }}"/>
 						</form>
 					</td>
-					<td><a href="#!" onclick="previewDelProduct({{ product.id }},{{ index }});">{{ 'remove'|trans }}</a></td>
+					<td>
+						<a href="#!" onclick="previewDelProduct({{ product.id }},{{ index }});">{{ 'remove'|trans }}</a>
+					</td>
     			</tr>
 		{% endfor %}
     		</tbody>

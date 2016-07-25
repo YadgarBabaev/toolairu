@@ -14,6 +14,7 @@
                     </li>
                 {% endfor %}
                 <li class="shop-category-item" style="float: right; margin: 10px;">
+                    {% if catId == 7 %}
                     <form id="store_select_form" action="{{ path('category_'~catId) }}">
                         <select name="store" class="form-control" onchange="$('#store_select_form').submit();">
                             {% for store in stores %}
@@ -24,6 +25,7 @@
                             {% endfor %}
                         </select>
                     </form>
+                    {% endif %}
                 </li>
             </ul>
         </div>

@@ -40,6 +40,10 @@
                 <label class="text-left">
                     {{ form_row(form.pIndex) }}
                 </label>
+            <div>
+                {{ 'Note_for_delivery'|trans|raw }}
+            </div>
+            <br>
             <h3 class="text-center">{{ 'Shipping method'|trans }}</h3>
             <label class="text-left">
                 {{ form_row(form.shippingMethod) }}
@@ -59,9 +63,11 @@
                     </div>
                     <div class="shopping-total-quantity">
                         <b>
-                        <span onclick="countUp({{ product.key }})" class="glyphicon glyphicon-plus" style="cursor: pointer;"></span>
-                          <input type="text" onchange="changeTotal();" class="quantityItem" data-price="{{ product.price }}" value="{{ product.quantity }}" id="q_{{ product.key }}" name="count[{{ product.key }}]" style="width: 60px; margin: 0 auto;">
-                        <span onclick="countDown({{ product.key }})" class="glyphicon glyphicon-minus" style="cursor: pointer;"></span>
+                        {#<span onclick="countUp({{ product.key }})" class="glyphicon glyphicon-plus" style="cursor: pointer;"></span>#}
+                          <input type="text" onchange="changeTotal();" disabled="disabled"
+                                 class="quantityItem" data-price="{{ product.price }}" value="{{ product.quantity }}"
+                                 id="q_{{ product.key }}" name="count[{{ product.key }}]" style="width: 60px; margin: 0 auto; border: none;">
+                        {#<span onclick="countDown({{ product.key }})" class="glyphicon glyphicon-minus" style="cursor: pointer;"></span>#}
                         </b>
                     </div>
                     <div class="shopping-total-price float">
@@ -75,14 +81,38 @@
                 </div>
             {% endfor %}
             <div class="shopping-row">
-                <div class="shopping-footer-total text-right">{{ 'Subtotal'|trans }} <span class="total-price">
-                        {% if currency %}
-                        <span class="total_sum">{{ (sum/currency.rate)|round(2,'floor') }}</span> {{ currency.name }}
-                        {% elseif(shop.getMainCurrency().symbol) %}
-                        <span class="total_sum">{{ sum }}</span>
-                            {{ shop.getMainCurrency().symbol }}
+                <div class="shopping-footer-total text-right">
+                    <div>
+                        <label style="display: inline-block;">{{ 'Sum'|trans }}: </label>
+                         <span  class="total-price">
+                            {% if currency %}
+                            <span class="total_sum">{{ (sum/currency.rate)|round(2,'floor') }}</span>
+                            {{ currency.name }}
+                            {% elseif(shop.getMainCurrency().symbol) %}
+                            <span class="total_sum">{{ sum }}</span>
+                                {{ shop.getMainCurrency().symbol }}
                         {% endif %}
-                    </span>
+                         </span>
+                    </div>
+                    <div>
+                        <label style="display: inline-block;">{{ 'delivery'|trans }}: </label>
+                        <span class="total-price" id="delivery">0</span>
+                    </div>
+                    <div>
+                        {{ 'Subtotal'|trans }}
+                        <span  class="total-price">
+                            {% if currency %}
+                                <span class="index_total_all">{{ (sum/currency.rate)|round(2,'floor') }}</span>
+                                {{ currency.name }}
+                            {% elseif(shop.getMainCurrency().symbol) %}
+                                <span  class="index_total_all">{{ sum }}</span>
+                                {{ shop.getMainCurrency().symbol }}
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div>
+                        {#<label>{{ 'prepayment'|trans }}</label><span id="prepayment"></span>#}
+                    </div>
                 </div>
 
             </div>
@@ -105,6 +135,7 @@
     <script type="text/javascript">
         $(document).ready(function(){
             changeTotal();
+            setDelivery(0);
         });
         function countUp($id){
             var cnt = parseInt($("#q_"+$id).val());
@@ -134,6 +165,12 @@
             });
 
             $('.shopping-footer-total .total_sum').html($total);
+        }
+        function setDelivery($coast){
+            var sum = parseInt($('.shopping-footer-total .total_sum').html());
+            var total = sum + $coast;
+            $('.index_total_all').html(total);
+            $('#delivery').html($coast);
         }
     </script>
 {% endblock %}

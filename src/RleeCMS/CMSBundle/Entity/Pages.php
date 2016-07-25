@@ -138,6 +138,38 @@ class Pages implements Translatable
     private $images;
 
     /**
+     * @var array
+     * @ORM\Column(name="main_images", type="array", nullable=true)
+     */
+    private $mainImages;
+
+    /**
+     * @return array
+     */
+    public function getMainImages()
+    {
+        return $this->mainImages;
+    }
+
+    /**
+     * @param array $mainImages
+     */
+    public function setMainImages($mainImages)
+    {
+        $this->mainImages = $mainImages;
+    }
+
+    /**
+     * @return null
+     */
+    public function getMainImage(){
+        if(isset($this->mainImages[0])){
+            return $this->mainImages[0];
+        }else
+            return null;
+    }
+
+    /**
      * @return array
      */
     public function getImages()

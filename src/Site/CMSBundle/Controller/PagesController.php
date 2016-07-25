@@ -73,7 +73,7 @@ class PagesController extends Controller
         if ($menu->getType() == 'blog') {
             $content = $menu->getPage();
             $news = $content->getChildren();
-            $img = array();
+//            $img = array();
             $arrayNews = array();
             foreach ($news as $new) {
                 $arrNews = array(
@@ -83,18 +83,19 @@ class PagesController extends Controller
                     'title' => $new->getTitle(),
                     'fullName' => $new->getFullName(),
                     'content' => $new->getContent(),
-                    'published' => $new->getPublished()
+                    'published' => $new->getPublished(),
+                    'img' => $new->getMainImage()
                 );
-                preg_match('/<img[^>]+>/i', $new->getContent(), $res);
-                if (!empty($res)) {
-                    $img[$new->getId()] = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $res[0]);
-                }
+//                preg_match('/<img[^>]+>/i', $new->getContent(), $res);
+//                if (!empty($res)) {
+//                    $img[$new->getId()] = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $res[0]);
+//                }
                 $arrayNews[$new->getId()] = $arrNews;
             }
             return $this->render('CMSBundle:Pages:blog.html.twig', array(
                 'content' => $arrayContent,
                 'news' => $arrayNews,
-                'img' => $img,
+//                'img' => $img,
                 '_route' => $request->attributes->get('_route'),
                 'published' => $published,
             ));

@@ -27,10 +27,48 @@ class ShippingMethods
     private $name;
 
     /**
-     * @var string
-     * @ORM\Column(name="url", type="string", length=255, nullable=true)
+     * @ORM\Column(name="type", type="integer", nullable=true)
      */
-    private $url;
+    private $type;
+
+    /**
+     * @ORM\Column(name="coast", type="float", nullable=true)
+     */
+    private $coast;
+
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param mixed $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCoast()
+    {
+        return $this->coast;
+    }
+
+    /**
+     * @param mixed $coast
+     */
+    public function setCoast($coast)
+    {
+        $this->coast = $coast;
+    }
+
+
 
     public function __toString()
     {

@@ -2,6 +2,8 @@
 
 namespace RleeCMS\UserBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
+use RleeCMS\UserBundle\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -19,6 +21,8 @@ class OrdersType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $translator = $options['translator'];
+        /** @var User $user */
+        $user = $options['user'];
 
         $builder
             ->add('email',EmailType::class,array(
@@ -69,6 +73,22 @@ class OrdersType extends AbstractType
                 "class" =>'RleeCMS\ReferenceBundle\Entity\ShippingMethods',
                 "required" => true,
                 'horizontal' => false,
+                'query_builder' => function(EntityRepository $er) use ($user){
+                    $qb = $er->createQueryBuilder('m');
+                    if($user and $user->getLegalPerson()){
+                        $qb->where('m.type = 2');
+                    }else{
+                        $qb->where('m.type = 1');
+                    }
+                    return $qb;
+
+                },
+                'choices_as_values' => true,
+                'choice_attr' => function($val, $key, $index) {
+                    return array(
+                            'onclick' => "setDelivery(".$val->getCoast().");"
+                        );
+                },
             ))
         ;
     }
@@ -80,7 +100,8 @@ class OrdersType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'RleeCMS\UserBundle\Entity\Orders',
-            'translator' => null
+            'translator' => null,
+            'user' => null
         ));
     }
 }

@@ -29,8 +29,8 @@
             <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
             {{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}
             &nbsp;
-            <a onclick="addImage(this)" {% for attrname,attrvalue in widget_add_btn %} {{ attrname }}="{{ attrvalue }}"{% endfor %} data-collection-add-btn=".{{ form.vars['id'] }}_form_group">
-            <i class="fa fa-plus-circle"></i>
+            <a onclick="addImage{{ id }}(this)" {% for attrname,attrvalue in widget_add_btn %} {{ attrname }}="{{ attrvalue }}"{% endfor %} data-collection-add-btn=".{{ form.vars['id'] }}_form_group">
+            <i class="glyphicon glyphicon-plus"></i>
             </a>
             </label>
         {%- endif -%}
@@ -42,7 +42,7 @@
             {% if value %}
                 {% for image in value %}
                     <div class="col-md-3">
-                        <a class="thumbnail" onclick="initJS(this)" href="javascript:" data-toggle="popover">
+                        <a class="thumbnail" onclick="initJS{{ id }}(this)" href="javascript:" data-toggle="popover">
                             <img width="100%" src="{{ image }}" data-holder-rendered="true">
                         </a>
                         <input type="hidden" value="{{ image }}" name="{{ full_name }}[]">
@@ -54,10 +54,11 @@
             function rem(e) {
                 $(e).parent().parent().parent().remove();
             }
-            function initJS(e) {
+            function initJS{{ id }}(e) {
                 if ($(e).attr('data-original-title') == undefined) {
                     $(e).popover({
-                        content: '<a class="btn btn-danger" onclick="rem(this)" href="javascript:" title="Удалить"><i class="fa fa-trash-o"></a>',
+                        content: '<a class="btn btn-danger" onclick="rem(this)" href="javascript:" title="Удалить">' +
+                        '<i class="glyphicon glyphicon-remove"></i></a>',
                         html: true,
                         placement: 'right',
                         trigger: 'click'
@@ -68,16 +69,16 @@
             }
             function setValue(value, element_id) {
                 html = '<div class="col-md-3">' +
-                        '<a class="thumbnail" onclick="initJS(this)" href="javascript:" data-toggle="popover">' +
+                        '<a class="thumbnail" onclick="initJS{{ id }}(this)" href="javascript:" data-toggle="popover">' +
                         '<img width="100%" src="' + value + '" data-holder-rendered="true">' +
                         '</a>' +
-                        '<input type="hidden" value="' + value + '" name="{{ full_name }}[]">' +
+                        '<input type="hidden" value="' + value + '" name="'+element_id.replace("_","[")+'][]">' +
                         '</div>';
-                $('#div_{{ id }}').append(html);
-                $('#fileBrowser_{{ id }}').modal('hide');
-                initJS();
+                $('#div_'+element_id).append(html);
+                $('#fileBrowser_'+element_id).modal('hide');
+                initJS{{ id }}();
             }
-            function addImage(e){
+            function addImage{{ id }}(e){
                 $('#modal_body_{{ id }}').html('<iframe id="frame_{{ id }}" src="{{ path('elfinder') }}?id={{ id }}" width="100%"></iframe>');
                 $('#fileBrowser_{{ id }}').modal('show');
                 $('#frame_{{ id }}').ready(function () {

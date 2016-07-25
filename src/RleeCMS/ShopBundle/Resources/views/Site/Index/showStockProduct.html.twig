@@ -82,7 +82,7 @@
                                 <div class="col-sm-9">
                                     {% for size in product.sizes %}
                                         <label class="tabs-size-label{% if size.id not in sizeArray %} disabled{% endif %}" for="size_{{ size.id }}"
-                                               onclick="$('#product_form').data('size',{{ size.id }});">
+                                               onclick="$('#product_form').data('size',{{ size.id }});  $('#q_{{ product.id }}').val(0);">
                                             {{ size }}
                                             <input {% if size.id not in sizeArray %}disabled="disabled"{% endif %} id="size_{{ size.id }}" value="{{ size.id }}" type="radio"
                                                    name="size">

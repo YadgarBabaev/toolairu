@@ -67,10 +67,10 @@ class IndexController extends Controller
             ->createQueryBuilder('p')
             ->leftJoin('p.categories', 'c')
             ->leftJoin('p.filters', 'f')
-            ->leftJoin('RleeCMSShopBundle:ProductStore','ps', 'WITH','p.id =ps.product')
             ->andWhere('p.status = 1');
-        if($session->get('store')){
+        if($session->get('store') && $catId != 6){
             $products = $products ->andWhere('ps.store = :store')
+                ->leftJoin('RleeCMSShopBundle:ProductStore','ps', 'WITH','p.id =ps.product')
                 ->setParameter('store', $session->get('store'));
         }
 
@@ -325,13 +325,17 @@ class IndexController extends Controller
             $flag = true;
         }
 
-        $stores = $em
+        $qb = $em
             ->getRepository('RleeCMSShopBundle:ProductStore')
             ->createQueryBuilder('s')
             ->andWhere('s.product = :pId')
             ->andWhere('s.count != 0')
-            ->setParameter('pId', $product->getId())
-            ->getQuery()->getResult();
+            ->setParameter('pId', $product->getId());
+        if($session->get('store')){
+            $qb->andWhere('s.store = :store')
+                ->setParameter('store', $session->get('store'));
+        }
+        $stores = $qb->getQuery()->getResult();
         $countStores = count($stores);
         $colorArray = array();
         $sizeArray = array();

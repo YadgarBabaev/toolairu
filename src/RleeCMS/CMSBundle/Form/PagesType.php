@@ -111,6 +111,17 @@ class PagesType extends AbstractType
                         ),
                 )
             )
+            ->add('mainImages', FileBrowserType::class, array(
+                'label' => 'Фотография для обложки(будет использоватся только первый)',
+
+                'allow_add' => true,
+                'widget_add_btn' => array(
+                    'class' => 'btn btn-success'
+                ),
+                'allow_delete' => true,
+                'prototype' => false,
+//                'prototype_name'=> 'text'
+            ))
             ->add('images', FileBrowserType::class, array(
                 'label' => 'Фотографии слайдера',
 
@@ -119,7 +130,7 @@ class PagesType extends AbstractType
                     'class' => 'btn btn-default',
                 ),
                 'allow_delete' => true,
-                //'prototype' => true,
+                'prototype' => false,
             ));
     }
 

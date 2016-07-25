@@ -58,19 +58,34 @@ class OrderController extends Controller
           $size = $this->getDoctrine()->getRepository('RleeCMSShopBundle:Size')->find($item['size']);
 
             if($product){
+                $quantity = $item['quantity'];
+                $sizes = $size->getSize();
+
+                foreach($products as $p){
+                    if($p['type'] == $item['type'] and ($p['id'] == $product->getId()) and $p['colorId'] == $item['color']){
+                        $key = $p['key'];
+                        $quantity = $quantity + intval($p['quantity']);
+                        $sizes = $p['size'].','.$size->getSize();
+                        break;
+                    }
+                }
+
                 $images = $product->getImages();
                 if($product->getWebPath()){
                     $products[$key]['src'] = $images[0];
                 }else{
                     $products[$key]['src'] = $product->getWebPath();
                 }
+
+
                 $products[$key]['key'] = $key;
                 $products[$key]['id'] = $product->getId();
                 $products[$key]['name'] = $product->getName();
-                $products[$key]['size'] = $size->getSize();
+                $products[$key]['size'] = $sizes;
                 $products[$key]['color'] = $color->getName();
+                $products[$key]['colorId'] = $color->getId();
                 $products[$key]['price'] = $item['type']==6?$product->getPriceB2B():$product->getPrice();
-                $products[$key]['quantity'] = $item['quantity'];
+                $products[$key]['quantity'] = $quantity;
                 $products[$key]['type'] = $item['type'];
                 $products[$key]['prontoType'] = isset($item['prontoType'])?$item['prontoType']:0;
 
@@ -194,7 +209,8 @@ class OrderController extends Controller
             }
         }
         return $this->createForm('RleeCMS\UserBundle\Form\OrdersType', $order,array(
-            'translator'=>$translator
+            'translator'=>$translator,
+            'user' => $user
         ));
     }
 
@@ -217,7 +233,7 @@ class OrderController extends Controller
             if($product){
 
                 foreach($products as $p){
-                    if($p['type'] == $item['type'] and $p['id'] == $product->getId() and $item['type']==6 and $p['color'] == $item['color']){
+                    if($p['type'] == $item['type'] and $p['id'] == $product->getId() /*and $item['type']==6*/ and $p['color']->getId() == $item['color']){
                         $key = $p['key'];
                         $quantity = $quantity + intval($p['quantity']);
                         $info = $p['infoTable'];

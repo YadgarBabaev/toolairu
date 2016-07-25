@@ -17,7 +17,8 @@
             <tr>
                 <th>Id</th>
                 <th>Наименование</th>
-                <th>URL</th>
+                <th>Тип</th>
+                <th>Стоимость</th>
                 <th>Действия</th>
             </tr>
             </thead>
@@ -27,7 +28,10 @@
                     <td>{{ entity.id }}</td>
                     <td><a href="{{ path('admin_ref_shipping_methods_edit', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
                     <td>
-                        {{ entity.url }}
+                        {{ entity.type }}
+                    </td>
+                    <td>
+                        {{ entity.coast }}
                     </td>
                     <td>
                         <a class="btn btn-danger" href="{{ path('admin_ref_shipping_methods_delete', { 'id': entity.id }) }}">Удалить <i class="fa fa-fw fa-minus-square-o"></i></a>

@@ -14,13 +14,16 @@
                              class="col-md-6 item">
                             {#<span class="date-news">{{ page.published|date('d.m.y') }}</span>#}
                             {% set alias = '/'~content.alias~'/'~page.alias~'.html' %}
-                            {% if img[page.id] is defined %}
+                            {#{% if img[page.id] is defined %}#}
                                 {#<a title="{{ page.title }}" href="{{ alias }}">#}
-                                {{ img[page.id]|raw }}
+                                {#{{ img[page.id]|raw }}#}
                                 {#</a>#}
-                            {% endif %}
+                            {#{% endif %}#}
                             <div class="caption">
                                 <h4>{{ page.fullName|raw }}</h4>
+                                <a title="{{ page.title }}" href="{{ alias }}">
+                                    <img src="{{ page.img }}">
+                                </a>
                                 {% set page_content = ((page.content|striptags)|slice(0,500))|raw %}
                                 <p>{{ page_content|raw }}</p>
                                 <div class="text-center">

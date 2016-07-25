@@ -98,7 +98,7 @@
                 language: 'ru',
                 todayBtn: true
             });
-            {% if params %}
+            {% if params is defined %}
             {% if params.hide[0] is defined %}
             {% if params.hide[0] == "hideTitle" %}
             $('#pages_hide_0').prop('checked', true);
@@ -121,6 +121,9 @@
             min-height: 500px;
         }
         #frame_pages_images{
+            min-height: 500px;
+        }
+        #frame_pages_mainImages{
             min-height: 500px;
         }
     </style>
