@@ -26,6 +26,14 @@
 
                 </tr>
                 <tr>
+                    <th>Статус</th>
+                    <td> {{ entity.status }} </td>
+                </tr>
+                <tr>
+                    <th>Дата заказа</th>
+                    <td> {{ entity.date|date('d.m.Y H:i:s') }} </td>
+                </tr>
+                <tr>
                     <th>Email</th>
                     <td> {{ entity.email }} </td>
                 </tr>
@@ -75,6 +83,7 @@
             <br>
             <br>
             <div class="col-xs-12">
+                {% set total = 0 %}
             {% for product in entity.products %}
                 <div style="display: inline-block; width: 300px;">
                     <table>
@@ -94,6 +103,27 @@
                                 Размер: <label>{{ product.size }}</label><br>
                                 Цвет: <label>{{ product.color }}</label><br>
                                 Количество: <label>{{ product.count }}</label>
+                                Цена: <label>
+                                    {% if product.type and product.type.id == 6 %}
+                                        {{ product.product.priceB2B }}
+                                        {% set sum = product.count * product.product.priceB2B %}
+                                    {% else %}
+                                        {{ product.product.price }}
+                                        {% set sum = product.count * product.product.price %}
+                                    {% endif %}
+                                </label>
+                                Сумма: <label>
+                                    {{ sum }}
+                                    {% set total = total + sum %}
+                                </label>
+                                <br>
+                                Тип заказа: <label>
+                                    {% if product.type and product.type.id == 6 %}
+                                        B2B
+                                    {% else %}
+                                        B2C
+                                    {% endif %}
+                                </label>
                             </td>
                         </tr>
                     </table>
@@ -106,6 +136,11 @@
                     <br>
                 </div>
             {% endfor %}
+                <br>
+                <br>
+                <strong>Сумма заказа: {{ total }}</strong>
+                <br>
+                <br>
             </div>
 <br>
 <br>

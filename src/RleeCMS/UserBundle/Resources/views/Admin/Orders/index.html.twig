@@ -32,6 +32,8 @@
                     <th>Фио</th>
                     <th>Адресс</th>
                     <th>Номер</th>
+                    <th>Статус</th>
+                    <th>Дата заказа</th>
                     <th>Действия</th>
                 </tr>
                 </thead>
@@ -46,6 +48,12 @@
                         </td>
                         <td>
                             {{ order.phone }}
+                        </td>
+                        <td>
+                            {{ order.status }}
+                        </td>
+                        <td>
+                            {{ order.date|date('d.m.Y H:i:s') }}
                         </td>
                         <td>
 

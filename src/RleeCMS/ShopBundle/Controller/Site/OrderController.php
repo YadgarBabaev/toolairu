@@ -121,6 +121,10 @@ class OrderController extends Controller
             if($user){
               $order->setUser($user);
             }
+            $orderStatus = $this->getDoctrine()->getRepository('AdminReferenceBundle:OrderStatus')->find(1);
+            if($orderStatus){
+                $order->setStatus($orderStatus);
+            }
             $em->persist($order);
             $em->flush();
             $cookie = new Cookie('cart', serialize(array()), 0, '/', null, false, false);

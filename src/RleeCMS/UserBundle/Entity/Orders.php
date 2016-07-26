@@ -45,6 +45,29 @@ class Orders
     private $lName;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $date;
+
+    /**
+     * @return mixed
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param mixed $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+
+
+
+    /**
      * @var string
      * @ORM\Column(type="string", length=255, name="address", nullable=true)
      */
@@ -395,6 +418,7 @@ class Orders
     public function __construct()
     {
         $this->products = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->date = new \DateTime('now');
     }
 
     /**
