@@ -2,6 +2,7 @@
 
 namespace RleeCMS\ShopBundle\Controller\Site;
 
+use RleeCMS\CMSBundle\Entity\Pages;
 use RleeCMS\ShopBundle\Entity\Feedback;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
@@ -92,6 +93,16 @@ class FeedbackController extends Controller
         $session->remove('message');
         $form = $this->createForm('RleeCMS\ShopBundle\Form\FeedbackType', $feedback);
         $form->handleRequest($request);
+        $type = $request->query->getInt('type');
+        switch($type){
+            case 15:
+                $page = $this->getDoctrine()->getRepository('AdminCMSBundle:Pages')->find(15);
+                break;
+            default :
+                $page = $this->getDoctrine()->getRepository('AdminCMSBundle:Pages')->find(6);
+                break;
+        }
+
         if($form->isSubmitted() and  $form->isValid()){
             $em = $this->getDoctrine()->getManager();
             $em->persist($feedback);
@@ -103,7 +114,8 @@ class FeedbackController extends Controller
         return $this->render('RleeCMSShopBundle:Site/Feedback:contacts.html.twig',
             array(
                 'form' => $form->createView(),
-                'message' => $message
+                'message' => $message,
+                'page' => $page
             ));
     }
 

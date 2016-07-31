@@ -5,33 +5,15 @@
 		<div class="col-md-7">
 			<div class="col-sm-3 col-sm-offset-1 terms-menu">
 				<ul>
-					<li><a class="terms-link" href="#">Магазины <!--span class="terms-link-span">(Copyrights & Trademark)</span--></a></li>
-					<li><a class="terms-link" href="#">Агенты</a></li>
+					<li><a class="terms-link" href="{{ path('site_contacts') }}">Магазины <!--span class="terms-link-span">(Copyrights & Trademark)</span--></a></li>
+					<li><a class="terms-link" href="{{ path('site_contacts',{'type': 15 }) }}">Агенты</a></li>
 				</ul>
 			</div>
 
 			<div class="col-sm-7 terms-content">
-				<h4>Контакты</h4>
-
-				<p><strong>TOOLAI-FASHION</strong></p>
-
-				<p>ИП БЕЙШЕНОВА С.К</p>
-
-				<p>ИНН: 11911197800749</p>
-
-				<p>ОКПО: 29175022</p>
-
-				<p>ДЗЕРЖИНСКОГО 30, Г.БАЛЫКЧЫ</p>
-
-				<p>КЫРГЫЗСТАН</p>
-
-				<p>Т: +996 3944 70590</p>
-
-				<p>М: +996 707 91 43 35</p>
-
-				<p>Е: toolai.fashion@gmail.com , aseleleonora.b@gmail.com</p>
-
-				<p>W: www.tоolai-fashion.com , www.toolai-fashion.ru</p>
+				{% if page %}
+					{{ page.content|raw }}
+				{% endif %}
 			</div>
 
 		</div>
