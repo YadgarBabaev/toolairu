@@ -33,6 +33,7 @@ class AppKernel extends Kernel
             new Site\CMSBundle\CMSBundle(),
             new RleeCMS\ShopBundle\RleeCMSShopBundle(),
             new RleeCMS\UserBundle\UserBundle(),
+            new XpatBundle\XpatBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

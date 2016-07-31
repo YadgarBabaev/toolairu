@@ -1,3 +1,8 @@
+xpat:
+    resource: "@XpatBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 cms_pages_Extra:
     resource: .
     type: extra

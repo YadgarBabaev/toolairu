@@ -144,6 +144,10 @@ class Builder
                 'route' => 'admin_subscribe',
                 'icon' => 'envelope')
         );
+        $menu->addChild('База email рассылки', array(
+                'route' => 'email_db_index',
+                'icon' => 'envelope')
+        );
         $menu->addChild('Обратная связь', array(
                 'route' => 'admin_cms_feedback',
                 'icon' => 'envelope')

@@ -143,11 +143,16 @@ class SubscribeController extends Controller
                 ->andWhere('lp.id IS NULL');
         }
         $emails = $qb->getQuery()->getResult();
+        $emailDb = $this->getDoctrine()->getRepository('RleeCMSAdminBundle:EmailDb')->findBy(array(
+            'status' => 1
+        ));
         $mail_array = array();
         foreach ($emails as $mail) {
             $mail_array[] = $mail['email'];
         }
-//        var_dump($mail_array);die;
+        foreach($emailDb as $db){
+            $mail_array[] = $db->getName();
+        }
         if  (count($mail_array) > 0) {
             $mail_array = array_unique($mail_array);
             foreach ($mail_array as $key => $value) {
