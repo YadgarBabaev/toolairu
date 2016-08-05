@@ -105,14 +105,7 @@ $(window).resize(function(){
             
     
 
-		$('.shop-carousel').bxSlider({
-			mode: 'vertical',
-			pager: false,
-			maxSlides: 3,
-			minSlides: 3,
-			moveSlides: 1,
-			slideWidth: 160
-		});
+		
 
 
 
@@ -124,11 +117,22 @@ $(window).resize(function(){
 
 
                 
-                $(window).resize(function(){
+                $(window).resize(function zurz(){
 
                     if ($(window).width() <= 767) {  
 
                     $('.zoomContainer').remove();
+
+
+                    $('.shop-carousel').bxSlider({
+            /*mode: 'vertical',*/
+                        pager: false,
+                        maxSlides: 3,
+                        minSlides: 3,
+                        moveSlides: 1,
+                        slideWidth: 160
+                    });
+                    
 
                 }     
 

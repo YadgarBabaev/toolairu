@@ -3,6 +3,7 @@
 {% block content %}
     <h2 class="page-title">{{ 'Shopping cart'|trans }}</h2>
     <div class="container">
+    	<div style="overflow-x: scroll;">
     	<table class="table checkout-table">
     		<thead class="text-center">
     			<tr>
@@ -122,6 +123,7 @@
 		{% endfor %}
     		</tbody>
     	</table>
+    	</div>
     	<div class="sub-total text-right">
     		<h4>{{ 'Subtotal'|trans }}: <span>
 					 {% if currency %}
@@ -135,8 +137,8 @@
     	<div class="row result-links">
     		<div class="col-md-10 col-md-offset-1">
     			<div class="row">
-    				<div class="col-md-6 text-left"><a href="{{ path('category_1') }}" class="tomag">{{ 'In shop'|trans }}</a></div>
-    				<div class="col-md-6 text-right"><a href="{{ path('site_order') }}" class="checkout-btn">{{ 'Check out'|trans }}</a></div>
+    				<div class="col-md-6 text-center"><a href="{{ path('category_1') }}" class="tomag tomag-order">{{ 'In shop'|trans }}</a></div>
+    				<div class="col-md-6 text-center"><a href="{{ path('site_order') }}" class="checkout-btn">{{ 'Check out'|trans }}</a></div>
     			</div>
     		</div>
     	</div>

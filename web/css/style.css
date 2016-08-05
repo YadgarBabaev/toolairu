@@ -1316,6 +1316,14 @@ form {
 .blog .caption h4 {
     margin-top: 0 !important;
 }
+.blog .item a.more {
+      background: #e08283;
+    padding: 5px 15px;
+    color: #fff;
+    margin: 10px;
+    display: inline-block;
+    font-size: 14px;
+}
 .blog img {
     max-height: 310px;
     display: block;
@@ -1395,21 +1403,21 @@ body,html {
     box-shadow: none!important;
 }
 .bx-wrapper .bx-prev {
-    left: 0!important;
+    /* left: 0!important;
     right: 0!important;
     top: 0!important;
     margin: auto;
     background: url(images/controls.png) no-repeat 0 -32px;
-    transform: rotate(90deg);
+    transform: rotate(90deg); */
 }
 .bx-wrapper .bx-next {
-    left: 0!important;
+    /* left: 0!important;
     right: 0!important;
     bottom: 0!important;
     top: auto!important;
     margin: auto;
     background: url(images/controls.png) no-repeat 0 -32px;
-    transform: rotate(90deg);
+    transform: rotate(90deg); */
 }
 .page-title {
     background: #f5f7f8;
@@ -1515,8 +1523,43 @@ body,html {
     font-size: 18px;
     padding:  10px 20px;
 }
+@media (max-width: 992px){
+    .tomag-order {
+        margin-bottom: 15px;
+    }
+}
 @media (max-width: 768px){
     .collection-img {
         height: auto;
     }
+    .watch-now {
+        font-size: 16px;
+    }
+    .bag {
+        width: 100%;
+    }
+    .carousel a.watch-now {
+        right: 90px;
+    }
+        .shopping-row-name {
+            font-size: 10px;
+        }
+    .shopping-row-quantity,
+    .shopping-row-price{
+        font-size: 12px;
+    }
+    .shopping-row-quantity {
+        width:  20%;
+    }
+    .shopping-row-price {
+        width:  30%;
+    }
+
+}
+.shop-btn.shop-wishlist img {
+    padding: 5px;
+}
+#wish_span button {
+    background: #e08283;
+    color: #fff;
 }

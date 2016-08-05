@@ -30,10 +30,16 @@
                             <div class="collection-left-column">
                                 {% for mainPrev in mainPrevious %}
                                     {% if loop.index == 1 or loop.index == 3 %}
-                                        <div class="collection-item new-{{ loop.index }}">
+                                        <div class="collection-item new-{{ loop.index }}">  
                                             <img src="/images/shop/{{ mainPrev.logo }}" alt="">
-                                            <a href="/{{ alias }}/{{ mainPrev.alias }}.html" class="watch-now"
+                                            <div class="watch-overlay">
+                                                <div class="abs-center">
+                                                    <div class="cell">
+                                                    <a href="/{{ alias }}/{{ mainPrev.alias }}.html" class="watch-now"
                                                style="left: 242.5px;">{{ mainPrev }}</a>
+                                           </div>
+                                       </div>
+                                   </div>
                                         </div>
                                     {% endif %}
                                 {% endfor %}
@@ -45,8 +51,15 @@
                                     {% if loop.index == 2 or loop.index == 4 %}
                                         <div class="collection-item new-{{ loop.index }}">
                                             <img src="/images/shop/{{ mainPrev.logo }}" alt="">
+                                            <div class="watch-overlay">
+                                                <div class="abs-center">
+                                                    <div class="cell">
                                             <a href="/{{ alias }}/{{ mainPrev.alias }}.html" class="watch-now"
                                                style="left: 146.5px;">{{ mainPrev }}</a>
+                                           </div>
+                                           </div>
+                                           </div>
+                                           
                                         </div>
                                     {% endif %}
                                 {% endfor %}
