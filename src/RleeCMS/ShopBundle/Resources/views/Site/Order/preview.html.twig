@@ -32,6 +32,8 @@
 									 data-id="{{ product.color.id }}" onclick="colorChange({{ index }},this);"/>
 							</div>
 							{#{% endfor %}#}
+						{% else %}
+						<img src="/{{ product.color.getWebPath() }}" alt="" class="label-img-container">
 						{% endif %}
 					</td>
     				<td class="size">
@@ -45,15 +47,11 @@
 							<div>
 								<table class="table-bordered table-striped">
 									<tr>
-										<td>{{ 'COLOR'|trans }}</td>
 										{% for size in product.object.sizes %}
 											<td>{{ size }}</td>
 										{% endfor %}
 									</tr>
 										<tr>
-											<td>
-												<img src="/{{ product.color.getWebPath() }}" alt="" class="label-img-container">
-											</td>
 											{% for size in product.object.sizes %}
 												<td>
 													{% if product.infoTable[size.id] is defined %}

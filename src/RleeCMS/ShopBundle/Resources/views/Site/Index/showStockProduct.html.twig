@@ -41,9 +41,9 @@
 
                                 <div class="page-price">
                                     {% if currency %}
-                                        {{ product.priceB2B|number_format }} {{ currency.name }}
+                                        {{ product.price|number_format }} {{ currency.name }}
                                     {% elseif(shop.getMainCurrency().symbol) %}
-                                        {{ product.priceB2B|number_format }}
+                                        {{ product.price|number_format }}
                                         {{ shop.getMainCurrency().symbol }}
                                     {% endif %}
                                 </div>
@@ -95,7 +95,7 @@
                                 <div class="col-sm-9" style="padding-top: 5px;">
                                         <b>
                                             <span onclick="countDown({{ product.id }})" class="glyphicon glyphicon-minus" style="cursor: pointer;"></span>
-                                            <input type="text" value="0" id="q_{{ product.id }}" name="count" style="width: 40px; border: 1px solid silver; text-align: center; margin: 0 auto;">
+                                            <input type="text" value="0" id="q_{{ product.id }}" onchange="validCount({{ product.id }})" name="count" style="width: 40px; border: 1px solid silver; text-align: center; margin: 0 auto;">
                                             <span onclick="countUp({{ product.id }})" class="glyphicon glyphicon-plus" style="cursor: pointer;"></span>
                                         </b>
                                     <br>
@@ -212,6 +212,20 @@
             }else {
                 $("#q_"+$id).val(0);
             }
+        }
+
+        function validCount($id){
+            var $sizeId = $("#product_form").data('size');
+            var $colorId = $("#product_form").data('color');
+            var sum = 0;
+            $('.color_'+$colorId+'_size_'+$sizeId).each(function(){
+                sum = sum+ parseInt($(this).text());
+            });
+            var cnt = $('#q_'+$id);
+            if(cnt.val() > sum){
+                cnt.val(sum);
+            }
+            console.log(sum);
         }
 
         $(function () {

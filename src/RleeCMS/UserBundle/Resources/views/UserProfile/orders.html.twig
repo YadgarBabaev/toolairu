@@ -69,9 +69,11 @@
                             <td class="preorder">
                                 {% if item.type and  item.type.id == 6 %}
                                     {% for type in prontoTypes %}
-                                        <label class="tabs-size-label {% if type.length == item.prontoType %}active{% endif %}">
+                                        {% if type.length == item.prontoType %}
+                                        <label class="tabs-size-label active">
                                             {{ 'prepayment'|trans }} {{ type.percent }}
                                         </label>
+                                        {% endif %}
                                     {% endfor %}
                                 {% endif %}
                             </td>
