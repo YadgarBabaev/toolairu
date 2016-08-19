@@ -98,8 +98,8 @@ class FeedbackController extends Controller
             case 15:
                 $page = $this->getDoctrine()->getRepository('AdminCMSBundle:Pages')->find(15);
                 break;
-            case 17:
-                $page = $this->getDoctrine()->getRepository('AdminCMSBundle:Pages')->find(17);
+            case 21:
+                $page = $this->getDoctrine()->getRepository('AdminCMSBundle:Pages')->find(21);
                 break;
             default :
                 $page = $this->getDoctrine()->getRepository('AdminCMSBundle:Pages')->find(6);
