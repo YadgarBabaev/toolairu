@@ -207,7 +207,7 @@ class WidgetExtension extends \Twig_Extension
                 $check = true;
             } else if ($widget->getMenuCheck() == 'in_menu') {
                 foreach ($widget->getMenus() as $menu) {
-                    if ($menu->getId() == $this->request->get('menuId')) {
+                    if ($menu->getId() == $this->request->get('menuId') || $widget->getId()== $this->request->get('menuId')) {
                         $check = true;
                     }
                 }

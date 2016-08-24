@@ -40,12 +40,22 @@
                                 <h4 class="page-title">{{ product }}</h4>
 
                                 <div class="page-price">
+                                    <span {% if product.priceDiscount %} class="price-with-discount" {% endif %}>
+                                        {% if currency %}
+                                            {{ product.price|number_format() }} {{ currency.name }}
+                                        {% elseif(shop.getMainCurrency().symbol) %}
+                                            {{ product.price|number_format() }}
+                                            {{ shop.getMainCurrency().symbol }}
+                                        {% endif %}
+                                    </span>
+                                 {% if product.priceDiscount %}
                                     {% if currency %}
-                                        {{ product.price|number_format() }} {{ currency.name }}
+                                        {{ product.priceDiscount|number_format() }} {{ currency.name }}
                                     {% elseif(shop.getMainCurrency().symbol) %}
-                                        {{ product.price|number_format() }}
+                                        {{ product.priceDiscount|number_format() }}
                                         {{ shop.getMainCurrency().symbol }}
                                     {% endif %}
+                                {% endif %}
                                 </div>
                                 <div class="page-desc">{{ product.description|raw }}
                                 </div>

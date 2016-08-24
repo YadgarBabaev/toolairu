@@ -15,7 +15,7 @@
 
     <div class="box-footer">
         <div class="col-md-offset-3 col-md-9">
-            <button type="submit" class="btn btn-primary">Сохранить <i class="fa fa-fw fa-check-square-o"></i></button>
+            <button type="submit" onclick="$('#div_product_other_images input:hidden').attr('name','product[other][images][]');" class="btn btn-primary">Сохранить <i class="fa fa-fw fa-check-square-o"></i></button>
             <a class="btn btn-default" href="{{ path('admin_shop_product') }}">Отмена <i class="fa fa-fw fa-undo"></i></a>
         </div>
     </div>
