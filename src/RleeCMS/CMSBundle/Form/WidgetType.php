@@ -202,7 +202,7 @@ class WidgetType extends AbstractType
                     'choices' => array(
                         'Главное меню' => 'mainMenu',
                         'Нижнее меню' => 'footerMenu',
-                        'Левое меню только метиалы' => 'left_menu',
+                        'Левое меню только метериалы' => 'left_menu',
                         'right_menu' => 'right_menu',
                         'Карусель' => 'carousel',
                         'pink' => 'pink',
