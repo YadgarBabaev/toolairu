@@ -291,4 +291,12 @@ class OrderController extends Controller
         );
     }
 
+    /**
+     * @Route("/refund", name="site_order_refund")
+     * @Template()
+     */
+    public function refundAction(){
+        return array();
+    }
+
 }

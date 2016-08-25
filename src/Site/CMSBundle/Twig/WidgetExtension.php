@@ -201,13 +201,14 @@ class WidgetExtension extends \Twig_Extension
             ->add('where', 'w.position = :position AND w.status = true')
             ->setParameter('position', $position)
             ->getQuery()->getResult();
+
+        $check = false;
         foreach ($widgets as $widget) {
-            $check = false;
             if ($widget->getMenuCheck() == 'all') {
                 $check = true;
             } else if ($widget->getMenuCheck() == 'in_menu') {
                 foreach ($widget->getMenus() as $menu) {
-                    if ($menu->getId() == $this->request->get('menuId') || $widget->getId()== $this->request->get('menuId')) {
+                    if ($menu->getId() == $this->request->get('menuId')) {
                         $check = true;
                     }
                 }
@@ -236,9 +237,13 @@ class WidgetExtension extends \Twig_Extension
             }
             if ($check) {
                 return count($widgets);
-            } else {
-                return 0;
             }
+        }
+        if ($check) {
+            return count($widgets);
+        }
+        else {
+            return 0;
         }
 //        var_dump($widgets[0][1]);
 //        die;
