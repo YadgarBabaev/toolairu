@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
-
+{% block javascripts %}
+	<script src="{{ asset('dateTime/jquery.datetimepicker.js') }}" type="text/javascript"></script>
+{% endblock %}
+{% block stylesheets %}
+	<link href="{{ asset('dateTime/jquery.datetimepicker.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
 {% block content %}
 <div class="reg-form">
 	<hgroup>
@@ -9,75 +14,94 @@
    </hgroup>
    <div class="row refund">
    	<div class="col-md-8 col-md-offset-2">
+		{{ form_start(form) }}
    		<div class="form-group">
    			<div class="text-center">
-   				<label for="name" class="required">Имя</label>
+   				<label for="name" class="required">{{ 'Name'|trans }}</label>
    			</div>
-   			<input type="text" id="name" name="name" required="required" maxlength="255" class="form-control">
+   			{#<input type="text" id="name" name="name" required="required" maxlength="255" class="form-control">#}
+			{{ form_errors(form.userName) }}
+			{{ form_widget(form.userName) }}
    		</div>
    		<div class="form-group">
    			<div class="text-center">
-	   			<label for="name" class="required">Номер клиента</label>
+	   			<label for="name" class="required">{{ 'client_number'|trans }}</label>
 	   		</div>
-   			<input type="text" id="name" name="name" required="required" maxlength="255" class="form-control">
+   			{#<input type="text" id="name" name="name" required="required" maxlength="255" class="form-control">#}
+			{{ form_errors(form.clientNumber) }}
+			{{ form_widget(form.clientNumber) }}
    		</div>
    		<div class="form-group">
    			<div class="text-center">
-	   			<label for="order-number">Номер заказа</label>	
-	   			<label for="order-date">/Дата заказа/</label>	
-	   			<label for="order-date-get">Дата получения заказа</label>	
+	   			<label for="order-number">{{ 'order_number'|trans }}</label>
+	   			<label for="order-date">/{{ 'order_date'|trans }}/</label>
+	   			<label for="order-date-get">{{ 'shipping_date'|trans }}</label>
    			</div>
    			<div class="row">	
 					<div class="col-md-4">
-						<input type="text" id="order-number" name="name" required="required" maxlength="255" class="form-control">	
+						{#<input type="text" id="order-number" name="name" required="required" maxlength="255" class="form-control">	#}
+						{{ form_errors(form.orderNumber) }}
+						{{ form_widget(form.orderNumber) }}
 					</div>
 					<div class="col-md-4">
-						<input type="text" id="order-date" name="name" required="required" maxlength="255" class="form-control">	
+						{#<input type="text" id="order-date" name="name" required="required" maxlength="255" class="form-control">	#}
+						{{ form_errors(form.orderDate) }}
+						{{ form_widget(form.orderDate) }}
 					</div>
 					<div class="col-md-4">
-						<input type="text" id="order-date-get" name="name" required="required" maxlength="255" class="form-control">	
+						{#<input type="text" id="order-date-get" name="name" required="required" maxlength="255" class="form-control">	#}
+						{{ form_errors(form.shippingDate) }}
+						{{ form_widget(form.shippingDate) }}
 					</div>
 	   		</div>
    		</div>
    		<div class="form-group">
    			<div class="text-center">
    				<label for="order-refund-text"></label>
-   				<textarea id="order-refund-text" cols="30" rows="10" class="form-control"></textarea>
+   				{#<textarea id="order-refund-text" cols="30" rows="10" class="form-control"></textarea>#}
+				{{ form_errors(form.description) }}
+				{{ form_widget(form.description) }}
    			</div>
    		</div>
    		<div class="form-group">
    			<div class="text-center">
-	   			<label for="name" class="required">Банковский счет(для возврата денег)</label>
+	   			<label for="name" class="required">{{ 'reqvisit_for_refund'|trans }}</label>
 	   		</div>
-   			<input type="text" id="name" name="name" required="required" maxlength="255" class="form-control">
+   			{#<input type="text" id="name" name="name" required="required" maxlength="255" class="form-control">#}
+			{{ form_errors(form.reqvisit) }}
+			{{ form_widget(form.reqvisit) }}
    		</div>
    		<div class="form-group">
    			<div class="text-center">
-	   			<label for="name" class="required">Адрес</label>
+	   			<label for="name" class="required">{{ 'Address'|trans }}</label>
 	   		</div>
-   			<input type="text" id="name" name="name" required="required" maxlength="255" class="form-control">
+   			{#<input type="text" id="name" name="name" required="required" maxlength="255" class="form-control">#}
+			{{ form_errors(form.address) }}
+			{{ form_widget(form.address) }}
    		</div>
    		<div class="form-group">
    			<div class="text-center">
-	   			<label for="name" class="required">Почтовый адрес</label>
+	   			<label for="name" class="required">{{ 'post_address'|trans }}</label>
 	   		</div>
-   			<input type="text" id="name" name="name" required="required" maxlength="255" class="form-control">
+   			{#<input type="text" id="name" name="name" required="required" maxlength="255" class="form-control">#}
+			{{ form_errors(form.postAdress) }}
+			{{ form_widget(form.postAdress) }}
    		</div>
    		<div class="form-group">
    			<div class="text-center">
 	   			<label for="name" class="required">E-mail</label>
 	   		</div>
-   			<input type="text" id="name" name="name" required="required" maxlength="255" class="form-control">
+   			{#<input type="text" id="name" name="name" required="required" maxlength="255" class="form-control">#}
+			{{ form_errors(form.email) }}
+			{{ form_widget(form.email) }}
    		</div>
    		<div class="form-group text-center">
-   			<button class="reg-confirm">Отправить</button>
+   			<button class="reg-confirm">{{ 'send'|trans }}</button>
    		</div>
+		{{ form_end(form) }}
    	</div>
    </div>
 </div>
 {% endblock %}
 
-{% block javascripts %}
-
-{% endblock %}
 

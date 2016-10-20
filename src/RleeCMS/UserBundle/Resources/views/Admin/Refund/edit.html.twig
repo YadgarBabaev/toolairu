@@ -1,7 +1,7 @@
 {% extends "::adminBase.html.twig" %}
 {% block content_header %}
     <h1>
-        Заказы
+        Возвраты
         {#<small>Редактирование</small>#}
     </h1>
 {% endblock content_header %}
@@ -29,7 +29,7 @@
                 &nbsp;
                 &nbsp;
                 <input type="submit" class="btn btn-primary" value="Сохранить"/>
-                <a href="{{ path('admin_orders') }}" class="btn btn-default">Отмена</a>
+                <a href="{{ path('admin_refund') }}" class="btn btn-default">Отмена</a>
                 <br>
            {{ form_end(form) }}
             </div>

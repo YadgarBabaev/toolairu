@@ -152,6 +152,10 @@ class Builder
                 'route' => 'admin_cms_feedback',
                 'icon' => 'envelope')
         );
+        $menu->addChild('Возвраты', array(
+                'route' => 'admin_refund',
+                'icon' => 'envelope')
+        );
         if (strrpos($request->get('_route'), 'admin_subscribe_') !== false) {
             $menu['Рассылки']->setCurrent(true);
         }

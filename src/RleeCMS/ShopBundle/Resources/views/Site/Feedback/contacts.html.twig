@@ -1,5 +1,7 @@
 {% extends '::base.html.twig' %}
-
+{% block title %}
+	{{ 'contacts'|trans }}
+{% endblock %}
 {% block content %}
 	<div class="row">
 		<div class="col-md-{% if page and page.id == 6 %}7{% else %}12{% endif%}">

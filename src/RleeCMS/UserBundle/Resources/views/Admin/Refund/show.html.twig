@@ -1,0 +1,89 @@
+{% extends "::adminBase.html.twig" %}
+{% block content_header %}
+    <h1>
+        Возвраты
+        {#<small>Список</small>#}
+    </h1>
+{% endblock content_header %}
+{% block content %}
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Просмотр</h3>
+
+            <div class="box-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                </div>
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body table-responsive no-padding">
+
+            <br>
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th>ID</th>
+                    <td> {{ entity.id }} </td>
+
+                </tr>
+                <tr>
+                    <th>Имя</th>
+                    <td> {{ entity.userName }} </td>
+                </tr>
+                <tr>
+                    <th>Номер клиента</th>
+                    <td> {{ entity.clientNumber }} </td>
+                </tr>
+                <tr>
+                    <th>Номер заказа</th>
+                    <td> {{ entity.orderNumber }} </td>
+                </tr>
+                <tr>
+                    <th>Дата заказа</th>
+                    <td> {{ entity.orderDate|date('d.m.Y') }} </td>
+                </tr>
+                <tr>
+                    <th>Дата получения заказа</th>
+                    <td> {{ entity.shippingDate|date('d.m.Y') }} </td>
+                </tr>
+                <tr>
+                    <th>Описание</th>
+                    <td>
+                        {{ entity.description }}
+                        {{ entity.description }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Банковский счет(для возврата денег)</th>
+                    <td> {{ entity.reqvisit }} </td>
+                </tr>
+                <tr>
+                    <th>Адрес</th>
+                    <td>{{ entity.address }}</td>
+                </tr>
+                <tr>
+                    <th>Почтовый адрес</th>
+                    <td>{{ entity.postAdress }}</td>
+                </tr>
+                <tr>
+                    <th>E-mail</th>
+                    <td>{{ entity.email }}</td>
+                </tr>
+            </table>
+<br>
+
+<br>
+<br>
+
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            <a href="{{ path('admin_refund') }}" class="btn btn-default btn-xs">Список</a>
+            <a href="{{ path('admin_refund_edit',{'id' : entity.id }) }}" class="btn btn-primary btn-xs">Редактировать</a>
+            <a href="{{ path('admin_refund_delete',{'id' : entity.id }) }}" class="btn btn-danger btn-xs"
+               onclick="return confirm('Удалить?')">Удалить</a>
+            <br>
+            <br>
+        </div>
+        <!-- /.box-body -->
+    </div>
+{% endblock content %}
