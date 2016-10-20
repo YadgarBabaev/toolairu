@@ -53,11 +53,22 @@
                                 </div>
                                 {{ product }}</a>
                             <div class="shop-price">
-                                {% if currency %}
-                                    {{ product.price|number_format() }} {{ currency.name }}
-                                {% elseif(shop.getMainCurrency().symbol) %}
-                                    {{ product.price|number_format() }}
-                                    {{ shop.getMainCurrency().symbol }}
+                                <span {% if product.priceDiscount %} class="price-with-discount" {% endif %}>
+                                    {% if currency %}
+                                        {{ product.price|number_format() }} {{ currency.name }}
+                                    {% elseif(shop.getMainCurrency().symbol) %}
+                                        {{ product.price|number_format() }}
+                                        {{ shop.getMainCurrency().symbol }}
+                                    {% endif %}
+                                </span>
+
+                                {% if product.priceDiscount %}
+                                    {% if currency %}
+                                        {{ product.priceDiscount|number_format() }} {{ currency.name }}
+                                    {% elseif(shop.getMainCurrency().symbol) %}
+                                        {{ product.priceDiscount|number_format() }}
+                                        {{ shop.getMainCurrency().symbol }}
+                                    {% endif %}
                                 {% endif %}
                             </div>
                         </li>

@@ -82,7 +82,7 @@
                 $('#modal_body_{{ id }}').html('<iframe id="frame_{{ id }}" src="{{ path('elfinder') }}?id={{ id }}" width="100%"></iframe>');
                 $('#fileBrowser_{{ id }}').modal('show');
                 $('#frame_{{ id }}').ready(function () {
-                    $('#frame_{{ id }}').attr('style', 'height:100%;');
+                    $('#frame_{{ id }}').attr('style', 'height:450px;');
                 })
             }
             $(function () {

@@ -1,7 +1,80 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-test
+<div class="reg-form">
+	<hgroup>
+    <div class="container-fluid">
+      <h2>Возврат</h2>
+    </div>
+   </hgroup>
+   <div class="row refund">
+   	<div class="col-md-8 col-md-offset-2">
+   		<div class="form-group">
+   			<div class="text-center">
+   				<label for="name" class="required">Имя</label>
+   			</div>
+   			<input type="text" id="name" name="name" required="required" maxlength="255" class="form-control">
+   		</div>
+   		<div class="form-group">
+   			<div class="text-center">
+	   			<label for="name" class="required">Номер клиента</label>
+	   		</div>
+   			<input type="text" id="name" name="name" required="required" maxlength="255" class="form-control">
+   		</div>
+   		<div class="form-group">
+   			<div class="text-center">
+	   			<label for="order-number">Номер заказа</label>	
+	   			<label for="order-date">/Дата заказа/</label>	
+	   			<label for="order-date-get">Дата получения заказа</label>	
+   			</div>
+   			<div class="row">	
+					<div class="col-md-4">
+						<input type="text" id="order-number" name="name" required="required" maxlength="255" class="form-control">	
+					</div>
+					<div class="col-md-4">
+						<input type="text" id="order-date" name="name" required="required" maxlength="255" class="form-control">	
+					</div>
+					<div class="col-md-4">
+						<input type="text" id="order-date-get" name="name" required="required" maxlength="255" class="form-control">	
+					</div>
+	   		</div>
+   		</div>
+   		<div class="form-group">
+   			<div class="text-center">
+   				<label for="order-refund-text"></label>
+   				<textarea id="order-refund-text" cols="30" rows="10" class="form-control"></textarea>
+   			</div>
+   		</div>
+   		<div class="form-group">
+   			<div class="text-center">
+	   			<label for="name" class="required">Банковский счет(для возврата денег)</label>
+	   		</div>
+   			<input type="text" id="name" name="name" required="required" maxlength="255" class="form-control">
+   		</div>
+   		<div class="form-group">
+   			<div class="text-center">
+	   			<label for="name" class="required">Адрес</label>
+	   		</div>
+   			<input type="text" id="name" name="name" required="required" maxlength="255" class="form-control">
+   		</div>
+   		<div class="form-group">
+   			<div class="text-center">
+	   			<label for="name" class="required">Почтовый адрес</label>
+	   		</div>
+   			<input type="text" id="name" name="name" required="required" maxlength="255" class="form-control">
+   		</div>
+   		<div class="form-group">
+   			<div class="text-center">
+	   			<label for="name" class="required">E-mail</label>
+	   		</div>
+   			<input type="text" id="name" name="name" required="required" maxlength="255" class="form-control">
+   		</div>
+   		<div class="form-group text-center">
+   			<button class="reg-confirm">Отправить</button>
+   		</div>
+   	</div>
+   </div>
+</div>
 {% endblock %}
 
 {% block javascripts %}

@@ -73,10 +73,11 @@
     {% if previous %}
         <div class="previous-collection container-fluid">
             <div class="previous-collection-h2">{{ 'ALL PREVIOUS COLLECTIONS'|trans }}</div>
-            <ul class="list-unstyled clearfix ">
+            <ul class="list-unstyled clearfix collection-carousel">
                 {% for prev in previous %}
                     <li class="previous-collection-item">
-                        <a class="previous-collection-link" href="/{{ alias }}/{{ prev.alias }}.html">{{ prev }}</a>
+                       <a class="previous-collection-link" href="/{{ alias }}/{{ prev.alias }}.html"> <img src="/images/shop/{{ prev.logo }}"/></a> 
+                      
                     </li>
                 {% endfor %}
             </ul>

@@ -131,10 +131,10 @@ class SliderImage
     }
 
     protected function getUploadRootDir()
-    {
+    { 
         // the absolute directory path where uploaded
         // documents should be saved
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+        return $this->getUploadDir();
     }
 
     protected function getUploadDir()

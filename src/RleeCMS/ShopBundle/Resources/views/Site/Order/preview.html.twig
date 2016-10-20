@@ -41,7 +41,7 @@
 							{#{% for size in product.object.sizes %}#}
 								<label class="tabs-size-label size_{{ index }} {#{% if size.id == product.size %}active{% endif %}#}"
 									   onclick="sizeChange({{ index }},this);"
-									   data-id="{{ product.size }}">{{ product.size }}</label>
+									   data-id="{{ product.size.id }}">{{ product.size }}</label>
 							{#{% endfor %}#}
 						{% else %}
 							<div>

@@ -251,7 +251,7 @@ class OrderController extends Controller
                 $products[$key]['key'] = $key;
                 $products[$key]['id'] = $product->getId();
                 $products[$key]['name'] = $product->getName();
-                $products[$key]['size'] = $size->getId();
+                $products[$key]['size'] = $size;
                 $products[$key]['object'] = $product;
                 $products[$key]['color'] = $color;
                 $products[$key]['type'] = $item['type'];
