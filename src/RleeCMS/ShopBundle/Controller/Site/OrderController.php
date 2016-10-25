@@ -5,8 +5,6 @@ namespace RleeCMS\ShopBundle\Controller\Site;
 use Doctrine\ORM\QueryBuilder;
 use RleeCMS\ShopBundle\Core\Shop;
 use RleeCMS\ShopBundle\Entity\Product;
-use RleeCMS\ShopBundle\Entity\Refund;
-use RleeCMS\ShopBundle\Form\RefundType;
 use RleeCMS\UserBundle\Entity\LegalPerson;
 use RleeCMS\UserBundle\Entity\OrderingProducts;
 use RleeCMS\UserBundle\Entity\Orders;
@@ -297,31 +295,8 @@ class OrderController extends Controller
      * @Route("/refund", name="site_order_refund")
      * @Template()
      */
-    public function refundAction(Request $request){
-
-        /** @var User $user */
-        $user = $this->getUser();
-        $refund = new Refund();
-        /** Если есть пользователь заполняем его данные */
-        if($user){
-            $refund->setUser($user)
-                ->setEmail($user->getEmail())
-                ->setUserName($user->getName());
-        }
-
-        $form = $this->createForm(RefundType::class ,$refund);
-        $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($refund);
-            $em->flush();
-
-            return $this->redirectToRoute('site_order_refund');
-        }
-
-        return array(
-            'form' => $form->createView()
-        );
+    public function refundAction(){
+        return array();
     }
 
 }
