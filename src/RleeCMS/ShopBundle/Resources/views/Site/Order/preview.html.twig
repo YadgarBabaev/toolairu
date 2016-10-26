@@ -1,5 +1,8 @@
 {% extends "base.html.twig" %}
 {% trans_default_domain 'messages' %}
+{% block title %}
+	{{ 'Check out'|trans }}
+{% endblock %}
 {% block content %}
     <h2 class="page-title">{{ 'Shopping cart'|trans }}</h2>
     <div class="container">
@@ -29,7 +32,7 @@
 							{#{% for color in product.object.colors %}#}
 							<div>
 								<img src="/{{ product.color.getWebPath() }}" alt="" class="label-img-container color_{{ index }} {#{% if color.id == product.color.id %}active{% endif %} #} active"
-									 data-id="{{ product.color.id }}" onclick="colorChange({{ index }},this);"/>
+									 data-id="{{ product.color.id }}" onclick="/*colorChange({{ index }},this);*/"/>
 							</div>
 							{#{% endfor %}#}
 						{% else %}
@@ -40,7 +43,7 @@
 						{% if product.type != 6 %}
 							{#{% for size in product.object.sizes %}#}
 								<label class="tabs-size-label size_{{ index }} {#{% if size.id == product.size %}active{% endif %}#}"
-									   onclick="sizeChange({{ index }},this);"
+									   onclick="/*sizeChange({{ index }},this);*/"
 									   data-id="{{ product.size.id }}">{{ product.size }}</label>
 							{#{% endfor %}#}
 						{% else %}
@@ -70,7 +73,7 @@
 						{#{% if product.type == 6 %}#}<b>{{ product.quantity }}</b>{#{% endif %}#}
 						<b {#{% if product.type == 6 %}#}style="display: none;" {#{% endif %}#}>
 							<span onclick="countUp({{ loop.index }})" class="glyphicon glyphicon-plus" style="cursor: pointer;"></span>
-							<input type="text" form="form_{{ loop.index }}" onchange="changeCount({{ index }});" class="quantityItem" data-price="{{ product.price }}" data-index="{{ loop.index }}" value="{{ product.quantity }}" id="q_{{ loop.index }}" name="count[{{ loop.index }}]" style="width: 60px; margin: 0 auto;">
+							<input type="text" form="form_{{ loop.index }}" onchange="/*changeCount({{ index }});*/" class="quantityItem" data-price="{{ product.price }}" data-index="{{ loop.index }}" value="{{ product.quantity }}" id="q_{{ loop.index }}" name="count[{{ loop.index }}]" style="width: 60px; margin: 0 auto;">
 							<span onclick="countDown({{ loop.index }})" class="glyphicon glyphicon-minus" style="cursor: pointer;"></span>
 						</b>
 					</td>
@@ -96,7 +99,7 @@
 								{% if type.length == product.prontoType %}
 									<label class="tabs-size-label preorder_{{ index }} active"
 										   for="{{ type.length }}month_{{ index }}"
-										   onclick="preorderChange({{ index }},this);" data-value="{{ type.length }}">
+										   onclick="/*preorderChange({{ index }},this);*/" data-value="{{ type.length }}">
 										 {{ 'prepayment'|trans }} {{ type.percent }}%
 										<input  id="{{ type.length }}month_{{ index }}" value="{{ type.length }}" type="radio"
 												name="month_{{ index }}[]">

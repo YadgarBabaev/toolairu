@@ -1,4 +1,7 @@
 {% extends "::base.html.twig" %}
+{% block title %}
+    {{ 'Check out'|trans }}
+{% endblock %}
 {% block content %}
 <div class="reg-form">
     {{ form_start(form,{'attr': {'class': 'fos_user_registration_register','id' : 'orders' }}) }}
