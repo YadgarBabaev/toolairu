@@ -5,9 +5,9 @@
 		<div class="col-md-{% if page and page.id == 6 %}7{% else %}12{% endif%}">
 			<div class="col-sm-3 col-sm-offset-1 terms-menu">
 				<ul>
-					<li><a class="terms-link" href="{{ path('site_contacts') }}">Контакты <!--span class="terms-link-span">(Copyrights & Trademark)</span--></a></li>
-					<li><a class="terms-link" href="{{ path('site_contacts',{'type': 21 }) }}">Магазины <!--span class="terms-link-span">(Copyrights & Trademark)</span--></a></li>
-					<li><a class="terms-link" href="{{ path('site_contacts',{'type': 15 }) }}">Агенты</a></li>
+					<li><a class="terms-link" href="{{ path('site_contacts') }}">{{ 'contacts'|trans }} <!--span class="terms-link-span">(Copyrights & Trademark)</span--></a></li>
+					<li><a class="terms-link" href="{{ path('site_contacts',{'type': 21 }) }}">{{ 'Stores'|trans }} <!--span class="terms-link-span">(Copyrights & Trademark)</span--></a></li>
+					<li><a class="terms-link" href="{{ path('site_contacts',{'type': 15 }) }}">{{ 'Agents'|trans }}</a></li>
 				</ul>
 			</div>
 
