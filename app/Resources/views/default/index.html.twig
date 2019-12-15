@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div id="wrapper">
+    <!--<div id="wrapper">
         <div id="container">
             <div id="welcome">
                 <h1><span>Welcome to</span> Symfony {{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION') }}</h1>
@@ -43,10 +43,23 @@
             </div>
 
         </div>
-    </div>
+    </div>-->
 {% endblock %}
 
 {% block stylesheets %}
+<style>
+    html,body {
+        min-height: 100%;
+    }
+    body {
+        -webkit-background-size: cover;
+        background-size: cover;
+        background-image: url('images/toolai.png');
+        background-position: 50% 0;
+        background-repeat: no-repeat;
+    }
+</style>
+<!--
 <style>
     body { background: #F5F5F5; font: 18px/1.5 sans-serif; }
     h1, h2 { line-height: 1.2; margin: 0 0 .5em; }
@@ -72,5 +85,5 @@
         @keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
         .sf-toolbar { opacity: 0; -webkit-animation: fade-in 1s .2s forwards; animation: fade-in 1s .2s forwards;}
     }
-</style>
+</style>-->
 {% endblock %}
