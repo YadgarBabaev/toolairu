@@ -1,0 +1,42 @@
+{% extends '::adminBase.html.twig' %}
+{% block content_header %}
+    <h1>
+        Каталог
+        <small>Товары на складе({{ store.name }})</small>
+    </h1>
+{% endblock content_header %}
+{% block content %}
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <a class="btn btn-primary" href="{{ path('admin_shop_product_new') }}">
+                Добавить <i class="fa fa-fw fa-plus-square-o"></i>
+            </a>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Товар</th>
+                <th>Цвет</th>
+                <th>Размер</th>
+                <th>Количество</th>
+                <th>Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in productStores %}
+                <tr>
+                    <td>{{ product.id }}</td>
+                    <td>{{ product.product }}</a></td>
+                    <td>{{ product.color }}</td>
+                    <td>{{ product.size }}</td>
+                    <td>{{ product.count }}</td>
+                    <td>
+                        <a href="{{ path('admin_shop_product_store', {id: product.product.id}) }}" class="btn btn-default">Править</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

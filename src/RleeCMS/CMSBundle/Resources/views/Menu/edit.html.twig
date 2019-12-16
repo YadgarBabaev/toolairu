@@ -1,0 +1,106 @@
+{% extends '::adminBase.html.twig' %}
+{% block content_header %}
+    <h1>Меню
+        <small>Редактирование</small>
+    </h1>
+{% endblock content_header %}
+{% block content %}
+    <div class="box box-info">
+    </div>
+    {{ form_start(edit_form) }}
+    <div class="box-body">
+        {% do edit_form.params.setRendered() %}
+        {{ form_row(edit_form.title) }}
+        {{ form_row(edit_form.type) }}
+        <div id="shop" style="display: none">
+            <div class="form-group" style="">
+                <label for="menu_shop" class="control-label col-sm-3">
+                    Каталог -> Категория
+                </label>
+                <div class="col-sm-9">
+                    <select id="menu_shop" name="{{ edit_form.params.vars.full_name }}[cat_id]"
+                            class="form-control form-control">
+                        {% set cat_id = edit_form.params.vars['value'] %}
+                        {% for category in categories %}
+                            <option {% if cat_id['cat_id'] is defined and cat_id['cat_id'] == category.id %}selected="selected"{% endif %}
+                                    value="{{ category.id }}">{{ category }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div id="collection" style="display: none">
+            <div class="form-group" style="">
+                <label for="menu_shop" class="control-label col-sm-3">
+                    Каталог -> Категория
+                </label>
+                <div class="col-sm-9">
+                    <select id="menu_shop" name="{{ edit_form.params.vars.full_name }}[cat_id]"
+                            class="form-control form-control">
+                        {% set cat_id = edit_form.params.vars['value'] %}
+                        {% for category in categories %}
+                            {% if category.parent is null %}
+                                <option {% if cat_id['cat_id'] is defined and cat_id['cat_id'] == category.id %}selected="selected"{% endif %}
+                                        value="{{ category.id }}">{{ category }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        {{ form_row(edit_form.page) }}
+        {{ form_row(edit_form.url) }}
+        {{ form_row(edit_form.parent) }}
+        {{ form_row(edit_form.menuType) }}
+        {{ form_row(edit_form.status) }}
+        {{ form_row(edit_form.orderning) }}
+    </div>
+
+    <div class="box-footer">
+        <div class="col-md-offset-3 col-md-9">
+            <button type="submit" class="btn btn-primary">Сохранить <i class="fa fa-fw fa-check-square-o"></i></button>
+            <a class="btn btn-default" href="{{ path('admin_cms_menu') }}">Отмена <i class="fa fa-fw fa-undo"></i></a>
+        </div>
+    </div>
+    {{ form_end(edit_form) }}
+{% endblock content %}
+{% block footer_script %}
+    <script>
+        function hidePage() {
+            if ($('#menu_type').val() == 'content' || $('#menu_type').val() == 'blog') {
+                $('#menu_page').parent().parent().show('slow');
+                $('#menu_url').parent().parent().hide('slow');
+                $('#shop').hide('slow');
+                $('#collection').hide('slow');
+
+            } else if ($('#menu_type').val() == 'url') {
+                $('#menu_url').parent().parent().show('slow');
+                $('#menu_page').parent().parent().hide('slow');
+                $('#shop').hide('slow');
+                $('#collection').hide('slow');
+
+            } else if ($('#menu_type').val() == 'shop') {
+                $('#shop').show('slow');
+                $('#menu_url').parent().parent().hide('slow');
+                $('#menu_page').parent().parent().hide('slow');
+                $('#collection').hide('slow');
+            } else if ($('#menu_type').val() == 'collection' || $('#menu_type').val() == 'b2b') {
+                $('#collection').show('slow');
+                $('#menu_url').parent().parent().hide('slow');
+                $('#menu_page').parent().parent().hide('slow');
+                $('#shop').hide('slow');
+            } else {
+                $('#menu_page').parent().parent().hide('slow');
+                $('#menu_url').parent().parent().hide('slow');
+                $('#shop').hide('slow');
+                $('#collection').hide('slow');
+            }
+        }
+        $(document).ready(function () {
+            hidePage();
+            $('#menu_type').change(function () {
+                hidePage();
+            });
+        });
+    </script>
+{% endblock footer_script %}

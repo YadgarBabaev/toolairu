@@ -1,0 +1,40 @@
+{% extends "::adminBase.html.twig" %}
+{% block content_header %}
+    <h1><small>Обратная связь</small></h1>
+{% endblock content_header %}
+{% block content %}
+    <div class="box box-info">
+        <div class="box-header with-border">
+
+        </div>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>№</th>
+                <th>Имя</th>
+                <th>email</th>
+                <th>Телефон</th>
+                <th>Сообщение</th>
+                <th>Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ entity.id }}</td>
+                    <td>{{ entity.name }}</td>
+                    <td>{{ entity.mail }}</td>
+                    <td>{{ entity.contact }}</td>
+                    <td>
+                       {{ entity.message }}
+                    </td>
+                    <td>
+                        <a class="btn btn-danger" href="{{ path('admin_cms_feedback_delete', { 'id': entity.id }) }}">Удалить <i
+                                    class="fa fa-fw fa-minus-square-o"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

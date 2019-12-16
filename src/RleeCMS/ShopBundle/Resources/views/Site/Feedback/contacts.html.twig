@@ -1,0 +1,56 @@
+{% extends '::base.html.twig' %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-md-{% if page and page.id == 6 %}7{% else %}12{% endif%}">
+			<div class="col-sm-3 col-sm-offset-1 terms-menu">
+				<ul>
+					<li><a class="terms-link" href="{{ path('site_contacts') }}">{{ 'contacts'|trans }} <!--span class="terms-link-span">(Copyrights & Trademark)</span--></a></li>
+					<li><a class="terms-link" href="{{ path('site_contacts',{'type': 21 }) }}">{{ 'Stores'|trans }} <!--span class="terms-link-span">(Copyrights & Trademark)</span--></a></li>
+					<li><a class="terms-link" href="{{ path('site_contacts',{'type': 15 }) }}">{{ 'Agents'|trans }}</a></li>
+				</ul>
+			</div>
+
+			<div class="col-sm-7 terms-content">
+				{% if page %}
+					{{ page.content|raw }}
+				{% endif %}
+			</div>
+
+		</div>
+		{% if page and page.id == 6 %}
+		<div class="col-md-5">
+			<div class="reg-form contact-form">
+				<h2 class="pink-text">{{ 'contact_form_title'|trans }}</h2>
+				{% if message %}
+					<br>
+					<span class="alert alert-success">{{ message }}</span>
+					<br>
+					<br>
+				{% endif %}
+				{{ form_start(form) }}
+					<div class="form-group">
+						{{ form_errors(form.name) }}
+						{{ form_widget(form.name) }}
+					</div>
+					<div class="form-group">
+						{{ form_errors(form.contact) }}
+						{{ form_widget(form.contact) }}
+					</div>
+					<div class="form-group">
+						{{ form_errors(form.mail) }}
+						{{ form_widget(form.mail) }}
+					</div>
+					<div class="form-group">
+						{{ form_errors(form.message) }}
+						{{ form_widget(form.message) }}
+					</div>
+					<button type="submit" class="btn">Отправить</button>
+				{{ form_end(form) }}
+			</div>
+		</div>
+		{% endif %}
+	</div>
+
+{% endblock %}
+

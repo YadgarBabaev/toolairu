@@ -1,0 +1,46 @@
+{% extends '::adminBase.html.twig' %}
+{% block content_header %}
+    <h1>
+        Каталог
+        <small>Валюты</small>
+    </h1>
+{% endblock content_header %}
+{% block content %}
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <a class="btn btn-primary" href="{{ path('admin_shop_settings_currency_new') }}">
+                Добавить <i class="fa fa-fw fa-plus-square-o"></i>
+            </a>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Наименование</th>
+                <th>Международный код</th>
+                <th>Основная валюта</th>
+                <th>Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for currency in currencies %}
+                <tr>
+                    <td>{{ currency.id }}</td>
+                    <td>
+                        <a href="{{ path('admin_shop_settings_currency_edit', { 'id': currency.id }) }}">{{ currency }}</a>
+                    </td>
+                    <td>{{ currency.isoName }}</td>
+                    <td>{% if currency.main %}<i class="fa fa-fw fa-check-square-o"></i>{% endif %}</td>
+                    <td>
+                        {% if not currency.main %}
+                            <a class="btn btn-danger"
+                               href="{{ path('admin_shop_settings_currency_delete', { 'id': currency.id }) }}">Удалить <i
+                                        class="fa fa-fw fa-minus-square-o"></i></a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

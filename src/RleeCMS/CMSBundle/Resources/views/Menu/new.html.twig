@@ -1,0 +1,104 @@
+{% extends '::adminBase.html.twig' %}
+{% block content_header %}
+    <h1>Меню
+        <small>Добавление</small>
+    </h1>
+{% endblock content_header %}
+{% block content %}
+    <div class="box box-info">
+    </div>
+    {{ form_start(form) }}
+    <div class="box-body">
+        {% do form.params.setRendered() %}
+        {{ form_row(form.title) }}
+        {{ form_row(form.type) }}
+        <div id="shop" style="display: none">
+            <div class="form-group" style="">
+                <label for="menu_shop" class="control-label col-sm-3">
+                    Каталог -> Категория
+                </label>
+                <div class="col-sm-9">
+                    <select id="menu_shop" name="{{ form.params.vars.full_name }}[cat_id]"
+                            class="form-control form-control">
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div id="collection" style="display: none">
+            <div class="form-group" style="">
+                <label for="menu_shop" class="control-label col-sm-3">
+                    Каталог -> Категория
+                </label>
+                <div class="col-sm-9">
+                    <select id="menu_shop" name="{{ form.params.vars.full_name }}[cat_id]"
+                            class="form-control form-control">
+                        {% for category in categories %}
+                            {% if category.parent is null %}
+                                <option value="{{ category.id }}">{{ category }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        {{ form_row(form.page) }}
+        {{ form_row(form.url) }}
+        {{ form_row(form.parent) }}
+        {{ form_row(form.menuType) }}
+        {{ form_row(form.status) }}
+        {{ form_row(form.orderning) }}
+
+    </div>
+
+    <div class="box-footer">
+        <div class="col-md-offset-3 col-md-9">
+            <button type="submit" class="btn btn-primary">Сохранить <i class="fa fa-fw fa-check-square-o"></i></button>
+            <a class="btn btn-default" href="{{ path('admin_cms_menu') }}">Отмена <i class="fa fa-fw fa-undo"></i></a>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
+    {% block footer_script %}
+        <script>
+            function hidePage() {
+                if ($('#menu_type').val() == 'content' || $('#menu_type').val() == 'blog') {
+                    $('#menu_page').parent().parent().show('slow');
+                    $('#menu_url').parent().parent().hide('slow');
+                    $('#shop').hide('slow');
+                    $('#collection').hide('slow');
+
+                } else if ($('#menu_type').val() == 'url') {
+                    $('#menu_url').parent().parent().show('slow');
+                    $('#menu_page').parent().parent().hide('slow');
+                    $('#shop').hide('slow');
+                    $('#collection').hide('slow');
+
+                } else if ($('#menu_type').val() == 'shop') {
+                    $('#shop').show('slow');
+                    $('#menu_url').parent().parent().hide('slow');
+                    $('#menu_page').parent().parent().hide('slow');
+                    $('#collection').hide('slow');
+                } else if ($('#menu_type').val() == 'collection' || $('#menu_type').val() == 'b2b') {
+                    $('#collection').show('slow');
+                    $('#menu_url').parent().parent().hide('slow');
+                    $('#menu_page').parent().parent().hide('slow');
+                    $('#shop').hide('slow');
+                } else {
+                    $('#menu_page').parent().parent().hide('slow');
+                    $('#menu_url').parent().parent().hide('slow');
+                    $('#shop').hide('slow');
+                    $('#collection').hide('slow');
+                }
+            }
+            $(document).ready(function () {
+                hidePage();
+                $('#menu_type').change(function () {
+                    hidePage();
+                });
+            });
+        </script>
+    {% endblock footer_script %}

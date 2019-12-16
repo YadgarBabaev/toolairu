@@ -1,0 +1,63 @@
+{% extends "RleeCMSShopBundle::layout.html.twig" %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('js/magnific-popup/magnific-popup.css') }}">
+{% endblock %}
+{% block title %}{{ category.metaTagTitle }}{% endblock title %}
+{% block description %}{{ category.metaTagDescription }}{% endblock description %}
+{% block keywords %}{{ category.metaTagKeywords }}{% endblock keywords %}
+{% block content %}
+    <div class="shop-category-nav">
+        <div class="container-fluid">
+            <h3>{{ category }}</h3>
+            {#<ul class="list-unstyled">#}
+                {#<li class="shop-category-item"><a href="?filter=all" class="shop-item-link">{% trans %}All items{% endtrans %}</a>#}
+                {#</li>#}
+                {#{% for filter in filters %}#}
+                    {#<li class="shop-category-item">#}
+                        {#<a href="?filter={{ filter.id }}" class="shop-item-link">{{ filter }}</a>#}
+                    {#</li>#}
+                {#{% endfor %}#}
+            {#</ul>#}
+        </div>
+    </div>
+    <div class="shop-item-container">
+        <div class="container-fluid">
+            <div class="col-xs-12">
+                <ul class="list-unstyled parent-container" id="list-shop-dynamic"
+                    style="display: flex;flex-wrap: wrap;">
+                    {% for product in category.productsOnly %}
+                        {% set srs = product.getWebPath() %}
+                        <li class="col-sm-3 shop-item text-center">
+                            <div class="shop-img"><a href="/{{ srs }}" style="min-height:1px;">
+                                    <img src="/{{ srs }}" alt=""> </a></div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block javascripts %}
+    <script src="{{ asset('js/magnific-popup/jquery.magnific-popup.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('.parent-container').magnificPopup({
+                delegate: 'a',
+                type: 'image',
+                tLoading: 'Loading image #%curr%...',
+                mainClass: 'mfp-img-mobile',
+                gallery: {
+                    enabled: true,
+                    navigateByImgClick: true,
+                    preload: [0, 1] // Will preload 0 - before current, and 1 after the current image
+                },
+                image: {
+                    tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
+                    titleSrc: function (item) {
+                        return item.el.attr('title') ;
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}

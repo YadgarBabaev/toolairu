@@ -1,0 +1,15 @@
+{% extends "CMSBundle:Widgets:layout.html.twig" %}
+{% block title %}
+    {% if widget.hideTitle %}
+
+        <div class="cms_widget_title">
+            <h4>{{ widget.title }}</h4>
+        </div>
+
+    {% endif %}
+{% endblock title %}
+{% block widget %}
+    <div class="cms_widget_content">
+        {{ widget.html|raw }}
+    </div>
+{% endblock widget %}

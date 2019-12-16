@@ -1,0 +1,76 @@
+{% extends "RleeCMSShopBundle::layout.html.twig" %}
+{% block content %}
+    <div class="container-fluid shop-inside">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="col-sm-6"><img src="/images/shop/{{ shopByLook.logo }}" alt=""></div>
+                <div class="col-sm-6">
+                    <!-- Tab panes -->
+                    <div class="tabs-content">
+                        {% for product in shopByLook.products %}
+                            {% if product.status == 1 %}
+                                {% set i = loop.index %}
+                                <div class="tabs-pane fade{% if loop.first %} in active{% endif %}"
+                                     id="tab{{ loop.index }}">
+                                    <h4 class="tabs-title">{{ product }}</h4>
+                                    <div class="tabs-price">
+                                        {% if(shop.getMainCurrency().symbol) %}
+                                            {{ shop.getMainCurrency().symbol }}
+                                        {% endif %}
+                                        {{ product.price|number_format() }}
+                                        {% if(shop.getMainCurrency().symbol is null) %}
+                                            {{ shop.getMainCurrency().shortSign }}
+                                        {% endif %}
+                                    </div>
+                                    <div class="tabs-image text-center">
+                                        <img src="/images/shop/{{ product.logo }}" alt="">
+                                    </div>
+                                    <div class="tabs-shop">
+                                        <div class="row">
+                                            <div class="col-sm-5 tabs-shop-left">
+                                                <div><span class="tabs-shop-check-size">{% trans %}Size{% endtrans %}</span>
+                                                    {% for size in product.sizes %}
+                                                        <label class="tabs-size-label" for="tab{{ i }}-size-{{ size }}">{{ size }}
+                                                            <input id="tab{{ i }}-size-{{ size }}" type="radio"
+                                                                   name="tab{{ i }}-size"
+                                                                   value="{{ size.id }}"></label>
+                                                    {% endfor %}
+                                                </div>
+                                                <div><span class="tabs-shop-check-color">{% trans %}Color{% endtrans %}</span>
+                                                    {% for color in product.colors %}
+                                                        <label class="tabs-color-label" for="tab{{ i }}-color{{ loop.index }}"><img
+                                                                    src="/{{ color.getWebPath() }}" alt="">
+                                                            <input value="{{ color.id }}" id="tab{{ i }}-color{{ loop.index }}" type="radio"
+                                                                   name="tab{{ i }}-color">
+                                                        </label>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2 tabs-shop-center"><a class="tabs-shop-center-link"
+                                                                                      href="#">{% trans %}Detail{% endtrans %}</a>
+                                            </div>
+                                            <div class="col-sm-5 tabs-shop-right">
+                                                <button class="shop-btn shop-cart">{% trans %}Add to cart{% endtrans %}</button>
+                                                <button class="shop-btn shop-wishlist">{% trans %}Add to wishlist{% endtrans %}</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <!-- Nav tabs -->
+                    <ul class="tabs list-unstyled">
+                        {% for product in shopByLook.products %}
+                            {% if product.status == 1 %}
+                                <li class="tabs-item col-sm-4{% if loop.first %} active{% endif %}"><a
+                                            href="#tab{{ loop.index }}" data-toggle="tab"><img
+                                                src="/images/shop/{{ product.logo }}" alt=""></a></li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

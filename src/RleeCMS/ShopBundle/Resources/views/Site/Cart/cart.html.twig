@@ -1,0 +1,72 @@
+<div class="bag-header">{% trans %}Shopping cart{% endtrans %}<span class="bag-header-price">({{ 'items'|trans }} {{ cart|length }})</span><button class="cart-close-btn pull-right" onclick="$('.bag').toggleClass('hidden');">&times</button></div>
+<ol>
+    {% set sum = 0 %}
+    {% for item in items %}
+        {% set product = item.product %}
+        {% set price = product.price %}
+        {% if item.type == 6 %}
+            {% set price = product.priceB2B %}
+        {% endif %}
+        {% set sum = sum + price * item.quantity %}
+        <li class="bag-item cart_product_{{ product.id }}">
+            <a class="bag-link" href="{{ router.get('product_1_'~product.id).path }}">{{ product.name }}</a>
+            <div class="bag-price pull-right">
+
+                {% if currency %}
+                  {{ item.quantity }} * {{ (price/currency.rate)|round(2,'floor') }} = {{ ((item.quantity * price)/currency.rate)|round(2,'floor') }} {{ currency.name }}
+                {% elseif(shop.getMainCurrency().symbol) %}
+                    {{ item.quantity }} * {{ price }} = {{ price * item.quantity }} {{ shop.getMainCurrency().symbol }}
+                {% endif %}
+            </div>
+            <div class="clearfix bag-content">
+                <div class="col-sm-6 bag-img">
+                    {% set srs =  null %}
+                    {% if product.getWebPath() %}
+                        {% set srs =  product.images[0] %}
+                    {% elseif(product.images[0]) %}
+                        {% set srs =  product.getWebPath() %}
+                    {% endif %}
+                    <img src="{{ srs }}" alt="">
+                </div>
+                <div class="col-sm-6 bag-button-container">
+                    <a href="{{ path('site_order_preview') }}" class="bag-button">{% trans %}detail{% endtrans %}</a>
+                    <button onclick="delProduct('{{ product.id }}')" class="bag-button">{% trans %}remove{% endtrans %}</button>
+                </div>
+            </div>
+        </li>
+    {% endfor %}
+</ol>
+<div class="total">{% trans %}Subtotal{% endtrans %}<span id="total_price_in_cart" class="total-price pull-right">
+         {% if currency %}
+             {{ (sum/currency.rate)|round(2,'floor') }} {{ currency.name }}
+         {% elseif(shop.getMainCurrency().symbol) %}
+             {{ sum }}
+             {{ shop.getMainCurrency().symbol }}
+         {% endif %}
+    </span></div>
+<a class="shop-btn shop-cart bag-btn" href="{{ path('site_order') }}">{% trans %}Check out{% endtrans %}</a>
+<script>
+    $(function () {
+        $('#total-in-cart').html($('#total_price_in_cart').html());
+    });
+    function delProduct(id) {
+        $.ajax({
+            type: "POST",
+            url: "{{ path('site_cart_del') }}",
+            data: {product_id: id},
+            success: function () {
+                $('.bag').load('{{ path('site_cart') }}');
+            }
+        });
+    }
+    function addToCart(id) {
+        $.ajax({
+            type: "POST",
+            url: "{{ path('site_cart') }}",
+            data: {id: id},
+            success: function () {
+                $('.bag').load('{{ path('site_cart') }}')
+            }
+        });
+    }
+</script>

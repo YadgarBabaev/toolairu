@@ -1,0 +1,397 @@
+{% extends "RleeCMSShopBundle::layout.html.twig" %}
+{% block title %}{{ product.metaTagTitle }}{% endblock title %}
+{% block description %}{{ product.metaTagDescription }}{% endblock description %}
+{% block keywords %}{{ product.metaTagKeywords }}{% endblock keywords %}
+{% block content %}
+    {% set srs =  null %}
+    {% if product.getWebPath() %}
+        {% set srs =  product.getWebPath() %}
+    {% elseif(product.images[0]) %}
+        {% set srs =  product.images[0] %}
+    {% endif %}
+    <div class="container-fluid shop-item-page">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="col-sm-2 shop-item-col-1 shop-car">
+                    <ul class="list-unstyled shop-carousel">
+                        <li class="item-page">
+                            <a class="item-page-link">
+                                <img src="/{{ srs }}" alt="" data-image="/{{ srs }}" class="product-thumb">
+                            </a>
+                        </li>
+                        {% for image in product.images %}
+                            <li class="item-page">
+                                <a class="item-page-link">
+                                    <img src="{{ image }}" alt="" data-image="{{ image }}" class="product-thumb">
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-sm-5 shop-item-col-2">
+                    <img src="/{{ srs }}" alt="" id="image_target" data-zoom-image="/{{ srs }}">
+                </div>
+                <div class="col-sm-5 shop-item-col-3">
+                    <!-- Tab panes -->
+                    <div class="page-content">
+                        <form id="product_form" action="{{ path('site_cart_add') }}" method="post" data-color="0" data-size="0">
+                            <input type="hidden" name="product_id" value="{{ product.id }}" required>
+                            <div>
+                                <h4 class="page-title">{{ product }}</h4>
+
+                                <div class="page-price">
+                                    {% if currency %}
+                                        {{ product.price|number_format }} {{ currency.name }}
+                                    {% elseif(shop.getMainCurrency().symbol) %}
+                                        {{ product.price|number_format }}
+                                        {{ shop.getMainCurrency().symbol }}
+                                    {% endif %}
+                                </div>
+                                <br>
+                                <div class="page-desc">{{ product.description|raw }}
+                                </div>
+                                <div class="page-info-container">
+                                    <div class="row page-info">
+                                        <div class="col-sm-5">{% trans %}STYLE{% endtrans %}</div>
+                                        <div class="col-sm-7 color-pink">{{ product.style }}</div>
+                                    </div>
+                                    <div class="row page-info">
+                                        <div class="col-sm-5">{% trans %}TYPE / DESCRIPTION{% endtrans %}</div>
+                                        <div class="col-sm-7 color-pink">{{ product.type }}</div>
+                                    </div>
+                                    <div class="row page-info">
+                                        <div class="col-sm-5">{% trans %}FABRIC COMPOSITION{% endtrans %}</div>
+                                        <div class="col-sm-7 color-pink">{{ product.composition }}</div>
+                                    </div>
+                                    <div class="row page-info">
+                                        <div class="col-sm-5">{% trans %}STORES{% endtrans %}</div>
+                                        <div class="col-sm-7 color-pink">
+                                            {% for store in storeData %}
+                                                {{ store.name }}<br>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-5">{% trans %}Note{% endtrans %}</div>
+                                        <div class="col-sm-5">{{ product.note }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3"><span class="tabs-shop-text-size">{% trans %}
+                                        SIZE{% endtrans %}</span>
+                                </div>
+                                <div class="col-sm-9">
+                                    {% for size in product.sizes %}
+                                        <label class="tabs-size-label{% if size.id not in sizeArray %} disabled{% endif %}" for="size_{{ size.id }}"
+                                               onclick="$('#product_form').data('size',{{ size.id }});  $('#q_{{ product.id }}').val(0);">
+                                            {{ size }}
+                                            <input {% if size.id not in sizeArray %}disabled="disabled"{% endif %} id="size_{{ size.id }}" value="{{ size.id }}" type="radio"
+                                                   name="size">
+                                        </label>
+                                    {% endfor %}
+                                </div>
+                                <div class="col-sm-3"><span class="tabs-shop-text-size">{% trans %}
+                                        QUANTITY{% endtrans %}</span>
+                                </div>
+                                <div class="col-sm-9" style="padding-top: 5px;">
+                                        <b>
+                                            <span onclick="countDown({{ product.id }})" class="glyphicon glyphicon-minus" style="cursor: pointer;"></span>
+                                            <input type="text" value="0" id="q_{{ product.id }}" onchange="validCount({{ product.id }})" name="count" style="width: 40px; border: 1px solid silver; text-align: center; margin: 0 auto;">
+                                            <span onclick="countUp({{ product.id }})" class="glyphicon glyphicon-plus" style="cursor: pointer;"></span>
+                                        </b>
+                                    <br>
+                                    <br>
+                                </div>
+
+                                <div class="col-sm-12" style="padding: 0;">
+                                    <div class="col-sm-3"><span class="tabs-shop-text-color">{% trans %}COLOR{% endtrans %}</span>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        {% for color in product.colors %}
+                                            <label class="tabs-color-label" for="color_{{ color.id }}" title="{{ color }}"
+                                                   onclick="$('#product_form').data('color',{{ color.id }}); $('#q_{{ product.id }}').val(0);"
+                                                   data-toggle="tooltip" data-placement="top">
+
+                                                <div class="label-img-container{% if color.id not in colorArray %} disabled{% endif %}">
+                                                    <img src="/{{ color.getWebPath() }}" alt="">
+                                                    <input id="color_{{ color.id }}" value="{{ color.id }}"
+                                                           {% if color.id not in colorArray %}disabled="disabled"{% endif %}
+                                                           type="radio" name="color">
+                                                </div>
+                                            </label>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="col-sm-9">
+                                    <strong>{% trans %}IN_STOCK_INFO{% endtrans %}</strong><br>
+                                    {% for store in storeData %}
+                                        <table class="table-bordered">
+                                            <thead>
+                                                <th colspan="{{ (product.sizes|length)+1 }}">{{ store.name }}</th>
+                                            </thead>
+                                            <tr>
+                                                <th>{% trans %}COLOR{% endtrans %}</th>
+                                                {% for size in product.sizes %}
+                                                    <th>{{ size.size }}</th>
+                                                {% endfor %}
+                                            </tr>
+                                            {% for color in product.colors %}
+                                            <tr>
+                                                <td><img src="/{{ color.getWebPath() }}" alt="" style="width: 30px;"></td>
+                                                {% for size in product.sizes %}
+                                                    {% if data[store.id][color.id][size.id] is defined %}
+                                                    <td class="color_{{ color.id }}_size_{{ size.id }}">
+                                                        {{ data[store.id][color.id][size.id].count }}
+                                                    </td>
+                                                    {% else %}
+                                                        <td>&#10006;</td>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </tr>
+                                            {% endfor %}
+                                        </table>
+                                    {% endfor %}
+                                    <br>
+                                    <br>
+                                </div>
+
+                                <div class="col-sm-9">
+                                    <button id="addBag" type="submit" class="shop-btn shop-cart">
+                                        <b><span class="glyphicon glyphicon-plus"></span></b>
+                                        {% trans %}Add to cart{% endtrans %}
+                                    </button>
+                                     <span id="wish_span">
+                                    {% if flag %}
+                                        <button id="" type="button" class="shop-btn shop-wishlist">
+                                            <img src="{{ asset('images/wishlist.png') }}"/>
+                                            {% trans %}ADD TO WISH{% endtrans %}
+                                        </button>
+                                    {% else %}
+                                        <a id="addWish" class="shop-btn shop-wishlist"
+                                           onclick="addWish('{{ product.id }}')">
+                                            <b><span class="glyphicon glyphicon-plus"></span></b>
+                                            {% trans %}ADD TO WISH {% endtrans %}
+                                        </a>
+                                    {% endif %}
+                                        </span>
+                                </div>
+                            </div>
+                                {#{% if countStores > 0 %}#}
+                                    {#<a href="#" id="in_store" class="shop-btn shop-store">{% trans %}In store{% endtrans %}</a>#}
+                                {#{% endif %}#}
+                        </form>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock content %}
+{% block javascripts %}
+    <script src="/js/jquery.elevatezoom.js" type="text/javascript"></script>
+
+    <script>
+
+        function countUp($id){
+            var cnt = parseInt($("#q_"+$id).val());
+            var $sizeId = $("#product_form").data('size');
+            var $colorId = $("#product_form").data('color');
+            var sum = 0;
+            $('.color_'+$colorId+'_size_'+$sizeId).each(function(){
+                sum = sum+ parseInt($(this).text());
+            });
+
+            if(cnt < sum){
+                $("#q_"+$id).val(cnt+1);
+            }else {
+                $("#q_"+$id).val(sum);
+            }
+        }
+        function countDown($id){
+            var cnt = parseInt($("#q_"+$id).val());
+            if(cnt>1){
+                $("#q_"+$id).val(cnt-1);
+            }else {
+                $("#q_"+$id).val(0);
+            }
+        }
+
+        function validCount($id){
+            var $sizeId = $("#product_form").data('size');
+            var $colorId = $("#product_form").data('color');
+            var sum = 0;
+            $('.color_'+$colorId+'_size_'+$sizeId).each(function(){
+                sum = sum+ parseInt($(this).text());
+            });
+            var cnt = $('#q_'+$id);
+            if(cnt.val() > sum){
+                cnt.val(sum);
+            }
+            console.log(sum);
+        }
+
+        $(function () {
+            var zoomConfig = {};
+            var real_img = new Image();
+            var zoomImage = $('#image_target');
+            var zoomSize;
+            real_img.onload = function () {
+
+                var min = Math.min(this.width, this.height);
+                zoomSize = min / 2  ;
+                zoomConfig = {
+//                    zoomWindowWidth: zoomSize,
+//                    zoomWindowHeight: zoomSize,
+                    lensSize: zoomSize,
+                    scrollZoom : true,
+                    zoomType	: "inner",
+                    cursor: "crosshair",
+                    responsive: true,
+                    //lensShape : "round",
+
+                };
+
+                zoomImage.elevateZoom(zoomConfig);
+            };
+            real_img.src = $("#image_target").attr('data-zoom-image');
+
+            var image = $('.product-thumb');
+            image.on('click', function () {
+                $('.zoomContainer').remove();
+                zoomImage.removeData('elevateZoom');
+
+                var img = $(this).attr('data-image');
+                zoomImage.attr('src', img);
+                zoomImage.data('zoom-image', img);
+                real_img.src = img;
+
+            });
+
+        });
+        function addWish(id) {
+            $.ajax({
+                url: "{{ path('site_wish_add') }}",
+                dataType: "json",
+                type: "POST",
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.flag == 'success') {
+                        alert(data.msg);
+                        var t = $('#image_target'), e = t.clone(), b = $('#wish-list'), o = t.position(), po = t.parent().offset(), bo = b.offset();
+                        e.css({top: o.top + 'px', left: o.left + 'px', position: 'absolute'});
+                        t.parent().append(e);
+                        e.animate({
+                            top: -po.top + bo.top + (b.height() - t.height()) / 500,
+                            left: -po.left + bo.left + (b.width() - t.width()) / 500,
+                            width: 25,
+                            height: 25
+                        }, 800, function () {
+                            $(this).remove();
+                        });
+                        $('#wish_span').html("<button  class=\"shop-btn shop-wishlist\">"+
+                        "<img src=\"{{ asset('images/wishlist.png') }}\"/>"+
+                                "{% trans %}ADD TO WISH{% endtrans %}"+
+                        "</button>");
+                    }
+                    if (data.flag == 'warning') {
+                        alert(data.msg);
+                    }
+                    if (data.flag == 'error') {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+
+        function validate(formData, jqForm, options) {
+            var size = false;
+            var color = false;
+            var product = false;
+            for (var i = 0; i < formData.length; i++) {
+                if (formData[i].name == 'product_id' && formData[i].value) {
+                    product = true;
+                }
+                if (formData[i].name == 'size' && formData[i].value) {
+                    size = true;
+                }
+                if (formData[i].name == 'color' && formData[i].value) {
+                    color = true;
+                }
+            }
+            if($("[name='count']").val() <= 0){
+                alert('{{ 'message'|trans }}');
+                return false;
+            }
+            if (!size) {
+                alert('{% trans %}SELECT SIZE{% endtrans %}');
+                return false;
+            }
+            if (!color) {
+                alert('{% trans %}SELECT COLOR{% endtrans %}');
+                return false;
+            }
+            if (!product) {
+                alert('{% trans %}ERROR PRODUCT ID{% endtrans %}');
+                return false;
+            }
+            if (size && color && product) {
+                return true;
+            }
+            return false;
+        }
+        function showResponse() {
+            var t = $('#image_target'), e = t.clone(), b = $('#bag-list'), o = t.position(), po = t.parent().offset(), bo = b.offset();
+            e.css({top: o.top + 'px', left: o.left + 'px', position: 'absolute'});
+            t.parent().append(e);
+            e.animate({
+                top: -po.top + bo.top + (b.height() - t.height()) / 500,
+                left: -po.left + bo.left + (b.width() - t.width()) / 500,
+                width: 25,
+                height: 25
+            }, 800, function () {
+                $(this).remove();
+            });
+            $('.bag').load('{{ path('site_cart') }}')
+        }
+        $(function () {
+            var options = {
+                target: '.bag',   // target element(s) to be updated with server response
+                beforeSubmit: validate,  // pre-submit callback
+                success: showResponse  // post-submit callback
+
+                // other available options:
+                //url:       url         // override for form's 'action' attribute
+                //type:      type        // 'get' or 'post', override for form's 'method' attribute
+                //dataType:  null        // 'xml', 'script', or 'json' (expected server response type)
+                //clearForm: true        // clear all form fields after successful submit
+                //resetForm: true        // reset the form after successful submit
+
+                // $.ajax options can be used here too, for example:
+                //timeout:   3000
+            };
+            $('#product_form').ajaxForm(options);
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+        $(document).ready(function(){
+            $('.tabs-size-label').click(function () {
+                $('.tabs-size-label').not(this).removeClass('active');
+                $(this).addClass('active');
+            });
+
+            $('.label-img-container').click(function () {
+                $('.label-img-container').not(this).removeClass('active');
+                $(this).addClass('active');
+            });
+        });
+
+    </script>
+    <style>
+        .table-bordered td,th{
+            padding: 8px;
+        }
+        .table-bordered{
+            display: inline-block;
+        }
+    </style>
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends "base.html.twig" %}
+{% block content %}
+    <h2 class="page-title">{{ 'my_orders'|trans }}</h2>
+    <div class="container">
+        <div class="row profile">
+            <div class="col-md-12">
+                <h3>{{ app.user }} <a href="{{ path('fos_user_security_logout') }}" class="pull-right">{{ 'logout'|trans }}</a></h3>
+
+                <table class="table checkout-table">
+                    <thead class="text-center">
+                    <tr>
+                        <th>{{ 'Item'|trans }}</th>
+                        <th>{{ 'COLOR'|trans }}</th>
+                        <th>{{ 'SIZE'|trans }}</th>
+                        <th>{{ 'QUANTITY'|trans }}</th>
+                        <th>{{ 'Price'|trans }}</th>
+                        <th>{{ 'Sum'|trans }}</th>
+                        <th>{{ 'PRONTO'|trans }}</th>
+                        <td>{{ 'Address'|trans }}</td>
+                        <td>{{ 'Shipping method'|trans }}</td>
+                    </tr>
+                    </thead>
+                    <tbody class="text-center">
+                    {% for order in orders %}
+                        {% for item in order.products %}
+                            {% set product = item.product %}
+                            {% set src = null %}
+                            {% if product.getWebPath() %}
+                                {% set src =  product.images[0] %}
+                            {% elseif(product.images[0]) %}
+                                {% set src =  product.getWebPath() %}
+                            {% endif %}
+                        <tr>
+                            <td><img src="{{ src }}" alt="" class="img-responsive center-block" width="150"><h5>{{ product.name }}</h5></td>
+                            <td class="color">
+                                <div>
+                                    <img src="/{{ item.color.getWebPath() }}" alt="" class="label-img-container active"/>
+                                </div>
+                            </td>
+                            <td class="size">
+                               <label class="tabs-size-label">{{ item.size }}</label>
+                            </td>
+                            <td class="count">
+                                <label class="tabs-size-label">{{ item.count }}</label>
+                            </td>
+                            <td class="price">
+                                {% if item.type and item.type.id == 6 %}
+                                    {% set price = product.priceB2B %}
+                                {% else %}
+                                    {% set price = product.price %}
+                                {% endif %}
+                                {% if currency %}
+                                    {{ (price/currency.rate)|round(2,'floor') }} {{ currency.name }}
+                                {% elseif(shop.getMainCurrency().symbol) %}
+                                    {{ price }}
+                                    {{ shop.getMainCurrency().symbol }}
+                                {% endif %}
+                            </td>
+                            <td class="total">
+                                <span>
+                                    {{ item.count * price }}
+                                </span>
+                                {% if currency %}
+                                    {{ currency.name }}
+                                {% elseif(shop.getMainCurrency().symbol) %}
+                                    {{ shop.getMainCurrency().symbol }}
+                                {% endif %}
+                            </td>
+                            <td class="preorder">
+                                {% if item.type and  item.type.id == 6 %}
+                                    {% for type in prontoTypes %}
+                                        {% if type.length == item.prontoType %}
+                                        <label class="tabs-size-label active">
+                                            {{ 'prepayment'|trans }} {{ type.percent }}
+                                        </label>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            </td>
+                            <td>{{ order.address }}</td>
+                            <td>{{ order.shippingMethod }}</td>
+                        </tr>
+                            {% endfor %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+               {#<table class="table table-bordered table-striped">#}
+                   {#<thead>#}
+                        {#<tr>#}
+                            {#<td>{{ 'Email'|trans }}</td>#}
+                            {#<td>{{ 'Address'|trans }}</td>#}
+                            {#<td>{{ 'Shipping method'|trans }}</td>#}
+                            {#<td>{{ 'ITEM'|trans }}</td>#}
+                        {#</tr>#}
+
+                            {#<tr>#}
+                                {#<td>{{ order.email }}</td>#}
+                                {#<td>{{ order.address }}</td>#}
+                                {#<td>{{ order.shippingMethod }}</td>#}
+                                {#<td>#}
+                                    {#{% for product in order.products %}#}
+                                        {#<label>{{ product.product }}</label><br>#}
+                                    {#{% endfor %}#}
+                                {#</td>#}
+                            {#</tr>#}
+                        {#{% endfor %}#}
+                   {#</thead>#}
+               {#</table>#}
+                <br>
+                <a href="{{ path('user_profile_index') }}">{{ 'my_profile'|trans }}</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

@@ -1,0 +1,14 @@
+{% extends "CMSBundle:Widgets:layout.html.twig" %}
+{% block title %}
+    {% if widget.hideTitle %}
+        <div class="cms_widget_title">
+            <h4>{{ widget.title }}</h4>
+        </div>
+    {% endif %}
+{% endblock title %}
+{% block widget %}
+    <div class="cms_widget_content">
+        {% set menuItem = knp_menu_get('CMSBundle:Builder:mainMenu', [], {'currentClass': 'active', 'menuType':widget.params.MenuType, 'class':widget.class }) %}
+        {{ knp_menu_render(menuItem) }}
+    </div>
+{% endblock widget %}

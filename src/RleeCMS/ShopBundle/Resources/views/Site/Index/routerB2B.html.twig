@@ -1,0 +1,94 @@
+{% extends "RleeCMSShopBundle::layout.html.twig" %}
+{% block title %}{{ category.metaTagTitle }}{% endblock title %}
+{% block description %}{{ category.metaTagDescription }}{% endblock description %}
+{% block keywords %}{{ category.metaTagKeywords }}{% endblock keywords %}
+{% block content %}
+    <div class="shop-category-nav">
+        <div class="container-fluid">
+            <ul class="list-unstyled">
+                <li class="shop-category-item"><a href="?filter=all" class="shop-item-link">{% trans %}All items{% endtrans %}</a>
+                </li>
+                {% for filter in filters %}
+                    <li class="shop-category-item">
+                        <a href="?filter={{ filter.id }}" class="shop-item-link">{{ filter }}</a>
+                    </li>
+                {% endfor %}
+                <li class="shop-category-item" style="float: right; margin: 10px;">
+                    {% if catId == 7 %}
+                    <form id="store_select_form" action="{{ path('category_'~catId) }}">
+                        <select name="store" class="form-control" onchange="$('#store_select_form').submit();">
+                            {% for store in stores %}
+                                    <option value="{{ store.id }}"
+                                            {% if app.session.get('store') == store.id %} selected="selected" {% endif %}>
+                                        {{ store.name }}
+                                    </option>
+                            {% endfor %}
+                        </select>
+                    </form>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="shop-item-container">
+        <div class="container-fluid">
+            <div class="col-xs-12">
+                <ul class="list-unstyled">
+                    {% for product in products %}
+                        <li class="col-sm-3 shop-item text-center">
+                            <a class="shop-link" href="/{{ alias }}/{{ product.alias }}.html">
+                                <div class="shop-img">
+                                    {% set srs =  product.getWebPath() %}
+                                    {% if product.images and product.images[0] %}
+                                        {% set srs =  product.images[0] %}
+                                    {% endif %}
+                                    <img src="{{ srs }}" alt="">
+                                    <div class="shop-absolute">
+                                        <div class="shop-item-wishlist" onclick=" return addWish('{{ product.id }}')">
+                                        </div>
+                                    </div>
+                                </div>
+                                {{ product }}</a>
+                            <div class="shop-price">
+                                {% if currency %}
+                                    {{ product.price|number_format() }} {{ currency.name }}
+                                {% elseif(shop.getMainCurrency().symbol) %}
+                                    {{ product.price|number_format() }}
+                                    {{ shop.getMainCurrency().symbol }}
+                                {% endif %}
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block javascripts %}
+    <script type="text/javascript">
+        function addWish(id) {
+            $.ajax({
+                url: "{{ path('site_wish_add') }}",
+                dataType: "json",
+                type: "POST",
+                async: false,
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.flag == 'success') {
+                        $('#li_wish').removeAttr('class');
+                        $('#wish-list').html('<img src="/images/heartWishlist.png">');
+                    }
+                    if (data.flag == 'warning') {
+                        alert(data.msg);
+                    }
+                    if (data.flag == 'error') {
+                        alert(data.msg);
+                    }
+                }
+            });
+            return false;
+        }
+    </script>
+{% endblock %}

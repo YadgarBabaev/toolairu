@@ -1,0 +1,30 @@
+<table class="table table-hover table-striped">
+    <thead>
+    <th>Цвета/Размеры</th>
+    {% for size in product.sizes %}
+        <th>{{ size }}</th>
+    {% endfor %}
+    </thead>
+    <tbody>
+    {% for color in product.colors %}
+        <tr>
+            <th>{{ color }}</th>
+            {% for size in product.sizes %}
+                <td>
+                    {% set count = rp.findOneBy({
+                    'color': color.id,
+                    'size': size.id,
+                    'product': product.id,
+                    'store': store.id
+                    }) %}
+                    {% if count %}
+                        {% set count = count.count %}
+                    {% endif %}
+                    <input name="store[{{ color.id }}][{{ size.id }}]" value="{{ count }}">
+
+                </td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

@@ -1,0 +1,102 @@
+{% extends "::adminBase.html.twig" %}
+{% block content_header %}
+    <h1>
+        Пользователи
+        {#<small>Список</small>#}
+    </h1>
+{% endblock content_header %}
+{% block content %}
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Список</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body table-responsive no-padding">
+            <br>
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            <div class="btn-group">
+                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                    Добавить <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ path('admin_user_new') }}">Физ лицо</a></li>
+                    <li><a href="{{ path('admin_user_new',{ 'type':1 }) }}">Юр лицо</a></li>
+                </ul>
+            </div>
+            <br> <br>
+            <table class="table">
+                <tr>
+                    <td>
+                        <input form="search" type="text" class="form-control" name="keyword" value="{{ app.request.get('keyword') }}" placeholder="Имя пользователя"/>
+                    </td>
+                    <td>
+                        <select name="type" class="form-control" form="search">
+                            <option value="0">Все</option>
+                            <option value="1" {% if app.request.get('type') == 1 %} selected="selected" {% endif %} >Юр лицо</option>
+                            <option value="2" {% if app.request.get('type') == 2 %} selected="selected" {% endif %}>Физ лицо</option>
+                        </select>
+                    </td>
+                    <td>
+                        <form id="search">
+                            <input type="submit" class="btn btn-primary" value="Поиск"/>
+                            <a href="{{ path('admin_user') }}" class="btn btn-default">Сброс</a>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Email</th>
+                    <th>Фио</th>
+                    <th>Тип учетной записи</th>
+                    <th>Пол</th>
+                    <th>Статус</th>
+                    <th>Действия</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.name }} {{ user.fname }}</td>
+                        <td>
+                            {% if user.legalPerson %}
+                                Юр лицо
+                            {% else %}
+                                Физ лицо
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if  user.gender == 1 %}
+                                    <button class="btn btn-primary btn-xs">Ж</button>
+                            {% else %}
+                                    <button class="btn btn-primary btn-xs">М</button>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if user.enabled %}
+                                <span class="label label-success">АКтивный</span>
+                            {% else %}
+                                <span class="label label-danger">Не активный</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ path('admin_user_edit',{'id' : user.id }) }}" class="btn btn-primary btn-xs">Редактировать</a>
+                            <a href="{{ path('admin_user_delete',{'id' : user.id }) }}" class="btn btn-danger btn-xs"
+                               onclick="return confirm('Удалить пользователя?')">Удалить</a>
+
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+        <!-- /.box-body -->
+    </div>
+{% endblock content %}

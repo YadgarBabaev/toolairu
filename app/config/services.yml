@@ -1,0 +1,11 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+    fos_user.doctrine_registry:
+        alias: doctrine
+    rlee_cms_shop.core:
+        class: RleeCMS\ShopBundle\Core\Shop
+        arguments: ["@service_container", "@doctrine.orm.entity_manager"]

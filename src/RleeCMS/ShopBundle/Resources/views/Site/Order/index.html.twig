@@ -1,0 +1,179 @@
+{% extends "::base.html.twig" %}
+{% block title %}
+    {{ 'Check out'|trans }}
+{% endblock %}
+{% block content %}
+<div class="reg-form">
+    {{ form_start(form,{'attr': {'class': 'fos_user_registration_register','id' : 'orders' }}) }}
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <h3 class="text-center">{{ 'Cutomer information'|trans }}</h3>
+                <label class="text-left">
+                    {{ form_row(form.email) }}
+                </label>
+                {{ 'Alredy have an account?'|trans }}
+                <a href="{{ path('fos_user_security_login') }}">{{ 'Login'|trans }}</a>
+            <br>
+            <br>
+            <h3 class="text-center">{{ 'Shipping address'|trans }}</h3>
+                <label class="text-left">
+                    {{ form_row(form.fName) }}
+                </label>
+                <label class="text-left">
+                    {{ form_row(form.lName) }}
+                </label>
+                <label class="text-left">
+                    {{ form_row(form.phone) }}
+                </label>
+                <label class="text-left">
+                    {{ form_row(form.country) }}
+                </label>
+                <label class="text-left">
+                    {{ form_row(form.state) }}
+                </label>
+                <label class="text-left">
+                    {{ form_row(form.city) }}
+                </label>
+                <label class="text-left">
+                    {{ form_row(form.address) }}
+                </label>
+                {#<label class="text-left">#}
+                    {#{{ form_row(form.houseNumber) }}#}
+                {#</label>#}
+                <label class="text-left">
+                    {{ form_row(form.pIndex) }}
+                </label>
+            <div>
+                {{ 'Note_for_delivery'|trans|raw }}
+            </div>
+            <br>
+            <h3 class="text-center">{{ 'Shipping method'|trans }}</h3>
+            <label class="text-left">
+                {{ form_row(form.shippingMethod) }}
+            </label>
+
+        </div>
+        <div class="col-md-6">
+            <h3 class="text-center">{{ 'Order summary'|trans }}</h3>
+            {% set sum = 0 %}
+            {% for product in products %}
+                {% set sum = sum + product.price %}
+                <div class="shopping-total">
+                    <div class="shopping-total-image"><img src="{{ product.src }}" alt=""></div>
+                    <div class="shopping-total-name">{{ product.name }} <br>
+                    {{ 'SIZE'|trans }}: {{ product.size }}<br>
+                    {{ 'COLOR'|trans }}: {{ product.color }}
+                    </div>
+                    <div class="shopping-total-quantity">
+                        <b>
+                        {#<span onclick="countUp({{ product.key }})" class="glyphicon glyphicon-plus" style="cursor: pointer;"></span>#}
+                          <input type="text" onchange="changeTotal();" disabled="disabled"
+                                 class="quantityItem" data-price="{{ product.price }}" value="{{ product.quantity }}"
+                                 id="q_{{ product.key }}" name="count[{{ product.key }}]" style="width: 60px; margin: 0 auto; border: none;">
+                        {#<span onclick="countDown({{ product.key }})" class="glyphicon glyphicon-minus" style="cursor: pointer;"></span>#}
+                        </b>
+                    </div>
+                    <div class="shopping-total-price float">
+                        {% if currency %}
+                            {{ (product.price/currency.rate)|round(2,'floor') }} {{ currency.name }}
+                        {% elseif(shop.getMainCurrency().symbol) %}
+                            {{ product.price }}
+                            {{ shop.getMainCurrency().symbol }}
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="shopping-row">
+                <div class="shopping-footer-total text-right">
+                    <div>
+                        <label style="display: inline-block;">{{ 'Sum'|trans }}: </label>
+                         <span  class="total-price">
+                            {% if currency %}
+                            <span class="total_sum">{{ (sum/currency.rate)|round(2,'floor') }}</span>
+                            {{ currency.name }}
+                            {% elseif(shop.getMainCurrency().symbol) %}
+                            <span class="total_sum">{{ sum }}</span>
+                                {{ shop.getMainCurrency().symbol }}
+                        {% endif %}
+                         </span>
+                    </div>
+                    <div>
+                        <label style="display: inline-block;">{{ 'delivery'|trans }}: </label>
+                        <span class="total-price" id="delivery">0</span>
+                    </div>
+                    <div>
+                        {{ 'Subtotal'|trans }}
+                        <span  class="total-price">
+                            {% if currency %}
+                                <span class="index_total_all">{{ (sum/currency.rate)|round(2,'floor') }}</span>
+                                {{ currency.name }}
+                            {% elseif(shop.getMainCurrency().symbol) %}
+                                <span  class="index_total_all">{{ sum }}</span>
+                                {{ shop.getMainCurrency().symbol }}
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div>
+                        {#<label>{{ 'prepayment'|trans }}</label><span id="prepayment"></span>#}
+                    </div>
+                </div>
+
+            </div>
+            <div class="shopping-footer">
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="shopping-button text-center">
+        <a href="{{ path('index') }}" class="shop-btn shop-wishlist">{{ 'Continue shoping'|trans }}</a>
+        <button type="submit" form="orders" class="shop-btn shop-cart" >
+            {{'Check out' | trans  }}
+        </button>
+    </div>
+    {{ form_end(form) }}
+</div>
+{% endblock content %}
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            changeTotal();
+            setDelivery(0);
+        });
+        function countUp($id){
+            var cnt = parseInt($("#q_"+$id).val());
+            if(cnt){
+                $("#q_"+$id).val(cnt+1);
+                changeTotal();
+            }else {
+                $("#q_"+$id).val(1);
+            }
+        }
+        function countDown($id){
+            var cnt = parseInt($("#q_"+$id).val());
+            if(cnt>1){
+                $("#q_"+$id).val(cnt-1);
+                changeTotal();
+            }else {
+                $("#q_"+$id).val(1);
+            }
+        }
+
+        function changeTotal(){
+            var $total = 0;
+            $('.quantityItem').each(function($i){
+                var $quantity = parseInt($(this).val());
+                var $price = parseFloat($(this).data('price'));
+                $total = $total+($quantity * $price );
+            });
+
+            $('.shopping-footer-total .total_sum').html($total);
+        }
+        function setDelivery($coast){
+            var sum = parseInt($('.shopping-footer-total .total_sum').html());
+            var total = sum + $coast;
+            $('.index_total_all').html(total);
+            $('#delivery').html($coast);
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "CMSBundle::layout.html.twig" %}
+{% block title %}{{ content.title }}{% endblock title %}
+{% block description %}{{ content.description }}{% endblock description %}
+{% block keywords %}{{ content.keywords }}{% endblock keywords %}
+
+{% block pagesContent %}
+    <div id="blogs" class="blog">
+
+        <div id="blog" class="container">
+            <div class="row">
+                {% for page in news %}
+                    {% if page.status == 1 %}
+                        <div id="blog_{{ page.id }}"
+                             class="col-md-6 item">
+                            {#<span class="date-news">{{ page.published|date('d.m.y') }}</span>#}
+                            {% set alias = '/'~content.alias~'/'~page.alias~'.html' %}
+                            {#{% if img[page.id] is defined %}#}
+                                {#<a title="{{ page.title }}" href="{{ alias }}">#}
+                                {#{{ img[page.id]|raw }}#}
+                                {#</a>#}
+                            {#{% endif %}#}
+                            <div class="caption">
+                                <h4>{{ page.fullName|raw }}</h4>
+                                <a title="{{ page.title }}" href="{{ alias }}">
+                                    <img src="{{ page.img }}">
+                                </a>
+                                {% set page_content = ((page.content|striptags)|slice(0,500))|raw %}
+                                <p>{{ page_content|raw }}</p>
+                                <div class="text-center">
+                                    <a href="{{alias}}" class="more"><strong>{% trans %}View more{% endtrans %}</strong></a>
+                                </div>
+                            </div>
+                            {#<h1>#}
+                            {#<a href="{{alias}}">#}
+                            {#{{ page.fullName|raw }}#}
+                            {#</a>#}
+                            {#</h1>#}
+
+                            {#<div id="blog_content_{{ page.id }}" class="blog_content">#}
+                            {#<p>#}
+                            {#{% set page_content = ((page.content|striptags)|slice(0,500))|raw %}#}
+                            {#{{ page_content|raw }}#}
+                            {#</p>#}
+                            {#</div>#}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+            </div>
+            {#<div class="navigation">#}
+            {#{{ knp_pagination_render(news) }}#}
+            {#</div>#}
+        </div>
+    </div>
+{% endblock pagesContent %}

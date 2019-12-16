@@ -1,0 +1,66 @@
+{% extends "RleeCMSShopBundle::layout.html.twig" %}
+{% block title %}
+    {{ 'To Wishlist'|trans }}
+{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="col-xs-12">
+            <div class="">
+                <div class="shopping-header">
+                    <div class="text-center shopping-header-image">{% trans %}Item{% endtrans %}</div>
+                    <div class="shopping-header-name"></div>
+                    <div class="text-center shopping-header-quantity"></div>
+                    <div class="text-center shopping-header-price">{% trans %}Price{% endtrans %}</div>
+                </div>
+                {% set sum = 0 %}
+                {% for product in products %}
+                    {% set sum = sum + product.price %}
+                    {% set srs =  product.getWebPath() %}
+                    {% if product.images and product.images[0] %}
+                        {% set srs =  product.images[0] %}
+                    {% endif %}
+                    <div class="shopping-row">
+                        <div class="shopping-row-image"><img src="{{ srs }}" alt="" style="width: 110px"></div>
+                        <div class="shopping-row-name">{{ product }}</div>
+                        <div class="shopping-row-quantity">
+                            <a onclick="delete_wish('{{ path('site_wish_delete', { 'id': product.id }) }}')"
+                               href="javascript:void(0)">{% trans %}
+                                Remove{% endtrans %}</a>
+                        </div>
+                        <div class="shopping-row-price">
+                            {% if(shop.getMainCurrency().symbol) %}
+                                {{ shop.getMainCurrency().symbol }}
+                            {% endif %}
+                            {{ product.price|number_format() }}
+                            {% if(shop.getMainCurrency().symbol is null) %}
+                                {{ shop.getMainCurrency().shortSign }}
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="shopping-footer">
+                    <div class="shopping-footer-total text-right">{% trans %}Subtotal{% endtrans %}: <span
+                                class="total-price">
+                            {% if(shop.getMainCurrency().symbol) %}
+                                {{ shop.getMainCurrency().symbol }}
+                            {% endif %}
+                            {{ sum|number_format() }}
+                            {% if(shop.getMainCurrency().symbol is null) %}
+                                {{ shop.getMainCurrency().shortSign }}
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block javascripts %}
+    <script type="text/javascript">
+        function delete_wish(href) {
+            if (confirm('{% trans %}CONFIRM REMOVE WISH{% endtrans %}?')) {
+                window.location.replace(href);
+            }
+        }
+    </script>
+{% endblock %}

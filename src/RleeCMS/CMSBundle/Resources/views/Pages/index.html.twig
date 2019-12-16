@@ -1,0 +1,46 @@
+{% extends "::adminBase.html.twig" %}
+{% block content_header %}
+    <h1>CMS<small>Страницы</small></h1>
+{% endblock content_header %}
+{% block content %}
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <a class="btn btn-primary" href="{{ path('admin_cms_pages_new') }}">
+                Добавить <i class="fa fa-fw fa-plus-square-o"></i>
+            </a>
+            <a class="btn btn-default" href="{{ path('admin_cms') }}">Назад <i class="fa fa-fw fa-undo"></i></a>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>№</th>
+                <th>Наименование</th>
+                <th>Опубликован</th>
+                <th>Опции</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ entity.id }}</td>
+                    <td><a href="{{ path('admin_cms_pages_edit', { 'id': entity.id }) }}">{{ entity.title }}</a></td>
+                    <td>
+                        {% if entity.status == 1 %}
+                            <a title="Не опубликовывать" href="{{ path('admin_cms_pages_status', { 'id': entity.id }) }}">
+                                <i class="fa fa-fw fa-check-square-o"></i></a>
+                        {% else %}
+                            <a title="Опубликовать" href="{{ path('admin_cms_pages_status', { 'id': entity.id }) }}">
+                                <i class="fa fa-fw fa-close"></i></a>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a class="btn btn-danger" href="{{ path('admin_cms_pages_delete', { 'id': entity.id }) }}">Удалить <i
+                                    class="fa fa-fw fa-minus-square-o"></i></a>
+
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
