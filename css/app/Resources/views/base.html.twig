@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="/css/bootStyle.css" type="text/css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/css/fonts.css" type="text/css">
+    <link rel="stylesheet" href="/css/slick.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.5/jquery.bxslider.min.css" type="text/css">
+
+    <title>{% block title %}{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    {#<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>#}
+    {#<link rel="stylesheet" href="{{ asset('bundles/rleecmsadmin/bower_components/AdminLTE/bootstrap/css/bootstrap.min.css') }}">#}
+</head>
+<body>
+{% block body %}
+    <div class="wraper">
+        <nav class="navbar">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/"><img src="/images/logo.png" alt="Logo"></a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    {% block main_menu %}
+                        {{ cms_widget('mainMenu') }}
+                    {% endblock main_menu %}
+                    {% block right_menu %}
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="navItemRight" >
+                                {{ render(controller('UserBundle:Currency:index')) }}
+                            </li>
+                            <li class="navItemRight">
+                                <a class="nav-item-link" data-toggle="tooltip" title="Регистрация" data-placement="bottom" href="{{ path('fos_user_registration_register') }}">
+                                </a>
+                            </li>
+                            <li class="navItemRight">
+                                <a class="nav-item-link" {#data-toggle="modal"#} {#data-target="#login-modal"#} data-toggle="tooltip" title="Личный кабинет" data-placement="bottom" href="{{ path('user_profile_index') }}"></a>
+                            </li>
+                            {{ render(controller('RleeCMSShopBundle:Site/Wish:check')) }}
+                            <li class="navItemRight">
+                                <a class="nav-item-link cart-btn" id="nav-item-bag" href="#!" data-toggle="tooltip" title="Корзина" data-placement="bottom">
+                                    <span id="bag-list"></span>
+                                    <span id="total-in-cart"></span>
+                                </a>
+                            </li>
+                        </ul>
+
+                        {{ cms_widget('right_menu') }}
+                    {% endblock right_menu %}
+
+
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+        {% if cms_widget_count('carousel') > 0 %}
+            {% block carousel %}
+                {{ cms_widget('carousel') }}
+            {% endblock carousel %}
+        {% endif %}
+        {% if cms_widget_count('pink') > 0 %}
+            {% block pink %}
+                {{ cms_widget('pink') }}
+            {% endblock pink %}
+        {% endif %}
+
+        {% if cms_widget_count('category_left_1') > 0 or cms_widget_count('category_left_2') > 0 or cms_widget_count('category_right') > 0 %}
+            <div class="category container-fluid">
+                <div class="row">
+                    <div class="col-xs-12">
+                        {% if cms_widget_count('category_left_1') > 0 or cms_widget_count('category_left_2') > 0 %}
+                            <div class="left-column">
+                                {% block category_left_1 %}
+                                    {{ cms_widget('category_left_1') }}
+                                {% endblock category_left_1 %}
+                                {% block category_left_2 %}
+                                    {{ cms_widget('category_left_2') }}
+                                {% endblock category_left_2 %}
+                            </div>
+                        {% endif %}
+                        {% if cms_widget_count('category_right') > 0 %}
+                            <div class="right-column">
+                                {% block category_right %}
+                                    {{ cms_widget('category_right') }}
+                                {% endblock category_right %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <div id="content" class="content container-fluid">
+            <div class="main">
+                {#<div id="breadcrumb">#}
+                {#{{ wo_render_breadcrumbs() }}#}
+                {#</div>#}
+                {% block content %}
+                {% endblock content %}
+            </div>
+        </div>
+
+    </div><!-- /.wraper -->
+    <footer class="footer container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="inline-block copyright">© Copyright {{ "now"|date('Y') }} <br>
+                    toolai-fashion.com
+                </div>
+                <div class="inline-block navbar-footer">
+                    {{ cms_widget('footerMenu') }}
+                </div>
+                <div class="inline-block follou-us pull-right">
+                    <div class="follow inline-block">{% trans %}Follow us{% endtrans %}:</div>
+                    <ul class="list-unstyled inline-block list-inline">
+                        <li class="nav-item">
+                            <a class="nav-item-link" href="https://www.facebook.com/"
+                               target="_blank">
+                                <img src="/images/facebook.png" alt="FaceBook">
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-item-link" href="https://www.instagram.com/" target="_blank">
+                                <img
+                                        src="/images/insta.png" alt="Instagramm"></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-item-link" href="https://www.youtube.com/"
+                               target="_blank"><img src="/images/youtube.png" alt="YouTube"></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-item-link" href="https://www.tumblr.com/"
+                               target="_blank"><img src="/images/tumblr.png" alt="Tumblr"></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-item-link" href="https://pinterest.com/" target="_blank">
+                                <img
+                                        src="/images/pinterest.png" alt="Pinterest"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="{{ asset('js/jquery.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/slick') }}.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.5/jquery.bxslider.min.js"></script>
+    <script src="{{ asset('js/main') }}.js" type="text/javascript"></script>
+    <script src="{{ asset('js/jquery.form.min.js') }}"></script>
+
+{% endblock %}
+{% block javascripts %}{% endblock %}
+<div class="bag hidden">
+    {{ render(controller('RleeCMSShopBundle:Site/Cart:cart')) }}
+</div>
+<div class="modal fade" id="login-modal" tabindex="-1">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title text-center" id="myModalLabel">Авторизация</h4>
+      </div>
+      <div class="modal-body">
+        <div class="reg-form">
+        <h3 class="text-center">Зарегистрированный пользователь</h3>
+        <form action="#">
+            <div class="form-group">
+                <label for="sign-in-email">E-mail</label>
+                <input type="text" id="sign-in-email">
+            </div>
+            <div class="form-group">
+                <label for="sign-in-password">Пароль</label>
+                <input type="password" id="sign-in-email">
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="forgot">
+                        <a href="/resetting/request">Забыли пароль?</a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="forgot text-right">
+                        <a href="/register">Регистрация</a>
+                    </div>
+                </div>
+                <input type="hidden" value="1"/>
+            </div>
+            <div class="remember">
+                <label>
+                    <input type="checkbox" id="remember_me" name="_remember_me" value="on">
+                    Запомнить меня
+                </label>
+            </div>
+            <button type="submit" class="reg-confirm">Войти</button>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
