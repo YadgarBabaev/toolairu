@@ -83,5 +83,4 @@ class OrdersController extends Controller
         $em->flush();
         return $this->redirectToRoute('admin_orders');
     }
-
 }

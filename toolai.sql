@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.4.1deb2ubuntu2
--- http://www.phpmyadmin.net
+-- version 4.9.0.1
+-- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Oct 20, 2016 at 02:02 AM
--- Server version: 5.7.15-0ubuntu0.16.04.1
--- PHP Version: 7.0.8-0ubuntu0.16.04.3
+-- Хост: 127.0.0.1:3306
+-- Время создания: Янв 08 2020 г., 18:25
+-- Версия сервера: 10.3.13-MariaDB-log
+-- Версия PHP: 7.1.32
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -17,16 +19,16 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `toolai`
+-- База данных: `a306809_1`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `CMS_Menu`
+-- Структура таблицы `cms_menu`
 --
 
-CREATE TABLE `CMS_Menu` (
+CREATE TABLE `cms_menu` (
   `id` int(11) NOT NULL,
   `page_id` int(11) DEFAULT NULL,
   `parent_id` int(11) DEFAULT NULL,
@@ -39,53 +41,54 @@ CREATE TABLE `CMS_Menu` (
   `lvl` int(11) NOT NULL,
   `root` int(11) DEFAULT NULL,
   `status` int(11) NOT NULL,
-  `params` longtext COLLATE utf8_unicode_ci COMMENT '(DC2Type:array)',
+  `params` longtext COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '(DC2Type:array)',
   `home` tinyint(1) DEFAULT NULL,
   `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `menuType` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `CMS_Menu`
+-- Дамп данных таблицы `cms_menu`
 --
 
-INSERT INTO `CMS_Menu` (`id`, `page_id`, `parent_id`, `title`, `alias`, `type`, `orderning`, `lft`, `rgt`, `lvl`, `root`, `status`, `params`, `home`, `url`, `menuType`) VALUES
+INSERT INTO `cms_menu` (`id`, `page_id`, `parent_id`, `title`, `alias`, `type`, `orderning`, `lft`, `rgt`, `lvl`, `root`, `status`, `params`, `home`, `url`, `menuType`) VALUES
 (1, 1, NULL, 'Главная', 'glavnaia', 'content', 0, 1, 2, 0, 1, 1, 'a:0:{}', 1, NULL, 1),
-(2, NULL, NULL, 'Магазин', 'maghazin', 'shop', 1, 1, 2, 0, 2, 1, 'a:1:{s:6:"cat_id";s:1:"1";}', NULL, NULL, 1),
-(3, 2, NULL, 'Коллекции', 'kolliektsii', 'collection', 2, 1, 2, 0, 3, 1, 'a:1:{s:6:"cat_id";s:1:"2";}', NULL, NULL, 1),
-(4, 3, NULL, 'Для бизнеса', 'dlia-bizniesa', 'b2b', 3, 1, 4, 0, 4, 1, 'a:1:{s:6:"cat_id";s:1:"4";}', NULL, NULL, 1),
-(5, 4, NULL, 'Блог', 'blogh', 'blog', 5, 1, 2, 0, 5, 1, 'a:1:{s:6:"cat_id";s:1:"1";}', NULL, NULL, 1),
-(7, 7, NULL, 'Условия и положения', 'usloviia-i-polozhieniia', 'content', 1, 1, 2, 0, 7, 1, 'a:1:{s:6:"cat_id";s:1:"1";}', NULL, NULL, 2),
-(8, 8, NULL, 'ОБСЛУЖИВАНИЕ КЛИЕНТОВ', 'obsluzhivaniie-kliientov', 'content', 2, 1, 2, 0, 8, 1, 'a:1:{s:6:"cat_id";s:1:"1";}', NULL, NULL, 2),
-(9, 9, NULL, 'Условия возврата и замена', 'usloviia-vozvrata-i-zamiena', 'content', 3, 1, 2, 0, 9, 1, 'a:1:{s:6:"cat_id";s:1:"1";}', NULL, NULL, 2),
-(10, 11, NULL, 'Company Details', 'company-details', 'content', 0, 1, 2, 0, 10, 1, 'a:1:{s:6:"cat_id";s:1:"1";}', NULL, NULL, 3),
-(11, 11, NULL, 'SIZE GUIDE', 'size-guide', 'content', 1, 1, 2, 0, 11, 1, 'a:1:{s:6:"cat_id";s:1:"1";}', NULL, NULL, 3),
-(12, 11, NULL, 'Making a Purchase', 'making-a-purchase', 'content', 2, 1, 2, 0, 12, 1, 'a:1:{s:6:"cat_id";s:1:"1";}', NULL, NULL, 3),
-(13, 11, NULL, 'Delivery Schedule', 'delivery-schedule', 'content', 3, 1, 2, 0, 13, 1, 'a:1:{s:6:"cat_id";s:1:"1";}', NULL, NULL, 3),
-(14, 11, NULL, 'PRIVACY POLICY', 'privacy-policy', 'content', 4, 1, 2, 0, 14, 1, 'a:1:{s:6:"cat_id";s:1:"1";}', NULL, NULL, 3),
-(15, NULL, NULL, 'Магазин-Пронто', 'maghazin-pronto', 'shop', 5, 1, 2, 0, 15, 1, 'a:1:{s:6:"cat_id";s:1:"6";}', NULL, NULL, 3),
-(16, NULL, NULL, 'Магазин-Сток', 'maghazin-stok', 'shop', 2, 1, 2, 0, 16, 1, 'a:1:{s:6:"cat_id";s:1:"7";}', NULL, NULL, 3),
-(17, 16, NULL, 'Оплата', 'oplata', 'content', 5, 1, 2, 0, 17, 1, 'a:1:{s:6:"cat_id";s:1:"1";}', NULL, NULL, 2),
-(18, NULL, NULL, 'Контакты', 'kontakty', 'url', 6, 1, 2, 0, 18, 1, 'a:1:{s:6:"cat_id";s:1:"1";}', NULL, 'contacts', 1),
-(19, NULL, NULL, 'Мой аккаунт', 'moi-akkaunt', 'url', 1, 1, 2, 0, 19, 1, 'a:1:{s:6:"cat_id";s:1:"1";}', NULL, 'user_profile', 4);
+(2, NULL, NULL, 'Магазин', 'maghazin', 'shop', 1, 1, 2, 0, 2, 1, 'a:1:{s:6:\"cat_id\";s:1:\"1\";}', NULL, NULL, 1),
+(3, 2, NULL, 'Коллекции', 'kolliektsii', 'collection', 2, 1, 2, 0, 3, 1, 'a:1:{s:6:\"cat_id\";s:1:\"2\";}', NULL, NULL, 1),
+(4, 3, NULL, 'Для бизнеса', 'dlia-bizniesa', 'b2b', 3, 1, 4, 0, 4, 1, 'a:1:{s:6:\"cat_id\";s:1:\"4\";}', NULL, NULL, 1),
+(5, 4, NULL, 'Блог', 'blogh', 'blog', 5, 1, 2, 0, 5, 1, 'a:1:{s:6:\"cat_id\";s:1:\"1\";}', NULL, NULL, 1),
+(7, 7, NULL, 'Условия и положения', 'usloviia-i-polozhieniia', 'content', 1, 1, 2, 0, 7, 1, 'a:1:{s:6:\"cat_id\";s:1:\"1\";}', NULL, NULL, 2),
+(8, 8, NULL, 'ОБСЛУЖИВАНИЕ КЛИЕНТОВ', 'obsluzhivaniie-kliientov', 'content', 2, 1, 2, 0, 8, 1, 'a:1:{s:6:\"cat_id\";s:1:\"1\";}', NULL, NULL, 2),
+(9, 9, NULL, 'Условия возврата и замена', 'usloviia-vozvrata-i-zamiena', 'content', 3, 1, 2, 0, 9, 1, 'a:1:{s:6:\"cat_id\";s:1:\"1\";}', NULL, NULL, 2),
+(10, 11, NULL, 'Company Details', 'company-details', 'content', 0, 1, 2, 0, 10, 1, 'a:1:{s:6:\"cat_id\";s:1:\"1\";}', NULL, NULL, 3),
+(11, 11, NULL, 'SIZE GUIDE', 'size-guide', 'content', 1, 1, 2, 0, 11, 1, 'a:1:{s:6:\"cat_id\";s:1:\"1\";}', NULL, NULL, 3),
+(12, 11, NULL, 'Making a Purchase', 'making-a-purchase', 'content', 2, 1, 2, 0, 12, 1, 'a:1:{s:6:\"cat_id\";s:1:\"1\";}', NULL, NULL, 3),
+(13, 11, NULL, 'Delivery Schedule', 'delivery-schedule', 'content', 3, 1, 2, 0, 13, 1, 'a:1:{s:6:\"cat_id\";s:1:\"1\";}', NULL, NULL, 3),
+(14, 11, NULL, 'PRIVACY POLICY', 'privacy-policy', 'content', 4, 1, 2, 0, 14, 1, 'a:1:{s:6:\"cat_id\";s:1:\"1\";}', NULL, NULL, 3),
+(15, NULL, NULL, 'Магазин-Пронто', 'maghazin-pronto', 'shop', 5, 1, 2, 0, 15, 1, 'a:1:{s:6:\"cat_id\";s:1:\"6\";}', NULL, NULL, 3),
+(16, NULL, NULL, 'Магазин-Сток', 'maghazin-stok', 'shop', 2, 1, 2, 0, 16, 1, 'a:1:{s:6:\"cat_id\";s:1:\"7\";}', NULL, NULL, 3),
+(17, 16, NULL, 'Оплата', 'oplata', 'content', 5, 1, 2, 0, 17, 1, 'a:1:{s:6:\"cat_id\";s:1:\"1\";}', NULL, NULL, 2),
+(18, NULL, NULL, 'Контакты', 'kontakty', 'url', 6, 1, 2, 0, 18, 1, 'a:1:{s:6:\"cat_id\";s:1:\"1\";}', NULL, 'contacts', 1),
+(19, NULL, NULL, 'Мой аккаунт', 'moi-akkaunt', 'url', 1, 1, 2, 0, 19, 1, 'a:1:{s:6:\"cat_id\";s:1:\"1\";}', NULL, 'user_profile', 4),
+(20, NULL, NULL, 'Тех.обслуживание', 'tiekh-obsluzhivaniie', 'url', NULL, 1, 2, 0, 20, 1, 'a:1:{s:6:\"cat_id\";s:1:\"1\";}', 0, 'toolai.eu/dev', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `CMS_Menu_Type`
+-- Структура таблицы `cms_menu_type`
 --
 
-CREATE TABLE `CMS_Menu_Type` (
+CREATE TABLE `cms_menu_type` (
   `id` int(11) NOT NULL,
   `status_id` int(11) DEFAULT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `CMS_Menu_Type`
+-- Дамп данных таблицы `cms_menu_type`
 --
 
-INSERT INTO `CMS_Menu_Type` (`id`, `status_id`, `name`) VALUES
+INSERT INTO `cms_menu_type` (`id`, `status_id`, `name`) VALUES
 (1, 1, 'mainMenu'),
 (2, 1, 'footerMenu'),
 (3, 1, 'term'),
@@ -94,102 +97,102 @@ INSERT INTO `CMS_Menu_Type` (`id`, `status_id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `CMS_Pages`
+-- Структура таблицы `cms_pages`
 --
 
-CREATE TABLE `CMS_Pages` (
+CREATE TABLE `cms_pages` (
   `id` int(11) NOT NULL,
   `parent_id` int(11) DEFAULT NULL,
   `fullName` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `alias` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `content` longtext COLLATE utf8_unicode_ci,
+  `content` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
   `status` int(11) NOT NULL,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `description` longtext COLLATE utf8_unicode_ci,
-  `keywords` longtext COLLATE utf8_unicode_ci,
+  `description` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `keywords` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `published` datetime NOT NULL,
   `update_date` datetime DEFAULT NULL,
-  `params` longtext COLLATE utf8_unicode_ci COMMENT '(DC2Type:array)',
-  `images` longtext COLLATE utf8_unicode_ci COMMENT '(DC2Type:array)',
-  `main_images` longtext COLLATE utf8_unicode_ci COMMENT '(DC2Type:array)'
+  `params` longtext COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '(DC2Type:array)',
+  `images` longtext COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '(DC2Type:array)',
+  `main_images` longtext COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '(DC2Type:array)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `CMS_Pages`
+-- Дамп данных таблицы `cms_pages`
 --
 
-INSERT INTO `CMS_Pages` (`id`, `parent_id`, `fullName`, `alias`, `content`, `status`, `title`, `description`, `keywords`, `created`, `published`, `update_date`, `params`, `images`, `main_images`) VALUES
-(1, NULL, 'Главная', 'home', NULL, 1, 'Главная', NULL, NULL, '2016-03-11 01:49:02', '2016-03-01 00:00:00', NULL, 'a:1:{s:4:"hide";a:2:{i:0;s:9:"hideTitle";i:1;s:8:"hideText";}}', NULL, NULL),
-(2, NULL, 'Коллекции', 'kollekcii', NULL, 1, 'Коллекции', NULL, NULL, '2016-03-11 01:56:41', '2016-03-01 00:00:00', NULL, 'a:1:{s:4:"hide";a:2:{i:0;s:9:"hideTitle";i:1;s:8:"hideText";}}', NULL, NULL),
-(3, NULL, 'Для бизнеса', 'b2b', NULL, 1, 'Для бизнеса', NULL, NULL, '2016-03-11 01:57:59', '2016-03-01 00:00:00', NULL, 'a:1:{s:4:"hide";a:2:{i:0;s:9:"hideTitle";i:1;s:8:"hideText";}}', NULL, NULL),
-(4, NULL, 'Блог', 'blog', NULL, 1, 'Блог', NULL, NULL, '2016-03-11 01:58:34', '2016-03-01 00:00:00', '2016-07-25 19:53:52', 'a:1:{s:4:"hide";a:2:{i:0;s:9:"hideTitle";i:1;s:8:"hideText";}}', NULL, 'a:1:{i:0;s:31:"http://toolai.dev/uploads/3.png";}'),
-(5, 4, 'БРЕНД ТУЛАЙ  ВПЕРВЫЕ ВЫСТУПИЛ  НА МЕЖДУНАРОДНОЙ ТОРГОВОЙ АРЕНЕ', 'brend-tulaj -vpervye-vystupil -na-mezhdunarodnoj-torgovoj-arene', '<p>В феврале 2016 бренд Тулай впервые выступил на международной торговой арене, на Премиум класса выставке СПМ в Москве, где собираются ведущие торговые марки одежды со всего мира.</p>\r\n\r\n<p>Благодаря специальной программе по поддержке молодых дизайнеров, наш бренд был выбран из числа многих претендентов, что очень сильно помогло нам в нашем профессиональном продвижении.</p>\r\n\r\n<p><img alt="" src="/uploads/20160223_111829.jpg" style="height:118px; width:220px" /></p>\r\n\r\n<p><img alt="" src="/uploads/novost3-1.JPG" style="height:370px; width:555px" /></p>\r\n\r\n<p><img alt="" src="/uploads/novost3-2.JPG" style="height:370px; width:555px" /></p>\r\n\r\n<p><img alt="" src="/uploads/20160223_111829.jpg" style="height:312px; width:555px" /></p>\r\n\r\n<p><img alt="" src="/uploads/20160223_112008.jpg" style="height:987px; width:555px" /></p>\r\n\r\n<p><img alt="" src="/uploads/20160223_120734.jpg" style="height:987px; width:555px" /></p>\r\n\r\n<p><img alt="" src="/uploads/20160223_120846.jpg" style="height:987px; width:555px" /></p>\r\n\r\n<p><img alt="" src="/uploads/20160223_120921.jpg" style="height:987px; width:555px" /></p>\r\n\r\n<p><img alt="" src="/uploads/20160223_111646.jpg" style="height:312px; width:555px" /></p>\r\n\r\n<p><img alt="" src="/uploads/20160223_111713.jpg" style="height:312px; width:555px" /></p>\r\n\r\n<p>&nbsp;</p>', 1, 'БРЕНД ТУЛАЙ  ВПЕРВЫЕ ВЫСТУПИЛ  НА МЕЖДУНАРОДНОЙ ТОРГОВОЙ АРЕНЕ', NULL, NULL, '2016-03-11 01:58:58', '2016-04-05 00:00:00', '2016-04-29 10:59:03', 'a:1:{s:4:"hide";a:0:{}}', NULL, NULL),
-(6, NULL, 'Контакты', 'kontakty', '<h4>Контакты</h4>\r\n\r\n<p><strong>TOOLAI-FASHION</strong></p>\r\n\r\n<p>ИП БЕЙШЕНОВА С.К</p>\r\n\r\n<p>ИНН: 11911197800749</p>\r\n\r\n<p>ОКПО: 29175022</p>\r\n\r\n<p>ДЗЕРЖИНСКОГО 30, Г.БАЛЫКЧЫ</p>\r\n\r\n<p>КЫРГЫЗСТАН</p>\r\n\r\n<p>Т: +996 3944 70590</p>\r\n\r\n<p>М: +996 707 91 43 35</p>\r\n\r\n<p>Е: toolai.fashion@gmail.com , aseleleonora.b@gmail.com</p>\r\n\r\n<p>W: www.tоolai-fashion.com , www.toolai-fashion.ru</p>', 1, 'Контакты', NULL, NULL, '2016-03-11 02:02:09', '2016-03-01 00:00:00', '2016-08-16 07:56:34', 'a:1:{s:4:"hide";a:1:{i:0;s:9:"hideTitle";}}', 'a:0:{}', 'a:0:{}'),
-(7, NULL, 'Условия и положения', 'uslovija-i-polozhenija', '<p>Добро пожаловать в интернет магазин TOOLAI-FASHION.RU&nbsp; Если вы по-прежнему просматриваете и используете этот сайт, вы соглашаетесь с условиями и правилами использования&nbsp; сайта TOOLAI-FASHION.RU, которые вместе с нашей политикой конфиденциальности устанавливают отношения с вами с нашим веб-сайтом TOOLAI-FASHION.RU.</p>\r\n\r\n<p>Если вы согласны с условиями использования нашего сайта, то, пожалуйста, обратите внимание, что эти условия могут быть изменены без предварительного уведомления, и вы должны проверять эту страницу регулярно, чтобы убедиться, что вы читали самую последнюю версию и согласны с нашими условиями использования. Любые изменения, внесенные после установленного вами заказа, не будет влиять на порядок проведения вашего заказа.</p>\r\n\r\n<p>Если вы не согласны с каким-либо пунктом Условий и Политикой нашей компании , вы можете не использовать наш сайт.</p>\r\n\r\n<p>Эта версия была обновлена &nbsp;18 апреля 2016 года.</p>', 1, 'Условия и положения', NULL, NULL, '2016-03-16 10:20:50', '2016-03-01 00:00:00', '2016-04-18 09:28:23', 'a:1:{s:4:"hide";a:0:{}}', NULL, NULL),
-(8, NULL, 'ОБСЛУЖИВАНИЕ КЛИЕНТОВ', 'obsluzhivanie-klientov', '<ul>\r\n	<li><a href="http://toolai-fashion.ru/">ОБСЛУЖИВАНИЕ КЛИЕНТОВ</a></li>\r\n	<li>&nbsp;</li>\r\n</ul>', 1, 'ОБСЛУЖИВАНИЕ КЛИЕНТОВ', NULL, NULL, '2016-03-23 14:24:42', '2016-03-01 00:00:00', NULL, 'a:1:{s:4:"hide";a:0:{}}', NULL, NULL),
-(9, NULL, 'УСЛОВИЯ ВОЗВРАТА И ЗАМЕНА', 'uslovija-vozvrata-i-zamena', '<p>УСЛОВИЯ ВОЗВРАТА И ЗАМЕНА</p>', 1, 'УСЛОВИЯ ВОЗВРАТА И ЗАМЕНА', NULL, NULL, '2016-03-23 14:25:10', '2016-03-01 00:00:00', NULL, 'a:1:{s:4:"hide";a:0:{}}', NULL, NULL),
-(11, NULL, 'Company Details', 'company-details', '<p>WELCOME</p>\r\n\r\n<p>Welcome to the online home of TOOLAI-FASHION.COM If you continue to browse and use this website, you are agreeing to comply with and be bound by the following terms and conditions of use, which together with our privacy policy govern TOOLAI-FASHION.COM relationship with you in relation to this website.</p>\r\n\r\n<p>If you agree to the conditions of use for our website, then please note that these terms and conditions are subject to change without notice, and you should check this page regularly to ensure that you have read the most current version and still agree with our conditions of use. Any changes that are made after you have placed an order will not affect that order unless we are required to make that change by law. This Website also contains links to other websites, which are not operated by TOOLAI-FASHION.COM (the &quot;Linked Sites&quot;). TOOLAI-FASHION.COM has no control over the Linked Sites and accepts no responsibility for them or for any loss or damage that may arise from your use of them. Your use of the Linked Sites will be subject to the terms of use and service contained within each such site.</p>\r\n\r\n<p>If you disagree with any part of these Terms and Conditions, our Customer Care or our Cancellations, Returns, Refunds and Exchanges Policy please do not use our website.</p>\r\n\r\n<p>This version of our Terms and Conditions was last updated 4th March 2016.</p>', 1, 'Company Details', NULL, NULL, '2016-04-06 10:26:22', '2016-04-01 00:00:00', NULL, 'a:1:{s:4:"hide";a:1:{i:0;s:9:"hideTitle";}}', NULL, NULL),
-(12, 4, 'НОВАЯ КОЛЛЕКЦИЯ НА ОСЕНЬ ЗИМА 2016-17г.', 'novaja-kollekcija-na-osen-zima-2016-17g.', '<p>Новая коллекция на осень-зима 2016-17г.</p>\r\n\r\n<p>Новая осенне-зимняя коллекция бренда Тулай ярко подчеркивает свое концептуальное направление городского кочевника. Свободные формы, комфортная, функциональная и практичная одежда выглядит обманчиво просто, однако создает сильное впечатление в изменении обстановки, времени, места и обстоятельств.</p>\r\n\r\n<p><img alt="" src="/uploads/%D0%BD%D0%BE%D0%B2%D0%BE%D1%81%D1%82%D1%8C%202.jpg" style="height:220px; width:390px" /></p>\r\n\r\n<p><img alt="" src="/uploads/FW16-171NEWS-2.jpg" style="height:794px; width:555px" /></p>\r\n\r\n<p><img alt="" src="/uploads/FW16-172NEWS-2.jpg" style="height:794px; width:555px" /></p>\r\n\r\n<p><img alt="" src="/uploads/FW16-174NEWS-2.jpg" style="height:794px; width:555px" /></p>\r\n\r\n<p><img alt="" src="/uploads/FW16-175NEWS-2.jpg" style="height:794px; width:555px" /></p>\r\n\r\n<p><img alt="" src="/uploads/FW16-176NEWS-2.jpg" style="height:794px; width:555px" /></p>\r\n\r\n<p><img alt="" src="/uploads/FW16-177NEWS-2.jpg" style="height:794px; width:555px" /></p>', 1, 'НОВАЯ КОЛЛЕКЦИЯ НА ОСЕНЬ ЗИМА 2016-17г.', NULL, NULL, '2016-04-07 12:16:47', '2016-04-07 00:00:00', '2016-04-29 10:53:08', 'a:1:{s:4:"hide";a:0:{}}', NULL, NULL),
-(13, 4, 'TOOLAI – ЛЕТО 2016', 'toolai-–-leto-2016', '<p>Философия новой коллекции TOOLAI на Лето 2016&nbsp; приблизить человека с самим собой и его окружением с помощью традиционной гармонии&nbsp; между промышленным пространством и &nbsp;силой природы, романтической атмосферой, которая открывается перед космическими горизонтами.</p>\r\n\r\n<p>Это дает ощущение&nbsp; пространства и комфорта&nbsp; и защищенности собственного мира.</p>\r\n\r\n<p>Мягкие натуральные волокна, контрасное освещение как в 70-х напоминающее</p>\r\n\r\n<p>технические цвета, такие как рабочий синий, гранитные оттенки,&nbsp; приглушение ярких взрывов красок, окисленное &nbsp;отражение&nbsp; придают &nbsp;мощную романтическую форму.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>', 1, 'TOOLAI – ЛЕТО 2016', NULL, NULL, '2016-04-07 12:59:13', '2016-04-02 00:00:00', '2016-07-25 21:48:58', 'a:1:{s:4:"hide";a:0:{}}', 'a:4:{i:0;s:49:"http://toolai.dev/uploads/Blouse-Twist-1-SITE.jpg";i:1;s:49:"http://toolai.dev/uploads/Blouse-Osaka-2-SITE.jpg";i:2;s:49:"http://toolai.dev/uploads/SKIRT-STORMY-SITE-2.jpg";i:3;s:51:"http://toolai.dev/uploads/SS16-PICTURE-4-SITE-2.jpg";}', 'a:1:{i:0;s:76:"http://toolai.dev/uploads/%D0%BD%D0%BE%D0%B2%D0%BE%D1%81%D1%82%D1%8C%201.jpg";}'),
-(14, 4, 'МЕЖДУНАРОДНАЯ ВЫСТАВКА СПМ', 'mezhdunarodnaja-vystavka-spm', '<p>В рамках международной выставки СПМ, проходящей в феврале этого года, наш бренд Тулай проводил показ новой осенне-зимней коллекции на будущий год. Натуральные ткани, свободные и в то же время классические формы в стиле day-to-night, стоячие ниспадающие пончо, двусторонние утепленные куртки, ассиметричные юбки подчеркивают стиль бренда &laquo;Urban Nomad&raquo; и дают ощущение защищенности, комфорта и непринужденности.</p>\r\n\r\n<p><img alt="" src="/uploads/%D0%BD%D0%BE%D0%B2%D0%BE%D1%81%D1%82%D1%8C%204.jpg" style="height:220px; width:391px" />​</p>\r\n\r\n<p><img alt="" src="/uploads/TOOLAI%20LowRes-005.JPG" style="height:833px; width:555px" /></p>\r\n\r\n<p><img alt="" src="/uploads/TOOLAI%20LowRes-006.JPG" style="height:833px; width:555px" /></p>\r\n\r\n<p><img alt="" src="/uploads/TOOLAI%20LowRes-008.JPG" style="height:833px; width:555px" /></p>\r\n\r\n<p><img alt="" src="/uploads/TOOLAI%20LowRes-010.JPG" style="height:833px; width:555px" /></p>\r\n\r\n<p><img alt="" src="/uploads/TOOLAI%20LowRes-012.JPG" style="height:833px; width:555px" /></p>\r\n\r\n<p><img alt="" src="/uploads/TOOLAI%20LowRes-014.JPG" style="height:833px; width:555px" /></p>\r\n\r\n<p><img alt="" src="/uploads/TOOLAI%20LowRes-018.JPG" style="height:833px; width:555px" /></p>\r\n\r\n<p><img alt="" src="/uploads/TOOLAI%20LowRes-019.JPG" style="height:833px; width:555px" /></p>\r\n\r\n<p><img alt="" src="/uploads/TOOLAI%20LowRes-021.JPG" style="height:833px; width:555px" /></p>\r\n\r\n<p>&nbsp;</p>', 1, 'МЕЖДУНАРОДНАЯ ВЫСТАВКА СПМ', NULL, NULL, '2016-04-07 13:05:50', '2016-04-03 00:00:00', '2016-04-29 11:26:13', 'a:1:{s:4:"hide";a:0:{}}', NULL, NULL),
-(15, NULL, 'Агенты', 'agenty', '<p>&nbsp;</p>\r\n\r\n<p><span style="font-size:28px"><span style="font-family:times new roman,times,serif"><strong>Агенты</strong></span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>ло невозможно, в соответствии с требованиями &laquo;<a href="https://ru.wikipedia.org/w/index.php?title=Secure_Digital_Music_Initiative&amp;action=edit&amp;redlink=1" title="Secure Digital Music Initiative (страница отсутствует)">Secure Digital Music Initiative</a>&raquo;. Этот факт был отражён в названии стандарта (&laquo;Secure Digital&raquo;). Для записи в защищённую область используется специальный протокол записи, недоступный для обычных пользователей. При этом карта также может быть защищена паролем, без которого доступ к записанной информации невозможен; восстановить работоспособность карты можно только её полным переформатированием с потерей записанной информации.</p>\r\n\r\n<p>Карты формата Secure Digital снабжены механическим<sup><a href="https://ru.wikipedia.org/wiki/Secure_Digital#cite_note-3">[3]</a></sup>&nbsp;переключателем защиты от записи. В положении &laquo;lock&raquo; невозможны запись информации, и, соответственно, удаление файлов и&nbsp;<a href="https://ru.wikipedia.org/wiki/%D0%A4%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%B4%D0%B8%D1%81%D0%BA%D0%B0" title="Форматирование диска">форматирование</a>&nbsp;карты, что позволяет избежать случайной потери информации. Однако следует учитывать, что собственно защита от записи осуществляется не самой картой, а устройством, использующим карту, и может оказаться в нём не реализованной, либо намеренно отсутствовать. Например, автозагрузка резидентной программы&nbsp;<a href="https://ru.wikipedia.org/wiki/CHDK" title="CHDK">CHDK</a>&nbsp;для фотоаппаратов Canon работает, только когда карта защищена от записи.</p>\r\n\r\n<p>В большинстве случаев SD можно заменить&nbsp;<a href="https://ru.wikipedia.org/wiki/Multimedia_Card" title="Multimedia Card">MMC-картой</a>. Обратная замена обычно невозможна: SD толще и может просто не войти в&nbsp;<a href="https://ru.wikipedia.org/wiki/%D0%A1%D0%BB%D0%BE%D1%82" title="Слот">слот</a>&nbsp;для MMC.</p>', 0, 'Агенты', NULL, NULL, '2016-07-31 14:58:13', '2016-06-27 00:00:00', '2016-08-24 19:13:07', 'a:1:{s:4:"hide";a:1:{i:0;s:9:"hideTitle";}}', 'a:0:{}', 'a:0:{}'),
-(16, NULL, 'Оплата', 'oplata', '<p>оплата</p>', 1, 'Оплата', NULL, NULL, '2016-07-31 15:16:15', '2016-06-29 00:00:00', NULL, 'a:1:{s:4:"hide";a:0:{}}', 'a:0:{}', 'a:0:{}'),
-(17, NULL, 'Магазины', 'magaziny', '<p>Магазины тут</p>', 1, 'Магазины', NULL, NULL, '2016-08-16 08:01:36', '2016-07-31 00:00:00', NULL, 'a:1:{s:4:"hide";a:0:{}}', 'a:0:{}', 'a:0:{}');
+INSERT INTO `cms_pages` (`id`, `parent_id`, `fullName`, `alias`, `content`, `status`, `title`, `description`, `keywords`, `created`, `published`, `update_date`, `params`, `images`, `main_images`) VALUES
+(1, NULL, 'Главная', 'home', NULL, 1, 'Главная', NULL, NULL, '2016-03-11 01:49:02', '2016-03-01 00:00:00', NULL, 'a:1:{s:4:\"hide\";a:2:{i:0;s:9:\"hideTitle\";i:1;s:8:\"hideText\";}}', NULL, NULL),
+(2, NULL, 'Коллекции', 'kollekcii', NULL, 1, 'Коллекции', NULL, NULL, '2016-03-11 01:56:41', '2016-03-01 00:00:00', NULL, 'a:1:{s:4:\"hide\";a:2:{i:0;s:9:\"hideTitle\";i:1;s:8:\"hideText\";}}', NULL, NULL),
+(3, NULL, 'Для бизнеса', 'b2b', NULL, 1, 'Для бизнеса', NULL, NULL, '2016-03-11 01:57:59', '2016-03-01 00:00:00', NULL, 'a:1:{s:4:\"hide\";a:2:{i:0;s:9:\"hideTitle\";i:1;s:8:\"hideText\";}}', NULL, NULL),
+(4, NULL, 'Блог', 'blog', NULL, 1, 'Блог', NULL, NULL, '2016-03-11 01:58:34', '2016-03-01 00:00:00', '2016-07-25 19:53:52', 'a:1:{s:4:\"hide\";a:2:{i:0;s:9:\"hideTitle\";i:1;s:8:\"hideText\";}}', NULL, 'a:1:{i:0;s:31:\"http://toolai.dev/uploads/3.png\";}'),
+(5, 4, 'БРЕНД ТУЛАЙ  ВПЕРВЫЕ ВЫСТУПИЛ  НА МЕЖДУНАРОДНОЙ ТОРГОВОЙ АРЕНЕ', 'brend-tulaj -vpervye-vystupil -na-mezhdunarodnoj-torgovoj-arene', '<p>В феврале 2016 бренд Тулай впервые выступил на международной торговой арене, на Премиум класса выставке СПМ в Москве, где собираются ведущие торговые марки одежды со всего мира.</p>\r\n\r\n<p>Благодаря специальной программе по поддержке молодых дизайнеров, наш бренд был выбран из числа многих претендентов, что очень сильно помогло нам в нашем профессиональном продвижении.</p>\r\n\r\n<p><img alt=\"\" src=\"/uploads/20160223_111829.jpg\" style=\"height:118px; width:220px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"/uploads/novost3-1.JPG\" style=\"height:370px; width:555px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"/uploads/novost3-2.JPG\" style=\"height:370px; width:555px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"/uploads/20160223_111829.jpg\" style=\"height:312px; width:555px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"/uploads/20160223_112008.jpg\" style=\"height:987px; width:555px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"/uploads/20160223_120734.jpg\" style=\"height:987px; width:555px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"/uploads/20160223_120846.jpg\" style=\"height:987px; width:555px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"/uploads/20160223_120921.jpg\" style=\"height:987px; width:555px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"/uploads/20160223_111646.jpg\" style=\"height:312px; width:555px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"/uploads/20160223_111713.jpg\" style=\"height:312px; width:555px\" /></p>\r\n\r\n<p>&nbsp;</p>', 1, 'БРЕНД ТУЛАЙ  ВПЕРВЫЕ ВЫСТУПИЛ  НА МЕЖДУНАРОДНОЙ ТОРГОВОЙ АРЕНЕ', NULL, NULL, '2016-03-11 01:58:58', '2016-04-05 00:00:00', '2016-04-29 10:59:03', 'a:1:{s:4:\"hide\";a:0:{}}', NULL, NULL),
+(6, NULL, 'Контакты', 'kontakty', '<h4>Контакты</h4>\r\n\r\n<p><strong>TOOLAI-FASHION</strong></p>\r\n\r\n<p>ИП БЕЙШЕНОВА С.К</p>\r\n\r\n<p>ИНН: 11911197800749</p>\r\n\r\n<p>ОКПО: 29175022</p>\r\n\r\n<p>ДЗЕРЖИНСКОГО 30, Г.БАЛЫКЧЫ</p>\r\n\r\n<p>КЫРГЫЗСТАН</p>\r\n\r\n<p>Т: +996 3944 70590</p>\r\n\r\n<p>М: +996 707 91 43 35</p>\r\n\r\n<p>Е: toolai.fashion@gmail.com , aseleleonora.b@gmail.com</p>\r\n\r\n<p>W: www.tоolai-fashion.com , www.toolai-fashion.ru</p>', 1, 'Контакты', NULL, NULL, '2016-03-11 02:02:09', '2016-03-01 00:00:00', '2016-08-16 07:56:34', 'a:1:{s:4:\"hide\";a:1:{i:0;s:9:\"hideTitle\";}}', 'a:0:{}', 'a:0:{}'),
+(7, NULL, 'Условия и положения', 'uslovija-i-polozhenija', '<p>Добро пожаловать в интернет магазин TOOLAI-FASHION.RU&nbsp; Если вы по-прежнему просматриваете и используете этот сайт, вы соглашаетесь с условиями и правилами использования&nbsp; сайта TOOLAI-FASHION.RU, которые вместе с нашей политикой конфиденциальности устанавливают отношения с вами с нашим веб-сайтом TOOLAI-FASHION.RU.</p>\r\n\r\n<p>Если вы согласны с условиями использования нашего сайта, то, пожалуйста, обратите внимание, что эти условия могут быть изменены без предварительного уведомления, и вы должны проверять эту страницу регулярно, чтобы убедиться, что вы читали самую последнюю версию и согласны с нашими условиями использования. Любые изменения, внесенные после установленного вами заказа, не будет влиять на порядок проведения вашего заказа.</p>\r\n\r\n<p>Если вы не согласны с каким-либо пунктом Условий и Политикой нашей компании , вы можете не использовать наш сайт.</p>\r\n\r\n<p>Эта версия была обновлена &nbsp;18 апреля 2016 года.</p>', 1, 'Условия и положения', NULL, NULL, '2016-03-16 10:20:50', '2016-03-01 00:00:00', '2016-04-18 09:28:23', 'a:1:{s:4:\"hide\";a:0:{}}', NULL, NULL),
+(8, NULL, 'ОБСЛУЖИВАНИЕ КЛИЕНТОВ', 'obsluzhivanie-klientov', '<ul>\r\n	<li><a href=\"http://toolai-fashion.ru/\">ОБСЛУЖИВАНИЕ КЛИЕНТОВ</a></li>\r\n	<li>&nbsp;</li>\r\n</ul>', 1, 'ОБСЛУЖИВАНИЕ КЛИЕНТОВ', NULL, NULL, '2016-03-23 14:24:42', '2016-03-01 00:00:00', NULL, 'a:1:{s:4:\"hide\";a:0:{}}', NULL, NULL),
+(9, NULL, 'УСЛОВИЯ ВОЗВРАТА И ЗАМЕНА', 'uslovija-vozvrata-i-zamena', '<p>УСЛОВИЯ ВОЗВРАТА И ЗАМЕНА</p>', 1, 'УСЛОВИЯ ВОЗВРАТА И ЗАМЕНА', NULL, NULL, '2016-03-23 14:25:10', '2016-03-01 00:00:00', NULL, 'a:1:{s:4:\"hide\";a:0:{}}', NULL, NULL),
+(11, NULL, 'Company Details', 'company-details', '<p>WELCOME</p>\r\n\r\n<p>Welcome to the online home of TOOLAI-FASHION.COM If you continue to browse and use this website, you are agreeing to comply with and be bound by the following terms and conditions of use, which together with our privacy policy govern TOOLAI-FASHION.COM relationship with you in relation to this website.</p>\r\n\r\n<p>If you agree to the conditions of use for our website, then please note that these terms and conditions are subject to change without notice, and you should check this page regularly to ensure that you have read the most current version and still agree with our conditions of use. Any changes that are made after you have placed an order will not affect that order unless we are required to make that change by law. This Website also contains links to other websites, which are not operated by TOOLAI-FASHION.COM (the &quot;Linked Sites&quot;). TOOLAI-FASHION.COM has no control over the Linked Sites and accepts no responsibility for them or for any loss or damage that may arise from your use of them. Your use of the Linked Sites will be subject to the terms of use and service contained within each such site.</p>\r\n\r\n<p>If you disagree with any part of these Terms and Conditions, our Customer Care or our Cancellations, Returns, Refunds and Exchanges Policy please do not use our website.</p>\r\n\r\n<p>This version of our Terms and Conditions was last updated 4th March 2016.</p>', 1, 'Company Details', NULL, NULL, '2016-04-06 10:26:22', '2016-04-01 00:00:00', NULL, 'a:1:{s:4:\"hide\";a:1:{i:0;s:9:\"hideTitle\";}}', NULL, NULL),
+(12, 4, 'НОВАЯ КОЛЛЕКЦИЯ НА ОСЕНЬ ЗИМА 2016-17г.', 'novaja-kollekcija-na-osen-zima-2016-17g.', '<p>Новая коллекция на осень-зима 2016-17г.</p>\r\n\r\n<p>Новая осенне-зимняя коллекция бренда Тулай ярко подчеркивает свое концептуальное направление городского кочевника. Свободные формы, комфортная, функциональная и практичная одежда выглядит обманчиво просто, однако создает сильное впечатление в изменении обстановки, времени, места и обстоятельств.</p>\r\n\r\n<p><img alt=\"\" src=\"/uploads/%D0%BD%D0%BE%D0%B2%D0%BE%D1%81%D1%82%D1%8C%202.jpg\" style=\"height:220px; width:390px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"/uploads/FW16-171NEWS-2.jpg\" style=\"height:794px; width:555px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"/uploads/FW16-172NEWS-2.jpg\" style=\"height:794px; width:555px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"/uploads/FW16-174NEWS-2.jpg\" style=\"height:794px; width:555px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"/uploads/FW16-175NEWS-2.jpg\" style=\"height:794px; width:555px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"/uploads/FW16-176NEWS-2.jpg\" style=\"height:794px; width:555px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"/uploads/FW16-177NEWS-2.jpg\" style=\"height:794px; width:555px\" /></p>', 1, 'НОВАЯ КОЛЛЕКЦИЯ НА ОСЕНЬ ЗИМА 2016-17г.', NULL, NULL, '2016-04-07 12:16:47', '2016-04-07 00:00:00', '2016-04-29 10:53:08', 'a:1:{s:4:\"hide\";a:0:{}}', NULL, NULL),
+(13, 4, 'TOOLAI – ЛЕТО 2016', 'toolai-–-leto-2016', '<p>Философия новой коллекции TOOLAI на Лето 2016&nbsp; приблизить человека с самим собой и его окружением с помощью традиционной гармонии&nbsp; между промышленным пространством и &nbsp;силой природы, романтической атмосферой, которая открывается перед космическими горизонтами.</p>\r\n\r\n<p>Это дает ощущение&nbsp; пространства и комфорта&nbsp; и защищенности собственного мира.</p>\r\n\r\n<p>Мягкие натуральные волокна, контрасное освещение как в 70-х напоминающее</p>\r\n\r\n<p>технические цвета, такие как рабочий синий, гранитные оттенки,&nbsp; приглушение ярких взрывов красок, окисленное &nbsp;отражение&nbsp; придают &nbsp;мощную романтическую форму.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>', 1, 'TOOLAI – ЛЕТО 2016', NULL, NULL, '2016-04-07 12:59:13', '2016-04-02 00:00:00', '2016-07-25 21:48:58', 'a:1:{s:4:\"hide\";a:0:{}}', 'a:4:{i:0;s:49:\"http://toolai.dev/uploads/Blouse-Twist-1-SITE.jpg\";i:1;s:49:\"http://toolai.dev/uploads/Blouse-Osaka-2-SITE.jpg\";i:2;s:49:\"http://toolai.dev/uploads/SKIRT-STORMY-SITE-2.jpg\";i:3;s:51:\"http://toolai.dev/uploads/SS16-PICTURE-4-SITE-2.jpg\";}', 'a:1:{i:0;s:76:\"http://toolai.dev/uploads/%D0%BD%D0%BE%D0%B2%D0%BE%D1%81%D1%82%D1%8C%201.jpg\";}'),
+(14, 4, 'МЕЖДУНАРОДНАЯ ВЫСТАВКА СПМ', 'mezhdunarodnaja-vystavka-spm', '<p>В рамках международной выставки СПМ, проходящей в феврале этого года, наш бренд Тулай проводил показ новой осенне-зимней коллекции на будущий год. Натуральные ткани, свободные и в то же время классические формы в стиле day-to-night, стоячие ниспадающие пончо, двусторонние утепленные куртки, ассиметричные юбки подчеркивают стиль бренда &laquo;Urban Nomad&raquo; и дают ощущение защищенности, комфорта и непринужденности.</p>\r\n\r\n<p><img alt=\"\" src=\"/uploads/%D0%BD%D0%BE%D0%B2%D0%BE%D1%81%D1%82%D1%8C%204.jpg\" style=\"height:220px; width:391px\" />​</p>\r\n\r\n<p><img alt=\"\" src=\"/uploads/TOOLAI%20LowRes-005.JPG\" style=\"height:833px; width:555px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"/uploads/TOOLAI%20LowRes-006.JPG\" style=\"height:833px; width:555px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"/uploads/TOOLAI%20LowRes-008.JPG\" style=\"height:833px; width:555px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"/uploads/TOOLAI%20LowRes-010.JPG\" style=\"height:833px; width:555px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"/uploads/TOOLAI%20LowRes-012.JPG\" style=\"height:833px; width:555px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"/uploads/TOOLAI%20LowRes-014.JPG\" style=\"height:833px; width:555px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"/uploads/TOOLAI%20LowRes-018.JPG\" style=\"height:833px; width:555px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"/uploads/TOOLAI%20LowRes-019.JPG\" style=\"height:833px; width:555px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"/uploads/TOOLAI%20LowRes-021.JPG\" style=\"height:833px; width:555px\" /></p>\r\n\r\n<p>&nbsp;</p>', 1, 'МЕЖДУНАРОДНАЯ ВЫСТАВКА СПМ', NULL, NULL, '2016-04-07 13:05:50', '2016-04-03 00:00:00', '2016-04-29 11:26:13', 'a:1:{s:4:\"hide\";a:0:{}}', NULL, NULL),
+(15, NULL, 'Агенты', 'agenty', '<p>&nbsp;</p>\r\n\r\n<p><span style=\"font-size:28px\"><span style=\"font-family:times new roman,times,serif\"><strong>Агенты</strong></span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>ло невозможно, в соответствии с требованиями &laquo;<a href=\"https://ru.wikipedia.org/w/index.php?title=Secure_Digital_Music_Initiative&amp;action=edit&amp;redlink=1\" title=\"Secure Digital Music Initiative (страница отсутствует)\">Secure Digital Music Initiative</a>&raquo;. Этот факт был отражён в названии стандарта (&laquo;Secure Digital&raquo;). Для записи в защищённую область используется специальный протокол записи, недоступный для обычных пользователей. При этом карта также может быть защищена паролем, без которого доступ к записанной информации невозможен; восстановить работоспособность карты можно только её полным переформатированием с потерей записанной информации.</p>\r\n\r\n<p>Карты формата Secure Digital снабжены механическим<sup><a href=\"https://ru.wikipedia.org/wiki/Secure_Digital#cite_note-3\">[3]</a></sup>&nbsp;переключателем защиты от записи. В положении &laquo;lock&raquo; невозможны запись информации, и, соответственно, удаление файлов и&nbsp;<a href=\"https://ru.wikipedia.org/wiki/%D0%A4%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%B4%D0%B8%D1%81%D0%BA%D0%B0\" title=\"Форматирование диска\">форматирование</a>&nbsp;карты, что позволяет избежать случайной потери информации. Однако следует учитывать, что собственно защита от записи осуществляется не самой картой, а устройством, использующим карту, и может оказаться в нём не реализованной, либо намеренно отсутствовать. Например, автозагрузка резидентной программы&nbsp;<a href=\"https://ru.wikipedia.org/wiki/CHDK\" title=\"CHDK\">CHDK</a>&nbsp;для фотоаппаратов Canon работает, только когда карта защищена от записи.</p>\r\n\r\n<p>В большинстве случаев SD можно заменить&nbsp;<a href=\"https://ru.wikipedia.org/wiki/Multimedia_Card\" title=\"Multimedia Card\">MMC-картой</a>. Обратная замена обычно невозможна: SD толще и может просто не войти в&nbsp;<a href=\"https://ru.wikipedia.org/wiki/%D0%A1%D0%BB%D0%BE%D1%82\" title=\"Слот\">слот</a>&nbsp;для MMC.</p>', 0, 'Агенты', NULL, NULL, '2016-07-31 14:58:13', '2016-06-27 00:00:00', '2016-08-24 19:13:07', 'a:1:{s:4:\"hide\";a:1:{i:0;s:9:\"hideTitle\";}}', 'a:0:{}', 'a:0:{}'),
+(16, NULL, 'Оплата', 'oplata', '<p>оплата</p>', 1, 'Оплата', NULL, NULL, '2016-07-31 15:16:15', '2016-06-29 00:00:00', NULL, 'a:1:{s:4:\"hide\";a:0:{}}', 'a:0:{}', 'a:0:{}'),
+(17, NULL, 'Магазины', 'magaziny', '<p>Магазины тут</p>', 1, 'Магазины', NULL, NULL, '2016-08-16 08:01:36', '2016-07-31 00:00:00', NULL, 'a:1:{s:4:\"hide\";a:0:{}}', 'a:0:{}', 'a:0:{}');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `CMS_Widget`
+-- Структура таблицы `cms_widget`
 --
 
-CREATE TABLE `CMS_Widget` (
+CREATE TABLE `cms_widget` (
   `id` int(11) NOT NULL,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `hideTitle` tinyint(1) NOT NULL DEFAULT '1',
+  `hideTitle` tinyint(1) NOT NULL DEFAULT 1,
   `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `html` longtext COLLATE utf8_unicode_ci,
-  `title_html` longtext COLLATE utf8_unicode_ci,
+  `html` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `title_html` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
   `params` longtext COLLATE utf8_unicode_ci NOT NULL COMMENT '(DC2Type:array)',
-  `orderning` int(11) DEFAULT '0',
+  `orderning` int(11) DEFAULT 0,
   `position` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL DEFAULT 0,
   `class` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `menu_check` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `youtube_src` varchar(400) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `CMS_Widget`
+-- Дамп данных таблицы `cms_widget`
 --
 
-INSERT INTO `CMS_Widget` (`id`, `title`, `hideTitle`, `type`, `html`, `title_html`, `params`, `orderning`, `position`, `status`, `class`, `menu_check`, `youtube_src`) VALUES
-(1, 'menu', 0, 'menu', NULL, NULL, 'a:9:{s:8:"MenuType";i:1;s:11:"SliderCount";N;s:11:"SliderSpeed";N;s:11:"SliderTitle";N;s:10:"SliderHref";N;s:8:"Category";N;s:12:"CategoryHref";N;s:7:"Product";N;s:11:"ProductHref";N;}', -1, 'mainMenu', 1, 'nav navbar-nav navbar-nav-menu', 'all', NULL),
-(2, 'слайдер', 0, 'slider', NULL, NULL, 'a:9:{s:8:"MenuType";N;s:11:"SliderCount";i:4;s:11:"SliderSpeed";i:5999;s:11:"SliderTitle";i:0;s:10:"SliderHref";i:0;s:8:"Category";N;s:12:"CategoryHref";N;s:7:"Product";N;s:11:"ProductHref";N;}', 0, 'carousel', 1, NULL, 'main', NULL),
-(3, 'текс', 0, 'html', '<div class="pink">\r\n<div class="container-fluid">\r\n<div class="row">\r\n<div class="col-sm-6 col-sm-offset-3 text-center">\r\n<h3><strong><span style="color:#FFFFFF"><span style="font-size:26px">КОМФОРТ &nbsp; &nbsp; &nbsp; ФУНКЦИОНАЛЬНОСТЬ &nbsp; &nbsp; &nbsp; ПРАКТИЧНОСТЬ</span></span></strong></h3>\r\n</div>\r\n</div>\r\n</div>\r\n</div>', NULL, 'a:9:{s:8:"MenuType";N;s:11:"SliderCount";N;s:11:"SliderSpeed";N;s:11:"SliderTitle";N;s:10:"SliderHref";N;s:8:"Category";N;s:12:"CategoryHref";N;s:7:"Product";N;s:11:"ProductHref";N;}', 0, 'pink', 1, NULL, 'in_menu', NULL),
-(4, 'левый верхний блок', 0, 'html', '<div class="category-item new-1"><a href="/maghazin.html"><img alt="" src="/uploads/11%2022.jpg" style="height:427px; width:499px" /></a></div>', '<div class="category-item new-1"><a href="/maghazin.html"><img alt="" src="/uploads/11%2022.jpg" style="height:427px; width:499px" /></a></div>', 'a:9:{s:8:"MenuType";N;s:11:"SliderCount";N;s:11:"SliderSpeed";N;s:11:"SliderTitle";N;s:10:"SliderHref";N;s:8:"Category";N;s:12:"CategoryHref";N;s:7:"Product";i:16;s:11:"ProductHref";N;}', 0, 'category_left_1', 1, NULL, 'in_menu', NULL),
-(5, 'левый нижний блок', 0, 'product', '<div class="category-item new-2"><img alt="image" src="/uploads/2222.jpg" /></div>', '<div class="category-item new-2"><img alt="image" src="/uploads/2222.jpg" /></div>', 'a:9:{s:8:"MenuType";N;s:11:"SliderCount";N;s:11:"SliderSpeed";N;s:11:"SliderTitle";N;s:10:"SliderHref";N;s:8:"Category";N;s:12:"CategoryHref";N;s:7:"Product";i:4;s:11:"ProductHref";N;}', 0, 'category_left_2', 1, NULL, 'in_menu', '<iframe width="853" height="480" src="https://www.youtube.com/embed/SDNbTD2nTsc?list=RDbRDFuNr7ceI&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>'),
-(6, 'Правй блок', 0, 'html', '<div class="category-item new-3"><a class="category-item-link" href="kolliektsii/kolliektsiia/viesna-lieto-2016.html"><img alt="image" src="/uploads/3333.jpg" /> </a></div>', NULL, 'a:9:{s:8:"MenuType";N;s:11:"SliderCount";N;s:11:"SliderSpeed";N;s:11:"SliderTitle";N;s:10:"SliderHref";N;s:8:"Category";N;s:12:"CategoryHref";N;s:7:"Product";N;s:11:"ProductHref";N;}', 0, 'category_right', 1, NULL, 'in_menu', NULL),
-(7, 'footermenu', 0, 'menu', NULL, NULL, 'a:9:{s:8:"MenuType";i:2;s:11:"SliderCount";N;s:11:"SliderSpeed";N;s:11:"SliderTitle";N;s:10:"SliderHref";N;s:8:"Category";N;s:12:"CategoryHref";N;s:7:"Product";N;s:11:"ProductHref";N;}', NULL, 'footerMenu', 1, 'list-unstyled list-inline', 'all', NULL),
-(8, 'menu TErms', 0, 'menu', NULL, NULL, 'a:9:{s:8:"MenuType";i:1;s:11:"SliderCount";N;s:11:"SliderSpeed";N;s:11:"SliderTitle";N;s:10:"SliderHref";N;s:8:"Category";N;s:12:"CategoryHref";N;s:7:"Product";N;s:11:"ProductHref";N;}', 0, 'left_menu', 1, 'list-unstyled terms-menu-list', 'in_menu', NULL),
-(9, 'tems2', 0, 'menu', NULL, NULL, 'a:9:{s:8:"MenuType";i:4;s:11:"SliderCount";N;s:11:"SliderSpeed";N;s:11:"SliderTitle";N;s:10:"SliderHref";N;s:8:"Category";N;s:12:"CategoryHref";N;s:7:"Product";N;s:11:"ProductHref";N;}', 5, 'left_menu', 1, 'list-unstyled terms-menu-list', 'in_menu', NULL);
+INSERT INTO `cms_widget` (`id`, `title`, `hideTitle`, `type`, `html`, `title_html`, `params`, `orderning`, `position`, `status`, `class`, `menu_check`, `youtube_src`) VALUES
+(1, 'menu', 0, 'menu', NULL, NULL, 'a:9:{s:8:\"MenuType\";i:1;s:11:\"SliderCount\";N;s:11:\"SliderSpeed\";N;s:11:\"SliderTitle\";N;s:10:\"SliderHref\";N;s:8:\"Category\";N;s:12:\"CategoryHref\";N;s:7:\"Product\";N;s:11:\"ProductHref\";N;}', -1, 'mainMenu', 1, 'nav navbar-nav navbar-nav-menu', 'all', NULL),
+(2, 'слайдер', 0, 'slider', NULL, NULL, 'a:9:{s:8:\"MenuType\";N;s:11:\"SliderCount\";i:4;s:11:\"SliderSpeed\";i:5999;s:11:\"SliderTitle\";i:0;s:10:\"SliderHref\";i:0;s:8:\"Category\";N;s:12:\"CategoryHref\";N;s:7:\"Product\";N;s:11:\"ProductHref\";N;}', 0, 'carousel', 1, NULL, 'main', NULL),
+(3, 'текс', 0, 'html', '<div class=\"pink\">\r\n<div class=\"container-fluid\">\r\n<div class=\"row\">\r\n<div class=\"col-sm-6 col-sm-offset-3 text-center\">\r\n<h3><strong><span style=\"color:#FFFFFF\"><span style=\"font-size:26px\">КОМФОРТ &nbsp; &nbsp; &nbsp; ФУНКЦИОНАЛЬНОСТЬ &nbsp; &nbsp; &nbsp; ПРАКТИЧНОСТЬ</span></span></strong></h3>\r\n</div>\r\n</div>\r\n</div>\r\n</div>', NULL, 'a:9:{s:8:\"MenuType\";N;s:11:\"SliderCount\";N;s:11:\"SliderSpeed\";N;s:11:\"SliderTitle\";N;s:10:\"SliderHref\";N;s:8:\"Category\";N;s:12:\"CategoryHref\";N;s:7:\"Product\";N;s:11:\"ProductHref\";N;}', 0, 'pink', 1, NULL, 'in_menu', NULL),
+(4, 'левый верхний блок', 0, 'html', '<div class=\"category-item new-1\"><a href=\"/maghazin.html\"><img alt=\"\" src=\"/uploads/11%2022.jpg\" style=\"height:427px; width:499px\" /></a></div>', '<div class=\"category-item new-1\"><a href=\"/maghazin.html\"><img alt=\"\" src=\"/uploads/11%2022.jpg\" style=\"height:427px; width:499px\" /></a></div>', 'a:9:{s:8:\"MenuType\";N;s:11:\"SliderCount\";N;s:11:\"SliderSpeed\";N;s:11:\"SliderTitle\";N;s:10:\"SliderHref\";N;s:8:\"Category\";N;s:12:\"CategoryHref\";N;s:7:\"Product\";i:16;s:11:\"ProductHref\";N;}', 0, 'category_left_1', 1, NULL, 'in_menu', NULL),
+(5, 'левый нижний блок', 0, 'product', '<div class=\"category-item new-2\"><img alt=\"image\" src=\"/uploads/2222.jpg\" /></div>', '<div class=\"category-item new-2\"><img alt=\"image\" src=\"/uploads/2222.jpg\" /></div>', 'a:9:{s:8:\"MenuType\";N;s:11:\"SliderCount\";N;s:11:\"SliderSpeed\";N;s:11:\"SliderTitle\";N;s:10:\"SliderHref\";N;s:8:\"Category\";N;s:12:\"CategoryHref\";N;s:7:\"Product\";i:4;s:11:\"ProductHref\";N;}', 0, 'category_left_2', 1, NULL, 'in_menu', '<iframe width=\"853\" height=\"480\" src=\"https://www.youtube.com/embed/SDNbTD2nTsc?list=RDbRDFuNr7ceI&amp;showinfo=0\" frameborder=\"0\" allowfullscreen></iframe>'),
+(6, 'Правй блок', 0, 'html', '<div class=\"category-item new-3\"><a class=\"category-item-link\" href=\"kolliektsii/kolliektsiia/viesna-lieto-2016.html\"><img alt=\"image\" src=\"/uploads/3333.jpg\" /> </a></div>', NULL, 'a:9:{s:8:\"MenuType\";N;s:11:\"SliderCount\";N;s:11:\"SliderSpeed\";N;s:11:\"SliderTitle\";N;s:10:\"SliderHref\";N;s:8:\"Category\";N;s:12:\"CategoryHref\";N;s:7:\"Product\";N;s:11:\"ProductHref\";N;}', 0, 'category_right', 1, NULL, 'in_menu', NULL),
+(7, 'footermenu', 0, 'menu', NULL, NULL, 'a:9:{s:8:\"MenuType\";i:2;s:11:\"SliderCount\";N;s:11:\"SliderSpeed\";N;s:11:\"SliderTitle\";N;s:10:\"SliderHref\";N;s:8:\"Category\";N;s:12:\"CategoryHref\";N;s:7:\"Product\";N;s:11:\"ProductHref\";N;}', NULL, 'footerMenu', 1, 'list-unstyled list-inline', 'all', NULL),
+(8, 'menu TErms', 0, 'menu', NULL, NULL, 'a:9:{s:8:\"MenuType\";i:1;s:11:\"SliderCount\";N;s:11:\"SliderSpeed\";N;s:11:\"SliderTitle\";N;s:10:\"SliderHref\";N;s:8:\"Category\";N;s:12:\"CategoryHref\";N;s:7:\"Product\";N;s:11:\"ProductHref\";N;}', 0, 'left_menu', 1, 'list-unstyled terms-menu-list', 'in_menu', NULL),
+(9, 'tems2', 0, 'menu', NULL, NULL, 'a:9:{s:8:\"MenuType\";i:4;s:11:\"SliderCount\";N;s:11:\"SliderSpeed\";N;s:11:\"SliderTitle\";N;s:10:\"SliderHref\";N;s:8:\"Category\";N;s:12:\"CategoryHref\";N;s:7:\"Product\";N;s:11:\"ProductHref\";N;}', 5, 'left_menu', 1, 'list-unstyled terms-menu-list', 'in_menu', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `CMS_widget_menu`
+-- Структура таблицы `cms_widget_menu`
 --
 
-CREATE TABLE `CMS_widget_menu` (
+CREATE TABLE `cms_widget_menu` (
   `widget_id` int(11) NOT NULL,
   `menu_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `CMS_widget_menu`
+-- Дамп данных таблицы `cms_widget_menu`
 --
 
-INSERT INTO `CMS_widget_menu` (`widget_id`, `menu_id`) VALUES
+INSERT INTO `cms_widget_menu` (`widget_id`, `menu_id`) VALUES
 (2, 1),
 (3, 1),
 (4, 1),
@@ -204,7 +207,7 @@ INSERT INTO `CMS_widget_menu` (`widget_id`, `menu_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `email_db`
+-- Структура таблицы `email_db`
 --
 
 CREATE TABLE `email_db` (
@@ -217,7 +220,7 @@ CREATE TABLE `email_db` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `feedback`
+-- Структура таблицы `feedback`
 --
 
 CREATE TABLE `feedback` (
@@ -225,15 +228,43 @@ CREATE TABLE `feedback` (
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `organization` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contact` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `message` longtext COLLATE utf8_unicode_ci,
+  `message` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `mail` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Дамп данных таблицы `feedback`
+--
+
+INSERT INTO `feedback` (`id`, `name`, `organization`, `contact`, `message`, `created`, `mail`) VALUES
+(1, 'conttouxl', NULL, '123456789', 'Доброго времени суток! \r\n \r\nРазошлём ваши коммерческие предложения по контакт-формам сайтов фирм России.  \r\nРассылаем по контакт-формам сайтов предприятий по любым странам и доменным зонам мира на любых языках.  \r\n \r\nhttp://kontakt-forma.cn/ \r\n \r\nКоммерческое предложение приходит на контактный адрес электронной почты организации. \r\n \r\nТест: \r\n10000 сообщений по России на ваш электронный адрес - 1000 руб. \r\nдесять тысяч сообщений по зарубежным зонам на ваш электронный адрес - 20 долларов. \r\nОт вас требуется E-mail, заголовок и текст письма. \r\n \r\nОрганизации России - 3012045 предприятий - 3500 руб за 1 миллион. \r\n \r\nМосква и Московская область 627545 предприятий - 5000 руб. \r\n \r\nСанкт-Петербург и область 374471 предприятий - 5000 руб. \r\n \r\nНовые организации Российской Федерации зарегистрированные в 2016-2018 году - 5000 руб. \r\n \r\nНовые сайты РФ, зарегистрированные 24-48 часов назад (Цикл из 15 рассылок в течение месяца). - 15000 рублей. \r\n \r\nУкраїна 605745 сайтов - 5000 рублей. \r\n \r\nВсе русскоговорящие страны минус Россия 15 стран 1722657 сайтов - 10000 рублей. \r\n \r\nВся Европа 44 страны 60726150 доменных имён - 60000 рублей. \r\n \r\nВесь European Union 28 стран 56752547 доменов- 55000 руб. \r\n \r\nВся Азия 48 стран 14662004 сайтов - 15000 руб. \r\n \r\nВся Африка 50 стран 1594390 доменных имён - 10000 руб. \r\n \r\nВся Центральная и Северная America 35 стран 7441637 доменов - 15000 рублей. \r\n \r\nВся Южная America 14 стран 5826884 доменов - 10000 рублей. \r\n \r\nНовые сайты со всех стран мира зарегистрированные 24-48 часов назад (Цикл из 15 рассылок в течение месяца). - 30000 руб. \r\n \r\nРассылки по движкам сайтов: \r\nAmiro	        2294     sites   1000 руб. \r\nБитрикс	        175513   sites   3000 руб. \r\nКонкретэ5	49721    sites   2000 руб. \r\nКонтенидо	7769     sites   1000 руб. \r\nCubeCart	1562     sites   1000 руб. \r\nДЛЕ	29220    sites   2000 руб. \r\nДискуз	        70252    sites   2000 руб. \r\nДотнетнук	31114    sites   2000 руб. \r\nДрупал	        802121   sites   5000 руб. \r\nХост ЦМС	        6342     sites   1000 руб. \r\nИнстант CMS	4936     sites   1000 руб. \r\nИнвизион Повер Боард 510 sites   1000 руб. \r\nДжумла	        1906994  sites  10000 руб. \r\nЛайфрей	        5937     sites   1000 руб. \r\nМаджента	        269488   sites   3000 руб. \r\nМод икс	        67023    sites   2000 руб. \r\nMovable Type	13523    sites   2000 руб. \r\nНетКэт	        6936     sites   1000 руб. \r\nНопКомерс	5313     sites   1000 руб. \r\nOpenCart	321057   sites   3000 руб. \r\nOpen Source Commerce	65468    sites   2000 руб. \r\nпхпББ	        3582     sites   1000 руб. \r\nПресташоп	92949    sites   2000 руб. \r\nШопифи	        365755   sites   3000 руб. \r\nSimpla	        8963     sites   1000 руб. \r\nSitefinity	4883     sites   1000 руб. \r\nТайпо3	        227167   sites   3000 руб. \r\nЮМИ CMS	        15943    sites   2000 руб. \r\nВблютин	154677   sites   3000 руб. \r\nWix	        2305768  sites  10000 руб. \r\nWordpress       14467405 sites  20000 руб. \r\nWooCommerce     2097367  sites  10000 руб. \r\n \r\n \r\nВыборки по сферам деятельности и отраслям России: \r\nB2B uslugi, Автомобили, Avtoservis, Avtotovary, Bezopasnost, Бизнес, Computers and Internet, Krasota, Kultura i iskusstvo, Медицина и Фармацевтика, Места и топографические обьекты,Наука и образование, Образование, Obshchepit, Society, Otdyh i turizm, Products, Proizvodstvo i postavki, Promyshlennye tovary, Entertainment, Advertising and printing, Ремонт стройка, Family children pets, Special stores, Спорт, Reference Information Systems, Media, Construction and Real Estate, Телекоммуникации и связь, Товары для дома и дачи, Transport i perevozki, Услуги \r\n \r\nВыборки по городам и областям Российской Федерации: \r\nAbakan and the Republic of Khakassia, Anadyr and Chukotka Autonomous Region, Arhangelsk i Arhangelskaya oblast, Astrakhan and Astrakhan region, Barnaul i Altajskij kraj, г.Белгород и Белгородская область, г.Биробиджан и Еврейский автономный округ, г.Благовещенск и Амурская область, г.Брянск и Брянская область, г.Великий Новгород и Новгородская область, г.Владивосток и Приморский край, Vladikavkaz i Respublika Severnaya Osetiya, Vladimir i Vladimirskaya oblast, Volgograd i Volgogradskaya oblast, Vologda i Vologodskaya oblast, Voronezh i Voronezhskaya oblast, Gorno-Altajsk i Respublika Altaj, Grozny and Chechen Republic, г.Екатеринбург и Свердловская область, Ivanovo i Ivanovskaya oblast, Izhevsk i Respublika Udmurtiya, г.Йошкар-Ола и Республика Марий Эл, г.Иркутск и Иркутская область, г.Казань и Республика Татарстан, Kaliningrad and Kaliningrad region, Kaluga i Kaluzhskaya oblast, Kemerovo i Kemerovskaya oblast, Kirov i Kirovskaya oblast, Kostroma i Kostromskaya oblast, Krasnodar i Krasnodarskij kraj, г.Красноярск и Красноярский край, Kurgan and Kurgan region, г.Курск и Курская область, Kyzyl and Tyva Republic, Lipetsk and Lipetsk region, г.Магадан и Магаданская область, Magas i Respublika Ingushetiya, Majkop i Respublika Adygeya, г.Махачкала и Республика Дагестан, Moskva i Moskovskaya oblast, Murmansk i Murmanskaya oblast, г.Нальчик и Республика Кабардино-Балкария, Naryan-Mar and Nenets Autonomous Region, Nizhny Novgorod and Nizhny Novgorod region, г.Новосибирск и Новосибирская область, г.Омск и Омская область, г.Орел и Орловская область, Orenburg and Orenburg region, Penza i Penzenskaya oblast, Perm i Permskij kraj, Petrozavodsk i Respublika Kareliya, Petropavlovsk-Kamchatskij i Kamchatskij kraj, Pskov i Pskovskaya oblast, Rostov-Na-Donu i Rostovskaya oblast, г.Рязань и Рязанская область, г.Салехард и Ямало-Ненецкий автономный округ, Samara i Samarskaya oblast, г.Санкт-Петербург и Ленинградская область, Saransk and the Republic of Mordovia, г.Саратов и Саратовская область, Smolensk i Smolenskaya oblast, г.Ставрополь и Ставропольский край, Syktyvkar i Respublika Komi, Tambov and Tambov region, г.Тверь и Тверская область, Tomsk i Tomskaya oblast, Tula and Tula region, Tyumen and Tyumen region, г.Улан-Удэ и Республика Бурятия, г.Ульяновск и Ульяновская область, г.Уфа и Республика Башкортостан, Habarovsk i Habarovskij kraj, Khanty-Mansiysk and Khanty-Mansiysk Autonomous Okrug, Cheboksary and Chuvash Republic, Chelyabinsk and Chelyabinsk region, CHerkessk i Respublika Karachaevo-CHerkessiya, Chita and Zabaykalsky Krai, Elista and the Republic of Kalmykia, Yuzhno-Sakhalinsk and Sakhalin Region, YAkutsk i Respublika Saha, г.Ярославль и Ярославская область \r\n \r\nНаши базы: \r\nОрганизации и Предприятия из сервисов Яндекс и Гугл карт собранные по ОКАТО: 966 гор., 42187/108072 крупных/мелких населённых пунктов России. \r\nОрганизации и Предприятия России из: Yell, Дубль Гис, Ros-bis, Actinfo, Алинформ, Бтк-онлайн,Бигфоунбук, МБТГ, Где то место, Гдебиз, Е-адрес, B2B-russia, Zakazrf, Сам5, Foliant, Ярмэп, Topplan, Tel09, Spravochnik-09, EGTS, СПР, Interweb.spb, Moscowfirma, EGRUL, Дата.мос, Mosgid, Мск.справкер и др. \r\nБазы ВОЙС сайтов всех государств мира. \r\nВы можете приобрести наши базы отдельно от рассылки по запросу. \r\n \r\nP.S. \r\nПжл. не отвечайте на это коммерческое предложение со своего электронного ящика, так как оно создано в автоматическом режиме и никуда не дойдёт! \r\nИспользуйте для связи контакт-форму <a href=http://kontakt-forma.cn/>рассылка через формы обратной связи</a>', NULL, 'salome_gamba59@rambler.ru'),
+(2, 'conttruoi', NULL, '123456789', 'Приветствуем вас! \r\n \r\nПредлагаем рассылку ваших коммерческих предложений по формам-контактов сайтов фирм России.  \r\nРассылка ваших коммерческих предложений через контактные-формы сайтов предприятий по любым странам и доменным зонам мира.  \r\n \r\nhttp://kontakt-forma.cn/ \r\n \r\nКоммерческое предложение приходит на контактный емаил учреждения. \r\n \r\nТест: \r\n10000 сообщений по Российской Федерации на ваш E-mail - тысяча рублей. \r\n10000 сообщений по зарубежным зонам на ваш емаил - двадцать $. \r\nОт вас требуется почтовый ящик, заголовок и текст письма. \r\n \r\nОрганизации РФ - 3012045 предприятий - 3500 рублей за 1млн. \r\n \r\nМосква и область 627545 предприятий - 5000 руб. \r\n \r\nСанкт-Петербург и область 374471 предприятий - 5000 руб. \r\n \r\nНовые предприятия РФ зарегистрированные в 2016-2018 году - 5000 руб. \r\n \r\nНовые сайты России, зарегистрированные 24-48 часов назад (Цикл из 15 рассылок в течение месяца). - 15000 рублей. \r\n \r\nУкраина 605745 доменных имён - 5000 рублей. \r\n \r\nВсе русскоговорящие страны минус Россия 15 стран 1722657 сайтов - 10000 руб. \r\n \r\nВся Европа 44 страны 60726150 сайтов - 60000 руб. \r\n \r\nВесь European Union 28 стран 56752547 доменов- 55000 рублей. \r\n \r\nВся Азия 48 стран 14662004 сайтов - 15000 руб. \r\n \r\nВся Африка 50 стран 1594390 доменов - 10000 руб. \r\n \r\nВся Северная и Центральная America 35 стран 7441637 сайтов - 15000 руб. \r\n \r\nВся Южная Америка 14 стран 5826884 доменов - 10000 руб. \r\n \r\nНовые сайты со всех стран мира зарегистрированные 24-48 часов назад (Цикл из 15 рассылок в течение месяца). - 30000 рублей. \r\n \r\nРассылки по движкам сайтов: \r\nАмиро	        2294     sites   1000 руб. \r\nBitrix	        175513   sites   3000 руб. \r\nКонкретэ5	49721    sites   2000 руб. \r\nКонтенидо	7769     sites   1000 руб. \r\nКубекарт	1562     sites   1000 руб. \r\nDLE	29220    sites   2000 руб. \r\nДискуз	        70252    sites   2000 руб. \r\nДотнетнук	31114    sites   2000 руб. \r\nДрупал	        802121   sites   5000 руб. \r\nHostCMS	        6342     sites   1000 руб. \r\nInstantCMS	4936     sites   1000 руб. \r\nInvision Power Board 510 sites   1000 руб. \r\nJoomla	        1906994  sites  10000 руб. \r\nЛайфрей	        5937     sites   1000 руб. \r\nМаджента	        269488   sites   3000 руб. \r\nМод икс	        67023    sites   2000 руб. \r\nМувэбл Тайп	13523    sites   2000 руб. \r\nNetCat	        6936     sites   1000 руб. \r\nNopCommerce	5313     sites   1000 руб. \r\nOpenCart	321057   sites   3000 руб. \r\nosCommerce	65468    sites   2000 руб. \r\nпхпББ	        3582     sites   1000 руб. \r\nPrestashop	92949    sites   2000 руб. \r\nШопифи	        365755   sites   3000 руб. \r\nСимпла	        8963     sites   1000 руб. \r\nSitefinity	4883     sites   1000 руб. \r\nТайпо три	        227167   sites   3000 руб. \r\nЮМИ CMS	        15943    sites   2000 руб. \r\nvBulletin	154677   sites   3000 руб. \r\nWix	        2305768  sites  10000 руб. \r\nВордпресс       14467405 sites  20000 руб. \r\nВукомерц     2097367  sites  10000 руб. \r\n \r\n \r\nВыборки по отраслям и сферам деятельности России: \r\nB2B услуги, Avtomobili, Автосервис, Avtotovary, Security, Business, Компьютеры и интернет, beauty, Culture and art, Medicina i Farmacevtika, Places and topographic objects,Наука и образование, Obrazovanie, Obshchepit, Society, Отдых и туризм, Products, Production and supply, Промышленные товары, Razvlecheniya, Reklama i poligrafiya, Remont strojka, Family children pets, Спецмагазины, Sport, Spravochno-informacionnye sistemy, Media, Construction and Real Estate, Телекоммуникации и связь, Tovary dlya doma i dachi, Транспорт и перевозки, Услуги \r\n \r\nВыборки по городам и областям России: \r\nAbakan i Respublika Hakasiya, Anadyr i CHukotskij avtonomnyj okrug, г.Архангельск и Архангельская область, Astrahan i Astrahanskaya oblast, Barnaul i Altajskij kraj, Belgorod i Belgorodskaya oblast, Birobidzhan and Jewish Autonomous Region, г.Благовещенск и Амурская область, г.Брянск и Брянская область, Velikij Novgorod i Novgorodskaya oblast, Vladivostok i Primorskij kraj, г.Владикавказ и Республика Северная Осетия, Vladimir and Vladimir region, Volgograd i Volgogradskaya oblast, Vologda and Vologda region, г.Воронеж и Воронежская область, Gorno-Altajsk i Respublika Altaj, г.Грозный и Чеченская Республика, Ekaterinburg i Sverdlovskaya oblast, Ivanovo i Ivanovskaya oblast, г.Ижевск и Республика Удмуртия, г.Йошкар-Ола и Республика Марий Эл, г.Иркутск и Иркутская область, Kazan and Republic of Tatarstan, г.Калининград и Калининградская область, г.Калуга и Калужская область, Kemerovo i Kemerovskaya oblast, Kirov and Kirov region, Kostroma and Kostroma region, Krasnodar and Krasnodar Territory, Krasnoyarsk i Krasnoyarskij kraj, Kurgan i Kurganskaya oblast, г.Курск и Курская область, г.Кызыл и Республика Тыва, г.Липецк и Липецкая область, Magadan i Magadanskaya oblast, Magas i Respublika Ingushetiya, г.Майкоп и Республика Адыгея, Makhachkala and the Republic of Dagestan, г.Москва и Московская область, Murmansk and Murmansk region, Nalchik and the Republic of Kabardino-Balkaria, Naryan-Mar and Nenets Autonomous Region, Nizhny Novgorod and Nizhny Novgorod region, Novosibirsk and Novosibirsk region, г.Омск и Омская область, г.Орел и Орловская область, г.Оренбург и Оренбургская область, г.Пенза и Пензенская область, Perm i Permskij kraj, Petrozavodsk i Respublika Kareliya, Petropavlovsk-Kamchatsky and Kamchatsky Krai, г.Псков и Псковская область, Rostov-on-Don and Rostov Region, Ryazan and Ryazan region, Salekhard and Yamalo-Nenets Autonomous District, г.Самара и Самарская область, St. Petersburg and Leningrad region, г.Саранск и Республика Мордовия, Saratov and Saratov region, г.Смоленск и Смоленская область, Stavropol and Stavropol Territory, Syktyvkar and the Komi Republic, г.Тамбов и Тамбовская область, Tver and Tver region, г.Томск и Томская область, г.Тула и Тульская область, Tyumen and Tyumen region, Ulan-Udeh i Respublika Buryatiya, Ulyanovsk i Ulyanovskaya oblast, Ufa and the Republic of Bashkortostan, Khabarovsk and Khabarovsk Territory, Hanty-Mansijsk i Hanty-Mansijskij avtonomnyj okrug, Cheboksary and Chuvash Republic, Chelyabinsk and Chelyabinsk region, Cherkessk and the Republic of Karachay-Cherkessia, г.Чита и Забайкальский край, г.Элиста и Республика Калмыкия, YUzhno-Sahalinsk i Sahalinskaya oblast, Yakutsk and Sakha Republic, YAroslavl i YAroslavskaya oblast \r\n \r\nБазы: \r\nОрганизации и Предприятия из сервисов Яндекс и Гугл карт собранные по Общероссийскому классификатору объектов административно-территориального деления: 966 городов, 42187/108072 крупных/мелких населённых пунктов РФ. \r\nПредприятия Российской Федерации из: Yell, Double GIS, Ros-bis, Actinfo, Алинформ, Бтк-онлайн,Bigphonebook, МБТГ, Где то место, Гдебиз, Е-адрес, B2B-russia, Zakazrf, Sam5, Foliant, Yarmap, Topplan, Tel09, Spravochnik-09, EGTS, СПР, Interweb.spb, Moscowfirma, EGRUL, Data.mos, Mosgid, Мск.справкер и другие. \r\nБазы WHOIS сайтов всех государств мира. \r\nВы можете приобрести наши базы отдельно от рассылки по запросу. \r\n \r\nP/S \r\nПожалуйста не отвечайте на это коммерческое предложение со своего ящика электронной почты, так как оно создано в автоматическом режиме и не дойдёт до нас! \r\nИспользуйте для связи контакт-форму <a href=http://kontakt-forma.cn/>рассылка по формам обратной связи</a>', NULL, 'dexter_comtois06@rambler.ru'),
+(3, 'Александр', NULL, '+79123456879', 'Привлекаем клиентов в Ваш бизнес, с помощью рассылки в формы обратной связи сайтов. \r\n \r\nВ наличии несколько баз, суммарным объемом более 5 млн сайтов СНГ. \r\nПредоставляем скриншоты, подтверждающие выполнение обязательств с нашей стороны. \r\n \r\nПриятные цены - нам выгодно, чтобы заказчик получал прибыль, значительно превышающую стоимость рассылки и обращался повторно. \r\n \r\nВ отличии от большинства наших конкурентов, оплату берем ТОЛЬКО за УСПЕШНО доставленные сообщения. \r\nНапишите пожалуйста ответ на нашу почту: silinitcha1979@mail.ru \r\nЕсли Вам удобнее другой способ связи, напишите на почту, какой именно. \r\n \r\nP.S. Извините за беспокойство, если мы с Вами уже сотрудничаем.', NULL, 'disrandvaro1974@mail.ru'),
+(4, 'Александр', NULL, '+79123456879', 'Привлекаем клиентов в Ваш бизнес, с помощью рассылки в формы обратной связи сайтов. \r\n \r\nВ наличии несколько баз, суммарным объемом более 5 млн сайтов СНГ. \r\nПредоставляем скриншоты, подтверждающие выполнение обязательств с нашей стороны. \r\n \r\nПриятные цены - нам выгодно, чтобы заказчик получал прибыль, значительно превышающую стоимость рассылки и обращался повторно. \r\n \r\nВ отличии от большинства наших конкурентов, оплату берем ТОЛЬКО за УСПЕШНО доставленные сообщения. \r\nНапишите пожалуйста ответ на нашу почту: silinitcha1979@mail.ru \r\nЕсли Вам удобнее другой способ связи, напишите на почту, какой именно. \r\n \r\nP.S. Извините за беспокойство, если мы с Вами уже сотрудничаем.', NULL, 'disrandvaro1974@mail.ru'),
+(5, 'Владимир', NULL, '87822633546', 'Добрый день! Как и договаривались высылаю вам презентацию: http://forziner.ru', NULL, 'olga_borisova_1980@mail.ru'),
+(6, 'Дмитрий', NULL, '+7123546789', 'Здравствуйте! \r\nВам нужны клиенты? \r\nНастроим таргетированную рекламу Вконтакте, проведем А/Б тестирование и приведем Вам клиентов! \r\nЗаинтересовало? \r\nСвяжитесь с нами! \r\nE-mail: arsatithos1987@mail.ru', NULL, 'elloutothor1980@mail.ru'),
+(7, 'Евгений', NULL, '+79123456879', 'Привлекаем клиентов в Ваш бизнес, с помощью рассылки в формы обратной связи сайтов. \r\n \r\nВ наличии несколько баз, суммарным объемом более 5 млн сайтов СНГ. \r\nПредоставляем скриншоты, подтверждающие выполнение обязательств с нашей стороны. \r\n \r\nПриятные цены - нам выгодно, чтобы заказчик получал прибыль, значительно превышающую стоимость рассылки и обращался повторно. \r\n \r\nВ отличии от большинства наших конкурентов, оплату берем ТОЛЬКО за УСПЕШНО доставленные сообщения. \r\nНапишите пожалуйста ответ на нашу почту: silinitcha1979@mail.ru \r\nЕсли Вам удобнее другой способ связи, напишите на почту, какой именно. \r\n \r\nP.S. Извините за беспокойство, если мы с Вами уже сотрудничаем.', NULL, 'phpadexsparer1985@mail.ru'),
+(8, 'Александр', NULL, '+79123456879', 'Привлекаем клиентов в Ваш бизнес, с помощью рассылки в формы обратной связи сайтов. \r\n \r\nВ наличии несколько баз, суммарным объемом более 5 млн сайтов СНГ. \r\nПредоставляем скриншоты, подтверждающие выполнение обязательств с нашей стороны. \r\n \r\nПриятные цены - нам выгодно, чтобы заказчик получал прибыль, значительно превышающую стоимость рассылки и обращался повторно. \r\n \r\nВ отличии от большинства наших конкурентов, оплату берем ТОЛЬКО за УСПЕШНО доставленные сообщения. \r\nНапишите пожалуйста ответ на нашу почту: silinitcha1979@mail.ru \r\nЕсли Вам удобнее другой способ связи, напишите на почту, какой именно. \r\n \r\nP.S. Извините за беспокойство, если мы с Вами уже сотрудничаем.', NULL, 'prisjiskating1976@mail.ru'),
+(9, 'Xodok', NULL, '89689943420', 'Перезвоните пожалуйста мне \r\n 89689943420', NULL, 'xodok@gmail.com'),
+(10, 'Алексей', NULL, '+79123456789', 'Предлагаем большой выбор рюкзаков и сумок высокого качества по приятной цене! Школьникам и студентам, бизнесменам и фрилансерам, специальные рюкзаки Антивор с USB и качественные рюкзаки для мам. \r\n \r\nВыбирайте удобный для Вас рюкзак уже сегодня! \r\n \r\nДоставляем рюкзаки по всей России. \r\n \r\nПродаем женские и мужские рюкзаки оптом и в розницу! \r\n \r\nПодробнее на нашем сайте: https://купи-рюкзак.рф/ \r\n \r\nСвяжитесь с нами, ответим на любой вопрос и поможем с выбором! \r\nE-mail: info@buy-backpack.ru \r\nТел/WhatsApp: +74997077826', NULL, 'getaxchoqua1980@mail.ru'),
+(11, 'TravismAw', NULL, '89977975169', 'Универсальное детское автокресло с длительным сроком использования, http://tmalie.ru/ru/__pc/pages/categories.htm группы 1 2 3 (вес - от 9 до 36 кг, возраст - от 9 месяцев до 12-ти лет). Оснащено плавно регулируемым по высоте подголовником 11 положений, благодаря чему, Ваш ребенок дольше проездит в автокресле, не трансформируя в бустер. А это, в свою очередь, обеспечит большую защиту Вашему малышу. Имеет дополнительные мягкие вкладыши для головы и туловища, которые используются для дополнительного комфорта при перевозке детей до 3-4х лет. Вкладыши двухсторонние, с одной стороны цветные, с другой темные, что очень удобно в разные сезоны.', NULL, 'domabanivtomske@yandex.ru'),
+(12, 'qwerty12', NULL, '89689943420', 'Перезвоните пожалуйста \r\n 89162974651', NULL, 'qwerty12@gmail.com'),
+(13, 'seorub', NULL, '89991234567', 'Не нужно платить за продвижение, просто покупайте место в выдаче Яндекса так же просто как в Яндекс Директ, но в разы дешевле! \r\nУзнать подробнее-  http://bit.ly/2QoExCR', NULL, 'seorub2323@gmail.com'),
+(14, 'Дмитрий', NULL, '+79123456879', 'Привлекаем клиентов в Ваш бизнес, с помощью рассылки в формы обратной связи сайтов. \r\n \r\nВ наличии несколько баз, суммарным объемом более 5 млн сайтов СНГ. \r\nПредоставляем скриншоты, подтверждающие выполнение обязательств с нашей стороны. \r\n \r\nПриятные цены - нам выгодно, чтобы заказчик получал прибыль, значительно превышающую стоимость рассылки и обращался повторно. \r\n \r\nВ отличии от большинства наших конкурентов, оплату берем ТОЛЬКО за УСПЕШНО доставленные сообщения. \r\nНапишите пожалуйста ответ на нашу почту: silinitcha1979@mail.ru \r\nЕсли Вам удобнее другой способ связи, напишите на почту, какой именно. \r\n \r\nP.S. Извините за беспокойство, если мы с Вами уже сотрудничаем.', NULL, 'prisjiskating1976@mail.ru'),
+(15, 'SergeiJoype', NULL, '86686948368', 'Здравствуйте! Меня зовут Сергей. \r\nНа Вашем сайте toolai.ru нет посетителей? \r\n \r\nПредлагаю Вам приобрести программу Zennoposter => http://zennoposter.edarling.best/ и Вы самостоятельно сможете: \r\n1. привлекать клиентов на свой сайт или реальный бизнес; \r\n2. автоматизировать монотонные действия в браузере и не только; \r\n3. создавать свои регистраторы, парсеры, постеры, загрузчики, профиля в соц. сетях и многое другое. \r\nИ все это без участия программистов и фрилансеров! \r\n \r\nТолько с 20 по 29 ноября в честь черной пятницы Вы можете приобрести \r\nпрограмму ZennoPoster с большой скидкой (до 5000 тысяч рублей)! \r\n \r\nКупите также CapMonster 2 и забудьте про сервисы распознования капч. \r\nCapMonster 2 - это автораспознавание Recaptcha2 и 25000+ других видов каптч! \r\n \r\nНапишите на почту zennocoupon@mail.ru я вышлю Вам инструкции по регистрации \r\nи индивидуальный купон с огромной скидкой (осталось 7 из 10 купонов), не пропустите! \r\n \r\nP.S Данное сообщение отправлено с помощью Zennoposter, капча (ReCaptcha2) разгадана при помощи CapMonster 2 ;)', NULL, 'trast.super@bk.ru'),
+(16, 'master-email.ru', NULL, '86981231962', 'Вас приветствует сайт рассылки http://master-email.ru \r\n.', NULL, 'mister.lexsus777@yandex.ru'),
+(17, 'SergeiJoype', NULL, '88866393255', 'Здравствуйте! Меня зовут Сергей. \r\nНа Вашем сайте toolai.ru нет посетителей? \r\n \r\nПредлагаю Вам приобрести программу Zennoposter => http://zennoposter.edarling.best/ и Вы самостоятельно сможете: \r\n1. привлекать клиентов на свой сайт или реальный бизнес; \r\n2. автоматизировать монотонные действия в браузере и не только; \r\n3. создавать свои регистраторы, парсеры, постеры, загрузчики, профиля в соц. сетях и многое другое. \r\nИ все это без участия программистов и фрилансеров! \r\n \r\nТолько с 20 по 29 ноября в честь черной пятницы Вы можете приобрести \r\nпрограмму ZennoPoster с большой скидкой (до 5000 тысяч рублей)! \r\n \r\nКупите также CapMonster 2 и забудьте про сервисы распознования капч. \r\nCapMonster 2 - это автораспознавание Recaptcha2 и 25000+ других видов каптч! \r\n \r\nНапишите на почту zennocoupon@mail.ru я вышлю Вам инструкции по регистрации \r\nи индивидуальный купон с огромной скидкой (осталось 7 из 10 купонов), не пропустите! \r\n \r\nP.S Данное сообщение отправлено с помощью Zennoposter, капча (ReCaptcha2) разгадана при помощи CapMonster 2 ;)', NULL, 'trast.super@bk.ru'),
+(18, 'Евгений', NULL, '+79123456879', 'Привлекаем клиентов в Ваш бизнес, с помощью рассылки в формы обратной связи сайтов. \r\n \r\nВ наличии несколько баз, суммарным объемом более 5 млн сайтов СНГ. \r\nПредоставляем скриншоты, подтверждающие выполнение обязательств с нашей стороны. \r\n \r\nПриятные цены - нам выгодно, чтобы заказчик получал прибыль, значительно превышающую стоимость рассылки и обращался повторно. \r\n \r\nВ отличии от большинства наших конкурентов, оплату берем ТОЛЬКО за УСПЕШНО доставленные сообщения. \r\nНапишите пожалуйста ответ на нашу почту: silinitcha1979@mail.ru \r\nЕсли Вам удобнее другой способ связи, напишите на почту, какой именно. \r\n \r\nP.S. Извините за беспокойство, если мы с Вами уже сотрудничаем.', NULL, 'prisjiskating1976@mail.ru'),
+(19, 'Nikon', NULL, '89165199728', 'Перезвоните мне. \r\n 89166273593                                                                  89854340192', NULL, 'megaclub@gmail.com'),
+(20, 'Нина', NULL, '+79123456879', 'Здравствуйте! \r\nХотите порадовать коллег, друзей, родных или близких? \r\nВкусные подарочные наборы ТМ Organic Food - отличный вариант корпоративного подарка! \r\n \r\nМы подготовили для вас оригинальные подарки? с ароматным чаем, изысканными конфетами, вкусными натуральными ягодами и мёдом-суфле, специями и пряностями! \r\nПриобретая наш подарочный набор, вы можете быть уверены, что покупаете эксклюзивный товар! В наших подарках – всегда самые свежие и вкусные продукты, которые гармонично дополняют друг друга и придутся по душе даже взыскательному гурману! \r\nЗаинтересовало? \r\nСвяжитесь с нами! \r\nE-mail: \r\nsozvezdie2810@mail.ru \r\nninasozvezdie@mail.ru? \r\n \r\nНаш сайт: www.organic-food.biz \r\nМы в Instagram:? @organic_food.insta? ? \r\nтел. (8352) 22 26 42, 22 26 41 \r\nтел. 8 961 346 33 92 \r\n \r\nКроме этого всегда в наличии: \r\n \r\n- овощи сушеные и смеси овощей, травы и приправы \r\n- специи и пряности \r\n- супы и гарниры \r\n- ягоды сублимированные \r\n- ягоды сублимированные в шоколаде и йогурте \r\n- напитки чайные травяные с ягодами, шиповником. \r\n \r\nВАЖНО!!! Вся продукция 100 % натуральная и? не содержит никаких химических добавок! \r\n? ? \r\nВся продукция 100 % натуральная, мы не используем ароматизаторы и усилители вкуса и соль. \r\n \r\nПродукция имеет большой срок хранения, не менее 12 мес. \r\n \r\nПродукция легковесная и не требует больших затрат на логистику. \r\nПродукция не требует особых условий хранения. \r\nИндивидуальный подход к каждому партнеру. \r\nРассматриваем работу по СТМ. \r\nРаботаем со всеми транспортными компаниями. \r\n \r\nПИШИТЕ НАМ, ЗАПРАШИВАЙТЕ ПРАЙС! \r\n \r\nsozvezdie2810@mail.ru \r\nninasozvezdie@mail.ru? \r\n \r\nНаш сайт: www.organic-food.biz \r\nМы в Instagram:? @organic_food.insta? ? \r\nтел. (8352) 22 26 42, 22 26 41 \r\nтел. 8 961 346 33 92', NULL, 'derpamabgoe1979@mail.ru'),
+(21, 'conttwwek', NULL, '123456789', 'Доброго времени суток! \r\n \r\nПредлагаем рассылку ваших предложений по формам обратной связи сайтов предприятий Российской Федерации и СНГ.  \r\nПредлагаем рассылки через формы-контактов сайтов фирм по любым доменным зонам мира на всех языках.  \r\n \r\nhttp://kontakt-forma.cn/ \r\n \r\nВаше сообщение приходит на контактный электронный адрес предприятия. \r\n \r\nТест: \r\n10000 сообщений по Российской Федерации на ваш адрес электронной почты - 1000 рублей. \r\nдесять тысяч сообщений по зарубежным зонам на ваш E-mail - двадцать долларов. \r\nОт вас требуется почтовый ящик, заголовок и текст письма. \r\n \r\nОрганизации России - 3012045 предприятий - 3500 руб за 1 миллион. \r\n \r\nМосква и область 627545 организаций - 5000 рублей. \r\n \r\nСанкт-Петербург и область 374471 предприятий - 5000 рублей. \r\n \r\nНовые предприятия Российской Федерации зарегистрированные в 2016-2018 году - 5000 руб. \r\n \r\nНовые сайты России, зарегистрированные 24-48 часов назад (Цикл из 15 рассылок в течение месяца). - 15000 рублей. \r\n \r\nУкраина 605745 сайтов - 5000 руб. \r\n \r\nВсе русскоговорящие страны минус РФ 15 стран 1722657 доменов - 10000 руб. \r\n \r\nВся Европа 44 страны 60726150 доменных имён - 60000 руб. \r\n \r\nВесь Евросоюз 28 стран 56752547 доменов- 55000 рублей. \r\n \r\nВся Азия 48 стран 14662004 доменов - 15000 руб. \r\n \r\nВся Africa 50 стран 1594390 доменных имён - 10000 руб. \r\n \r\nВся Центральная и Северная America 35 стран 7441637 сайтов - 15000 руб. \r\n \r\nВся Южная Америка 14 стран 5826884 сайтов - 10000 рублей. \r\n \r\nНовые сайты со всех стран мира зарегистрированные 24-48 часов назад (Цикл из 15 рассылок в течение месяца). - 30000 руб. \r\n \r\nРассылки по CMS: \r\nAmiro	        2294     sites   1000 руб. \r\nBitrix	        175513   sites   3000 руб. \r\nConcrete5	49721    sites   2000 руб. \r\nCONTENIDO	7769     sites   1000 руб. \r\nCubeCart	1562     sites   1000 руб. \r\nDLE	29220    sites   2000 руб. \r\nDiscuz	        70252    sites   2000 руб. \r\nДотнетнук	31114    sites   2000 руб. \r\nДрупал	        802121   sites   5000 руб. \r\nHostCMS	        6342     sites   1000 руб. \r\nInstantCMS	4936     sites   1000 руб. \r\nInvision Power Board 510 sites   1000 руб. \r\nДжумла	        1906994  sites  10000 руб. \r\nLiferay	        5937     sites   1000 руб. \r\nМаджента	        269488   sites   3000 руб. \r\nМод икс	        67023    sites   2000 руб. \r\nМувэбл Тайп	13523    sites   2000 руб. \r\nНетКэт	        6936     sites   1000 руб. \r\nНопКомерс	5313     sites   1000 руб. \r\nOpenCart	321057   sites   3000 руб. \r\nosCommerce	65468    sites   2000 руб. \r\nphpBB	        3582     sites   1000 руб. \r\nПресташоп	92949    sites   2000 руб. \r\nShopify	        365755   sites   3000 руб. \r\nСимпла	        8963     sites   1000 руб. \r\nСайтфинити	4883     sites   1000 руб. \r\nТайпо3	        227167   sites   3000 руб. \r\nЮМИ ЦМС	        15943    sites   2000 руб. \r\nВблютин	154677   sites   3000 руб. \r\nWix	        2305768  sites  10000 руб. \r\nВордпресс       14467405 sites  20000 руб. \r\nВукомерц     2097367  sites  10000 руб. \r\n \r\n \r\nВыборки по сферам деятельности и отраслям России: \r\nB2B uslugi, Cars, Avtoservis, Автотовары, Безопасность, Biznes, Kompyutery i internet, Красота, Kultura i iskusstvo, Medicina i Farmacevtika, Places and topographic objects,Наука и образование, Obrazovanie, Obshchepit, Obshchestvo, Recreation and tourism, Produkty, Production and supply, Promyshlennye tovary, Развлечения, Advertising and printing, Ремонт стройка, Family children pets, Спецмагазины, Спорт, Reference Information Systems, Sredstva massovoj informacii, Construction and Real Estate, Telekommunikacii i svyaz, Tovary dlya doma i dachi, Transport and transportation, Uslugi \r\n \r\nВыборки по городам и областям Российской Федерации: \r\nAbakan i Respublika Hakasiya, Anadyr and Chukotka Autonomous Region, г.Архангельск и Архангельская область, Astrahan i Astrahanskaya oblast, Barnaul i Altajskij kraj, Belgorod and Belgorod region, Birobidzhan and Jewish Autonomous Region, Blagoveshchensk i Amurskaya oblast, Bryansk and Bryansk region, г.Великий Новгород и Новгородская область, г.Владивосток и Приморский край, Vladikavkaz and the Republic of North Ossetia, Vladimir i Vladimirskaya oblast, Volgograd and Volgograd region, Vologda i Vologodskaya oblast, Voronezh and Voronezh region, г.Горно-Алтайск и Республика Алтай, Grozny and Chechen Republic, Ekaterinburg i Sverdlovskaya oblast, г.Иваново и Ивановская область, Izhevsk and the Republic of Udmurtia, Yoshkar-Ola and the Republic of Mari El, Irkutsk and Irkutsk region, Kazan i Respublika Tatarstan, Kaliningrad and Kaliningrad region, г.Калуга и Калужская область, г.Кемерово и Кемеровская область, г.Киров и Кировская область, Kostroma i Kostromskaya oblast, Krasnodar and Krasnodar Territory, г.Красноярск и Красноярский край, г.Курган и Курганская область, Kursk i Kurskaya oblast, г.Кызыл и Республика Тыва, Lipeck i Lipeckaya oblast, Magadan i Magadanskaya oblast, г.Магас и Республика Ингушетия, Majkop i Respublika Adygeya, Makhachkala and the Republic of Dagestan, Moskva i Moskovskaya oblast, Murmansk and Murmansk region, Nalchik and the Republic of Kabardino-Balkaria, г.Нарьян-Мар и Ненецкий автономный округ, г.Нижний Новгород и Нижегородская область, Novosibirsk i Novosibirskaya oblast, г.Омск и Омская область, г.Орел и Орловская область, Orenburg and Orenburg region, Penza and Penza region, Perm and Perm Territory, г.Петрозаводск и Республика Карелия, г.Петропавловск-Камчатский и Камчатский край, Pskov and Pskov region, г.Ростов-На-Дону и Ростовская область, Ryazan and Ryazan region, г.Салехард и Ямало-Ненецкий автономный округ, г.Самара и Самарская область, St. Petersburg and Leningrad region, г.Саранск и Республика Мордовия, Saratov i Saratovskaya oblast, Smolensk i Smolenskaya oblast, Stavropol and Stavropol Territory, Syktyvkar and the Komi Republic, Tambov and Tambov region, г.Тверь и Тверская область, Tomsk and Tomsk region, г.Тула и Тульская область, Tyumen and Tyumen region, г.Улан-Удэ и Республика Бурятия, г.Ульяновск и Ульяновская область, г.Уфа и Республика Башкортостан, г.Хабаровск и Хабаровский край, Khanty-Mansiysk and Khanty-Mansiysk Autonomous Okrug, Cheboksary and Chuvash Republic, CHelyabinsk i CHelyabinskaya oblast, Cherkessk and the Republic of Karachay-Cherkessia, CHita i Zabajkalskij kraj, Elista and the Republic of Kalmykia, Yuzhno-Sakhalinsk and Sakhalin Region, Yakutsk and Sakha Republic, г.Ярославль и Ярославская область \r\n \r\nБазы: \r\nОрганизации из сервисов Яндекс и Google карт собранные по ОКАТО: 966 городов, 42187/108072 крупных/мелких населённых пунктов России. \r\nОрганизации и Предприятия Российской Федерации из: Ypag, Double GIS, Рос-биз, Actinfo, Алинформ, Btk-online,Bigphonebook, MBTG, Где то место, Гдебиз, Евро-адрес, Б2Б Россия, Zakazrf, Sam5, Фолиант, Yarmap, Топплан, Тел09, Spravochnik-09, ЕГТС, СПР, Интервеб.спб, Moscowfirma, ЕГРЮЛ, Data.mos, Mosgid, Msk.spravker и другие. \r\nБазы WHOIS сайтов всех стран мира. \r\nВы можете приобрести наши базы отдельно от рассылки по запросу. \r\n \r\nP.S. \r\nПожалуйста не отвечайте на это коммерческое предложение со своего электронного ящика, так как оно создано автоматически и не дойдёт до нас! \r\nИспользуйте для связи контакт-форму <a href=http://kontakt-forma.cn/>рассылка через формы обратной связи</a>', NULL, 'ogden_treine71@rambler.ru'),
+(22, 'Александр', NULL, '+79123456879', 'Здравствуйте! \r\nВам нужны новые клиенты? \r\nПривлекаем клиентов в Ваш бизнес, с помощью рассылки в формы обратной связи. \r\n \r\nНесколько преимуществ работы с нами: \r\n \r\n- Приятные цены - нам выгодно, чтобы заказчик получал прибыль, значительно превышающую стоимость рассылки и обращался повторно. \r\n \r\n- Все максимально прозрачно: \r\nПредоставим скриншоты из программы, с подробными отчетами о результатах рассылки, подтверждающие выполнение обязательств с нашей стороны. \r\n \r\n- В отличии от большинства наших конкурентов, оплата ТОЛЬКО за УСПЕШНО доставленные сообщения. \r\n \r\nЗаинтересовало? \r\nСвяжитесь с нами в течении суток и в качестве бонуса, получите бесплатное составление оффера для Вашей рассылки! \r\nНаш E-mail: silinitcha1979@mail.ru \r\n \r\nP.S. Извините за беспокойство, если мы с Вами уже сотрудничаем.', NULL, 'ircesgiosteen1970@mail.ru');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `legal_person`
+-- Структура таблицы `legal_person`
 --
 
 CREATE TABLE `legal_person` (
@@ -260,13 +291,13 @@ CREATE TABLE `legal_person` (
   `phoneNumber` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `mobile_number` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `whats_app` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `email1` tinytext COLLATE utf8_unicode_ci,
-  `email2` tinytext COLLATE utf8_unicode_ci,
-  `site` tinytext COLLATE utf8_unicode_ci
+  `email1` tinytext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email2` tinytext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `site` tinytext COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `legal_person`
+-- Дамп данных таблицы `legal_person`
 --
 
 INSERT INTO `legal_person` (`id`, `user_id`, `company_name`, `company_type`, `position`, `fio`, `inn`, `director_fio`, `country`, `p_index`, `city`, `street`, `house_number`, `requisite1`, `requisite2`, `fact_country`, `fact_p_index`, `fact_city`, `fact_street`, `fact_house_number`, `phoneNumber`, `mobile_number`, `whats_app`, `email1`, `email2`, `site`) VALUES
@@ -278,7 +309,7 @@ INSERT INTO `legal_person` (`id`, `user_id`, `company_name`, `company_type`, `po
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ordering_products`
+-- Структура таблицы `ordering_products`
 --
 
 CREATE TABLE `ordering_products` (
@@ -286,13 +317,13 @@ CREATE TABLE `ordering_products` (
   `product_id` int(11) NOT NULL,
   `color_id` int(11) DEFAULT NULL,
   `size_id` int(11) DEFAULT NULL,
-  `count` int(11) NOT NULL DEFAULT '1',
+  `count` int(11) NOT NULL DEFAULT 1,
   `type_id` int(11) DEFAULT NULL,
   `pronto_type` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `ordering_products`
+-- Дамп данных таблицы `ordering_products`
 --
 
 INSERT INTO `ordering_products` (`id`, `product_id`, `color_id`, `size_id`, `count`, `type_id`, `pronto_type`) VALUES
@@ -322,7 +353,7 @@ INSERT INTO `ordering_products` (`id`, `product_id`, `color_id`, `size_id`, `cou
 -- --------------------------------------------------------
 
 --
--- Table structure for table `orders`
+-- Структура таблицы `orders`
 --
 
 CREATE TABLE `orders` (
@@ -344,7 +375,7 @@ CREATE TABLE `orders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `orders`
+-- Дамп данных таблицы `orders`
 --
 
 INSERT INTO `orders` (`id`, `shipping_method_id`, `email`, `f_name`, `l_name`, `address`, `house_number`, `city`, `country`, `state`, `p_index`, `phone`, `status_id`, `user_id`, `date`) VALUES
@@ -354,7 +385,7 @@ INSERT INTO `orders` (`id`, `shipping_method_id`, `email`, `f_name`, `l_name`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `orders_products`
+-- Структура таблицы `orders_products`
 --
 
 CREATE TABLE `orders_products` (
@@ -363,7 +394,7 @@ CREATE TABLE `orders_products` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `orders_products`
+-- Дамп данных таблицы `orders_products`
 --
 
 INSERT INTO `orders_products` (`order_id`, `product_id`) VALUES
@@ -379,7 +410,7 @@ INSERT INTO `orders_products` (`order_id`, `product_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order_status`
+-- Структура таблицы `order_status`
 --
 
 CREATE TABLE `order_status` (
@@ -388,7 +419,7 @@ CREATE TABLE `order_status` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `order_status`
+-- Дамп данных таблицы `order_status`
 --
 
 INSERT INTO `order_status` (`id`, `name`) VALUES
@@ -397,7 +428,7 @@ INSERT INTO `order_status` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ref_status`
+-- Структура таблицы `ref_status`
 --
 
 CREATE TABLE `ref_status` (
@@ -407,7 +438,7 @@ CREATE TABLE `ref_status` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `ref_status`
+-- Дамп данных таблицы `ref_status`
 --
 
 INSERT INTO `ref_status` (`id`, `name`, `date_add`) VALUES
@@ -417,7 +448,7 @@ INSERT INTO `ref_status` (`id`, `name`, `date_add`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `settings`
+-- Структура таблицы `settings`
 --
 
 CREATE TABLE `settings` (
@@ -426,7 +457,7 @@ CREATE TABLE `settings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `settings`
+-- Дамп данных таблицы `settings`
 --
 
 INSERT INTO `settings` (`id`, `email`) VALUES
@@ -435,7 +466,7 @@ INSERT INTO `settings` (`id`, `email`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shipping_method`
+-- Структура таблицы `shipping_method`
 --
 
 CREATE TABLE `shipping_method` (
@@ -446,7 +477,7 @@ CREATE TABLE `shipping_method` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `shipping_method`
+-- Дамп данных таблицы `shipping_method`
 --
 
 INSERT INTO `shipping_method` (`id`, `name`, `type`, `coast`) VALUES
@@ -457,7 +488,7 @@ INSERT INTO `shipping_method` (`id`, `name`, `type`, `coast`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_category`
+-- Структура таблицы `shop_category`
 --
 
 CREATE TABLE `shop_category` (
@@ -465,10 +496,10 @@ CREATE TABLE `shop_category` (
   `parent_id` int(11) DEFAULT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `alias` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `description` longtext COLLATE utf8_unicode_ci,
+  `description` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
   `meta_tag_title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `meta_tag_description` longtext COLLATE utf8_unicode_ci,
-  `meta_tag_keywords` longtext COLLATE utf8_unicode_ci,
+  `meta_tag_description` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `meta_tag_keywords` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
   `status` int(11) NOT NULL,
   `orderning` int(11) DEFAULT NULL,
   `lft` int(11) NOT NULL,
@@ -476,12 +507,12 @@ CREATE TABLE `shop_category` (
   `lvl` int(11) NOT NULL,
   `root` int(11) DEFAULT NULL,
   `logo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `sale` tinyint(1) NOT NULL DEFAULT '0',
+  `sale` tinyint(1) NOT NULL DEFAULT 0,
   `b2b` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `shop_category`
+-- Дамп данных таблицы `shop_category`
 --
 
 INSERT INTO `shop_category` (`id`, `parent_id`, `name`, `alias`, `description`, `meta_tag_title`, `meta_tag_description`, `meta_tag_keywords`, `status`, `orderning`, `lft`, `rgt`, `lvl`, `root`, `logo`, `sale`, `b2b`) VALUES
@@ -505,7 +536,7 @@ INSERT INTO `shop_category` (`id`, `parent_id`, `name`, `alias`, `description`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_color`
+-- Структура таблицы `shop_color`
 --
 
 CREATE TABLE `shop_color` (
@@ -515,7 +546,7 @@ CREATE TABLE `shop_color` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `shop_color`
+-- Дамп данных таблицы `shop_color`
 --
 
 INSERT INTO `shop_color` (`id`, `name`, `logo`) VALUES
@@ -597,7 +628,7 @@ INSERT INTO `shop_color` (`id`, `name`, `logo`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_filters`
+-- Структура таблицы `shop_filters`
 --
 
 CREATE TABLE `shop_filters` (
@@ -608,7 +639,7 @@ CREATE TABLE `shop_filters` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `shop_filters`
+-- Дамп данных таблицы `shop_filters`
 --
 
 INSERT INTO `shop_filters` (`id`, `name`, `created`, `status`) VALUES
@@ -621,7 +652,7 @@ INSERT INTO `shop_filters` (`id`, `name`, `created`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_product`
+-- Структура таблицы `shop_product`
 --
 
 CREATE TABLE `shop_product` (
@@ -629,17 +660,17 @@ CREATE TABLE `shop_product` (
   `category_id` int(11) DEFAULT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `alias` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `description` longtext COLLATE utf8_unicode_ci,
+  `description` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
   `meta_tag_title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `meta_tag_description` longtext COLLATE utf8_unicode_ci,
-  `meta_tag_keywords` longtext COLLATE utf8_unicode_ci,
+  `meta_tag_description` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `meta_tag_keywords` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
   `tags` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `composition` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `style` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL,
   `status` int(11) NOT NULL,
   `orderning` int(11) DEFAULT NULL,
-  `images` longtext COLLATE utf8_unicode_ci COMMENT '(DC2Type:array)',
+  `images` longtext COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '(DC2Type:array)',
   `logo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `price_discount` decimal(10,2) DEFAULT NULL,
@@ -649,38 +680,38 @@ CREATE TABLE `shop_product` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `shop_product`
+-- Дамп данных таблицы `shop_product`
 --
 
 INSERT INTO `shop_product` (`id`, `category_id`, `name`, `alias`, `description`, `meta_tag_title`, `meta_tag_description`, `meta_tag_keywords`, `tags`, `composition`, `style`, `price`, `status`, `orderning`, `images`, `logo`, `type`, `price_discount`, `price_b2b`, `categoryB2B_id`, `note`) VALUES
-(4, 3, 'ПЛАТЬЕ "ИЗИ"', 'plate-izi', '<p>Летнее платье day-to-night &nbsp;из легкой вискозы длиной чуть выше колена, &nbsp;как для работы, так и для активного вечера.</p>', 'платье', 'Летнее платье day-to-night  из легкой вискозы длиной чуть выше колена,  как для работы, так и для активного вечера.', 'дизайн, мода, платье, лето, вискоза, отдых, работа, натуральный', 'платье, лето, вискоза, отдых, работа, натуральный, дизайн, мода,', '100% ВИСКОЗА ПОПЛИН', '1002.1', '8750.00', 1, 1, 'a:3:{i:0;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-83-SITE-1.jpg";i:1;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-83-SITE-3.jpg";i:2;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-83-SITE-2.jpg";}', 'e9f67b58be2936067212ee6e67a9bd8bb0c45033.jpeg', NULL, '2000.00', '3500.00', 7, 'Примечание'),
-(5, 3, 'ПЛАТЬЕ "СЛИМ ДЖЕРСИ"', 'plate-slim-dzhersi', '<p>Длинное платье из мягкой трикотажной вискозы, плавно облегающего силуэта, наиболее подходящий выбор в жаркие летние дни и прохладные вечера.</p>', 'платье', 'Длинное платье из мягкой трикотажной вискозы, плавно облегающего силуэта, наиболее подходящий выбор в жаркие летние дни и прохладные вечера.', NULL, NULL, '100%ВИСКОЗА ТРИКОТАЖ', '1003.1', '4750.00', 1, 2, 'a:2:{i:0;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-13-SITE-1.jpg";i:1;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-13-SITE-2.jpg";}', '45b86edac8a9c433944ca768ef397755ce7d0851.jpeg', NULL, NULL, '1900.00', 6, NULL),
-(6, 3, 'ПЛАТЬЕ-РУБАХА "НОЧНОЙ БЛЮЗ"', 'platerubaha-nochnoj-bljuz', '<p>Платье-рубашка свободного силуэта , 100-процентная вискоза приятно охлаждает в жаркую погоду</p>', 'ПЛАТЬЕ-РУБАХА "НОЧНОЙ БЛЮЗ"', 'Платье-рубашка свободного силуэта , 100-процентная вискоза приятно охлаждает в жаркую погоду', 'Платье, рубашка,силуэт,  вискоза, мода, дизайн', NULL, '100%ВИСКОЗА   ПОПЛИН', '1006.1', '7250.00', 1, 3, 'a:2:{i:0;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-66-SITE-1.jpg";i:1;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-66-SITE-2.jpg";}', 'bce83432cb7af062db741162a5002926f1071ee4.jpeg', 'Платье-рубашка свободного силуэта', NULL, '2900.00', 6, 'Примечание текст тест итд'),
-(7, 3, 'ПЛАТЬЕ-САРАФАН В ТРИ УРОВНЯ "БАТИК"', 'platesarafan-v-tri-urovnja-batik', '<p>Легкий сарафан на тоненьких бретелях в трех уровнях , проделанный &nbsp;в технике батик вручную.</p>', 'ПЛАТЬЕ-САРАФАН В ТРИ УРОВНЯ "БАТИК"', 'Легкий сарафан на тоненьких бретелях в трех уровнях , проделанный  в технике батик вручную.', NULL, NULL, '100%  ХЛОПЧАТОБУМАЖНАЯ  ВУАЛЬ', '1007.1', '7750.00', 1, 4, 'a:2:{i:0;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-26-SITE-1.jpg";i:1;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-26-SITE-2.jpg";}', '2d9328debe194c982d4d1fb2f5627cad74bfd8c4.jpeg', 'Легкий сарафан на тоненьких бретелях', NULL, '3100.00', 6, NULL),
-(8, 3, 'ПЛАТЬЕ МАКСИ "БЛЮ ДЖИН"', 'plate-maksi-blju-dzhin', '<p>Длинное Бохо-стиль сарафан-платье с широким воланом по низу, отлично подойдет в жаркий день и теплый летний вечер.</p>', 'ПЛАТЬЕ МАКСИ "БЛЮ ДЖИН"', 'Длинное Бохо-стиль сарафан-платье с широким воланом по низу, отлично подойдет в жаркий день и теплый летний вечер.', NULL, NULL, '100% ВИСКОЗА ПОПЛИН', '1011.1', '11750.00', 1, 5, 'a:3:{i:0;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-45-SITE-1.jpg";i:1;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-45-SITE-2.jpg";i:2;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-45-SITE-3.jpg";}', '66371546c22e750f60c1f48ccf465076a4a17b58.jpeg', 'Длинное Бохо-стиль сарафан-платье', NULL, '4700.00', 6, NULL),
-(9, 3, 'ПЛАТЬЕ МАКСИ V-ГОРЛОВИНА "ШТОРМИ"', 'plate-maksi-vgorlovina-shtormi', '<p>Длинное платье свободного кроя, отличное решение для прогулок по побережью.</p>', 'ПЛАТЬЕ МАКСИ V-ГОРЛОВИНА "ШТОРМИ"', 'Длинное платье свободного кроя, отличное решение для прогулок по побережью', NULL, NULL, '100%ВИСКОЗА ПОПЛИН', '1012.1', '9750.00', 1, 6, 'a:3:{i:0;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-50-SITE-1.jpg";i:1;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-50-SITE-2.jpg";i:2;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-50-SITE-3.jpg";}', '121134498fd5fb413f285755a93d86fbe743c1dd.jpeg', 'Длинное платье свободного кроя', NULL, '3900.00', 6, NULL),
-(10, 3, 'ДЛИНОЕ ПЛАТЬЕ-РУБАХА "ДЖЕНИС ДЖОПЛИН"', 'dlinoe-platerubaha-dzhenis-dzhoplin', '<p>Многофункциональное платье-рубашка длинного силуэта из 100-процентного хлопка, благодаря мелким пуговицам в разрезах из одной модели возможно представить как минимум три.</p>', 'ДЛИНОЕ ПЛАТЬЕ-РУБАХА "ДЖЕНИС ДЖОПЛИН"', 'Многофункциональное платье-рубашка длинного силуэта из 100-процентного хлопка, благодаря мелким пуговицам в разрезах из одной модели возможно представить как минимум три.', NULL, NULL, '100%  ХЛОПЧАТОБУМАЖНЫЙ ПОПЛИН', '1013.1', '7750.00', 1, 7, 'a:3:{i:0;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-18-SITE-1.jpg";i:1;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-18-SITE-2.jpg";i:2;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-18-SITE-3.jpg";}', '6edfd80220bb94ae35bb26fc5dcd85811fba60bf.jpeg', 'Многофункциональное платье-рубашка', NULL, '3100.00', 6, NULL),
-(11, 3, 'ШЕЛКОВОЕ  ПЛАТЬЕ "КОКОН"', 'shelkovoe--plate-kokon', '<p>Коктейльное платье в стиле БОХО из хлопчатобумажного шелка с рукавом 3/4 &nbsp;идеальное решение для выхода в летний вечер.</p>', 'ШЕЛКОВОЕ  ПЛАТЬЕ "КОКОН"', 'Коктейльное платье в стиле БОХО из хлопчатобумажного шелка с рукавом 3/4  идеальное решение для выхода в летний вечер.', NULL, NULL, 'ШЕЛКОВЫЙ ХЛОПОК С МЕТАЛЛОМ  51%SILK41%COT8%METYARNS', '1008.1', '12750.00', 1, 8, 'a:3:{i:0;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-27-SITE-1.jpg";i:1;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-27-SITE-2.jpg";i:2;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-27-SITE-3.jpg";}', 'da822c50d25b58ffb3acf4c29bad6c824c8de428.jpeg', 'ШЕЛКОВОЕ  КОКТЕЙЛЬНОЕ  ПЛАТЬЕ', NULL, '5100.00', 6, NULL),
-(12, 3, 'КАФТАН -ТУНИКА "КВАДРАТ"', 'kaftan-tunika-kvadrat', '<p>Кафтан свободного кроя из плотной хлопчатобумажной габардины ,благодаря большим накладным карманам и симметричным углам, дает нам романтическое ощущение путешественника.</p>', 'КАФТАН -ТУНИКА "КВАДРАТ"', 'Кафтан свободного кроя из плотной хлопчатобумажной габардины ,благодаря большим накладным карманам и симметричным углам, дает нам романтическое ощущение путешественника.', NULL, NULL, '100%  ХЛОПЧАТОБУМАЖНЫЙ ПОПЛИН', '1101.1', '6250.00', 1, 9, 'a:3:{i:0;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-53-SITE-3.jpg";i:1;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-53-SITE-1.jpg";i:2;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-53-SITE-2.jpg";}', '3df42cda71f2f756293fe9774510f0ee548f0b36.jpeg', 'Кафтан-туника  свободного кроя', NULL, '2500.00', 6, NULL),
-(13, 3, 'КАФТАН -ТУНИКА  ЛЕГКИЙ "КВАДРАТ-2"', 'kaftan-tunika--legkij-kvadrat2', '<p>Кафтан свободного кроя из легкой полупрозрачной хлопчатобусажной вуали дает ощущение свежести в жаркие дни.</p>', 'КАФТАН -ТУНИКА  ЛЕГКИЙ "КВАДРАТ-2"', 'Кафтан свободного кроя из легкой полупрозрачной хлопчатобусажной вуали дает ощущение свежести в жаркие дни.', NULL, NULL, '100% ХЛОПЧАТОБУМАЖНАЯ ВУАЛЬ', '1101.2', '7750.00', 1, 10, 'a:3:{i:0;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-23-SITE-1.jpg";i:1;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-23-SITE-2.jpg";i:2;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-23-SITE-3.jpg";}', '1e28e8a758cde832d43632aad58d9b623869a96d.jpeg', 'Кафтан-туника свободного кроя из легкой полупрозрачной  вуали', NULL, '3100.00', 6, NULL),
-(14, 3, 'КАФТАН С КАПЮШОНОМ "БАТИК"', 'kaftan-s-kapjushonom-batik', '<p>Короткий кафтан с капюшоном , рукав 3/4 &nbsp;с непринужденными симметричными углами и регулируемой сборкой , решение для всех возрастов.</p>', 'КАФТАН С КАПЮШОНОМ "БАТИК"', 'Короткий кафтан с капюшоном , рукав 3/4  с непринужденными симметричными углами и регулируемой сборкой , решение для всех возрастов.', NULL, NULL, '100%  ХЛОПЧАТОБУМАЖНАЯ ВУАЛЬ', '1102.1', '7750.00', 1, 11, 'a:3:{i:0;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-56-SITE-3.jpg";i:1;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-56-SITE-1.jpg";i:2;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-56-SITE-2.jpg";}', '5ccba73a4fd91d0875b7451d6ff003f4c57098ba.jpeg', 'Кафтан свободного кроя с капюшоном', NULL, '3100.00', 6, NULL),
-(15, 3, 'КАФТАН С КАПЮШОНОМ "КЛЕТЧАТЫЙ"', 'kaftan-s-kapjushonom-kletchatyj', '<p>Короткий кафтан с капюшоном , рукав 3/4 &nbsp;с непринужденными симметричными углами и регулируемой сборкой , решение для всех возрастов.</p>', 'КАФТАН С КАПЮШОНОМ "КЛЕТЧАТЫЙ"', 'Короткий кафтан с капюшоном , рукав 3/4  с непринужденными симметричными углами и регулируемой сборкой , решение для всех возрастов.', NULL, NULL, '100%  КЛЕТЧАТЫЙ ХЛОПОК', '1102.2', '7750.00', 1, 12, 'a:3:{i:0;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-73-SITE-1.jpg";i:1;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-73-SITE-2.jpg";i:2;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-73-SITE-3.jpg";}', 'fed10ac380664bceae9cb925ca32727e27e20019.jpeg', 'Короткий кафтан с капюшоном', NULL, '3100.00', 6, NULL),
-(16, 3, 'ДЛИННЫЙ КАФТАН "ПАПРИКА"', 'dlinnyj-kaftan-paprika', '<p>Длинный кафтан прямого свободного кроя всегда актуален для летнего отдыха.</p>', 'ДЛИННЫЙ КАФТАН "ПАПРИКА"', 'Длинный кафтан прямого свободного кроя всегда актуален для летнего отдыха.', NULL, NULL, '100% ВИСКОЗНЫЙ ПОПЛИН', '1103.1', '7990.00', 1, 13, 'a:3:{i:0;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-65-SITE-3.jpg";i:1;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-65-SITE-1.jpg";i:2;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-65-SITE-2.jpg";}', '49532a128e513ff22cdb063fa6558b1ad164ef17.jpeg', 'Длинный кафтан прямого свободного кроя', NULL, '3200.00', 6, NULL),
-(17, 3, 'КАФТАН-РУБАШКА "БАТИК"', 'kaftanrubashka-batik', '<p>Укороченный кафтан-рубашка из легкого батиста , выполненный вручную в технике батик.</p>', 'КАФТАН-РУБАШКА "БАТИК"', 'Укороченный кафтан-рубашка из легкого батиста , выполненный вручную в технике батик.', NULL, NULL, '100%  ХЛОПЧАТОБУМАЖНАЯ ВУАЛЬ', '1104.1', '5750.00', 1, 14, 'a:2:{i:0;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-29-SITE-1.jpg";i:1;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-29-SITE-2.jpg";}', 'f62f8f4c42065f3b0b622d4630ef9b98723b0b33.jpeg', 'Укороченный кафтан-рубашка', NULL, '2300.00', 6, NULL),
-(18, 3, 'ТОП-БЛУЗКА "ТВИСТ" БЕЗ РУКАВОВ', 'topbluzka-tvist-bez-rukavov', '<p>Блуза-топ без рукавов из мягкого модального трикотажа с элементом перекручивания актуальна в любое время и на любой случай.</p>', 'ТОП-БЛУЗКА "ТВИСТ" БЕЗ РУКАВОВ', 'Блуза-топ без рукавов из мягкого модального трикотажа с элементом перекручивания актуальна в любое время и на любой случай.', NULL, NULL, 'ТРИКОТАЖНЫЙ МОДАЛЬ  50%COT50%MODAL', '3004.1', '3990.00', 1, 15, 'a:2:{i:0;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-79-SITE-2.jpg";i:1;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-79-SITE-1.jpg";}', '0a9d8f07a4977f6f7a8747263269998f4aea65a2.jpeg', 'Блуза-топ без рукавов', NULL, '1600.00', 6, NULL),
-(19, 3, 'ТОП "УГОЛОК"', 'top-ugolok', '<p>Асимметричный легкий топ с акцентом на угол впереди &nbsp;идеальное дополнение для любого гардероба.</p>', 'ТОП "УГОЛОК"', 'Асимметричный легкий топ с акцентом на угол впереди  идеальное дополнение для любого гардероба.', NULL, NULL, '100% КЛЕТЧАТЫЙ ХЛОПОК', '3005.2', '3250.00', 1, 16, 'a:3:{i:0;s:55:"http://dev.toolai-fashion.ru/uploads/SS16-19-SITE-2.jpg";i:1;s:55:"http://dev.toolai-fashion.ru/uploads/SS16-19-SITE-1.jpg";i:2;s:55:"http://dev.toolai-fashion.ru/uploads/SS16-19-SITE-3.jpg";}', '8fed0cb4fe903d0bc11eb3b8010cee90c4ad2b3f.jpeg', 'Асимметричный легкий топ', NULL, '1300.00', 6, NULL),
-(20, 3, 'БЛУЗА-РУБАШКА "ОСАКА"', 'bluzarubashka-osaka', '<p>Блуза-рубаха из легкого хлопка, решение на любой случай, от деловой встречи до вечеринки с друзьями.</p>', 'БЛУЗА-РУБАШКА "ОСАКА"', 'Блуза-рубаха из легкого хлопка, решение на любой случай, от деловой встречи до вечеринки с друзьями.', NULL, NULL, '100%  ХЛОПЧАТОБУМАЖНАЯ ВУАЛЬ', '3010.1', '5500.00', 1, 17, 'a:3:{i:0;s:60:"http://dev.toolai-fashion.ru/uploads/Blouse-Osaka-1-SITE.jpg";i:1;s:60:"http://dev.toolai-fashion.ru/uploads/Blouse-Osaka-2-SITE.jpg";i:2;s:60:"http://dev.toolai-fashion.ru/uploads/Blouse-Osaka-3-SITE.jpg";}', '635d4d752d3932e1ec41746698aeb6428eb19158.jpeg', 'Блуза-рубаха из легкого хлопка', NULL, '2200.00', 6, NULL),
-(21, 3, 'БЛУЗА-РУБАШКА "ТВИСТ-2" С ДЛИННЫМИ РУКАВАМИ', 'bluzarubashka-tvist2-s-dlinnymi-rukavami', '<p>Специальное предложение дизайнера, блузка с античным элементом заворота , решение не только на лето но и остальные сезоны.</p>', 'БЛУЗА-РУБАШКА "ТВИСТ-2" С ДЛИННЫМИ РУКАВАМИ', 'Специальное предложение дизайнера, блузка с античным элементом заворота , решение не только на лето но и остальные сезоны.', NULL, NULL, '100%  КЛЕТЧАТЫЙ ХЛОПОК', '3008.1', '5990.00', 1, 18, 'a:2:{i:0;s:60:"http://dev.toolai-fashion.ru/uploads/Blouse-Twist-2-SITE.jpg";i:1;s:60:"http://dev.toolai-fashion.ru/uploads/Blouse-Twist-1-SITE.jpg";}', '41539ec55384ff90a4868fba57edcf5b24bb7ab2.jpeg', 'Блузка с античным элементом заворота', NULL, '2400.00', 6, NULL),
-(22, 3, 'БЛУЗА-РУБАШКА "АНЖЕЛИКА"', 'bluzarubashka-anzhelika', '<p>Блузка из легкой вискозы. Мягкие обтекающие линии и широкий свободный крой облагораживают любую фигуру.</p>', 'БЛУЗА-РУБАШКА "АНЖЕЛИКА"', 'Блузка из легкой вискозы. Мягкие обтекающие линии и широкий свободный крой облагораживают любую фигуру.', NULL, NULL, '100%  ВИСКОЗНЫЙ ПОПЛИН', '3009.1', '6490.00', 1, 19, 'a:2:{i:0;s:63:"http://dev.toolai-fashion.ru/uploads/Blouse-Angelica-2-SITE.jpg";i:1;s:61:"http://dev.toolai-fashion.ru/uploads/Blouse-Angelica-SITE.jpg";}', 'e5099c934b85fc1ef0e1bbefc7acfb8f365395b6.jpeg', 'Блузка из легкой вискозы', NULL, '2600.00', 6, NULL),
-(23, 3, 'МНОГОФУНКЦИОНАЛЬНАЯ ЮБКА "САКУРА"', 'mnogofunkcionalnaja-jubka-sakura', '<p>Льняная многофункциональная юбка , благодаря &quot;умному&quot; крою, может быть представлена как мини-юбка, юбка средней длины так и оригинальное дизайнерское решение с отпущенным уголком.</p>', 'МНОГОФУНКЦИОНАЛЬНАЯ ЮБКА "САКУРА"', 'Льняная многофункциональная юбка , благодаря "умному" крою, может быть представлена как мини-юбка, юбка средней длины так и оригинальное дизайнерское решение с отпущенным уголком.', NULL, NULL, '100%   ЛЕН', '2003.2', '6490.00', 1, 20, 'a:8:{i:0;s:60:"http://dev.toolai-fashion.ru/uploads/SKIRT-STORMY-SITE-1.jpg";i:1;s:60:"http://dev.toolai-fashion.ru/uploads/SKIRT-STORMY-SITE-2.jpg";i:2;s:60:"http://dev.toolai-fashion.ru/uploads/SKIRT-STORMY-SITE-3.jpg";i:3;s:65:"http://dev.toolai-fashion.ru/uploads/SKIRT-STORMY-ITEM-SITE-1.jpg";i:4;s:69:"http://dev.toolai-fashion.ru/uploads/SKIRT-STORMY-ITEM-SITE-1BACK.jpg";i:5;s:65:"http://dev.toolai-fashion.ru/uploads/SKIRT-STORMY-ITEM-SITE-2.jpg";i:6;s:69:"http://dev.toolai-fashion.ru/uploads/SKIRT-STORMY-ITEM-SITE-2BACK.jpg";i:7;s:65:"http://dev.toolai-fashion.ru/uploads/SKIRT-STORMY-ITEM-SITE-3.jpg";}', '003ce8405dd6d3ae24e2e8e304d22ed7a0426648.jpeg', 'Многофункциональная ассиметричная юбка', NULL, NULL, 6, NULL),
-(24, 3, 'БРЮКИ ШИРОКИЕ "ЛУЗ"', 'brjuki-shirokie-luz', '<p>Широкие &nbsp;штаны-шаровары &nbsp;из легкой вискозы, решение на жаркие летние дни.</p>', 'БРЮКИ ШИРОКИЕ "ЛУЗ"', 'Широкие  штаны-шаровары  из легкой вискозы, решение на жаркие летние дни.', NULL, NULL, '100%  ВИСКОЗНЫЙ ПОПЛИН', '5001.2', '6250.00', 1, 21, 'a:2:{i:0;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-80-SITE-2.jpg";i:1;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-80-SITE-1.jpg";}', '93a93cb438d85b9c3ce24630b7c185cc3b459ef3.jpeg', 'Широкие  штаны-шаровары', NULL, '2500.00', 6, NULL),
-(25, 3, 'КОМБИНЕЗОН УДЛИНЕННЫЙ "ДЫМЧАТОЕ ДЕРЕВО"', 'kombinezon-udlinennyj-dymchatoe-derevo', '<p>Мягко облегающий тело вискозный комбинезон, оригинальное&nbsp;дизайнерское&nbsp;решение для современной женщины</p>', 'КОМБИНЕЗОН УДЛИНЕННЫЙ "ДЫМЧАТОЕ ДЕРЕВО"', 'Мягко облегающий тело вискозный комбинезон, оригинальное дизайнерское решение для современной женщины', NULL, NULL, '100%  ВИСКОЗНЫЙ ПОПЛИН', '5101.1', '10490.00', 1, 22, 'a:3:{i:0;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-68-SITE-1.jpg";i:1;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-68-SITE-4.jpg";i:2;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-68-SITE-3.jpg";}', 'cefc1594b4636572b024fa761066cca254342ea9.jpeg', 'Длинный  вискозный комбинезон', NULL, '4200.00', 6, NULL),
-(26, 3, 'ЛЬНЯНОЙ КОМБИНЕЗОН-ШОРТЫ', 'lnjanoj-kombinezonshorty', '<p>Укороченный комбинезон-шорты свободного кроя в стиле &quot;сафари&quot; выполненный из льняного материала в жаркое лето даст нам прохладу и чуство комфорта.</p>', 'ЛЬНЯНОЙ КОМБИНЕЗОН-ШОРТЫ', 'Укороченный комбинезон-шорты свободного кроя в стиле "сафари" выполненный из льняного материала в жаркое лето даст нам прохладу и чуство комфорта.', NULL, NULL, '100%   ЛЕН', '5102.1', '7990.00', 1, 23, 'a:2:{i:0;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-47-SITE-3.jpg";i:1;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-47-SITE-2.jpg";}', '64c388cc9bf31e3a048d8132569b3bd528f2a6a5.jpeg', 'Укороченный комбинезон-шорты', NULL, '3200.00', 6, NULL),
-(27, 3, 'ПАРКА УДЛИНЕННАЯ "НОРВЕГИЯ"', 'parka-udlinennaja-norvegija', '<p>Летняя парка , для похладных вечеров и ранней осени.</p>', 'ПАРКА УДЛИНЕННАЯ "НОРВЕГИЯ"', 'Летняя парка , для похладных вечеров и ранней осени.', NULL, NULL, '30%COT70%NYLON', '4001.1', '13250.00', 1, 24, 'a:3:{i:0;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-75-SITE-1.jpg";i:1;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-75-SITE-2.jpg";i:2;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-75-SITE-3.jpg";}', '7c3dfde089435549c76ee74f3e85161d2b0a18e1.jpeg', 'Летняя  удлиненная парка', NULL, '5300.00', 6, NULL),
-(28, 3, 'ЖАКЕТ-ПАРКА "СТИЛЬ КРЕПОН"', 'zhaketparka-stil-krepon', '<p>Летная парка-жакет, выполненная из хлопчатобумажного шелка с металлическими добавками, решение как для повседневного выхода, так и для вечернего коктейля.</p>', 'ЖАКЕТ-ПАРКА "СТИЛЬ КРЕПОН"', 'Летная парка-жакет, выполненная из хлопчатобумажного шелка с металлическими добавками, решение как для повседневного выхода, так и для вечернего коктейля.', NULL, NULL, 'ШЕЛКОВЫЙ ХЛОПОК С МЕТАЛЛОМ   51%SILK41%COT8%METYARNS', '4002.1', '11490.00', 1, 25, 'a:3:{i:0;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-38-SITE-1.jpg";i:1;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-38-SITE-2.jpg";i:2;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-38-SITE-3.jpg";}', '303598f98560af7d63ac4c50e4b50f37c2f6b844.jpeg', 'Летная парка-жакет, выполненная из хлопчатобумажного шелка.', NULL, '4600.00', 6, NULL),
-(29, 3, 'ЖАКЕТ-ПАРКА " СПОРТ-СТИЛЬ"', 'zhaketparka--sportstil', '<p>Парка-жакет спортивного стиля , решение на каждый день для активных женщин.</p>', 'ЖАКЕТ-ПАРКА " СПОРТ-СТИЛЬ"', 'Парка-жакет спортивного стиля , решение на каждый день для активных женщин.', NULL, NULL, 'ШЕЛКОВЫЙ ХЛОПОК С МЕТАЛЛОМ  51%SILK41%COT8%METYARNS', '4003.1', '11490.00', 1, 26, 'a:2:{i:0;s:62:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-1-SITE-1.jpg";i:1;s:62:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-1-SITE-2.jpg";}', 'd75f4d0fb7fa6855553153210044b81d8a68ee44.jpeg', 'Парка-жакет спортивного стиля.', NULL, '4600.00', 6, NULL),
-(30, 3, 'МНОГОФУНКЦИОНАЛЬНЫЙ ПЛАЩ "РОТТЕРДАМ"', 'mnogofunkcionalnyj-plasch-rotterdam', '<p>Многофункциональный летний плащ, где убираются рукава , выполненный из льняного материала, идеальное решение для регионов с прохладным летом.</p>', 'МНОГОФУНКЦИОНАЛЬНЫЙ ПЛАЩ "РОТТЕРДАМ"', 'Многофункциональный летний плащ, где убираются рукава , выполненный из льняного материала, идеальное решение для регионов с прохладным летом.', NULL, NULL, '30%COT70%NYLON', '6101.1', '14250.00', 1, 27, 'a:4:{i:0;s:62:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-4-SITE-1.jpg";i:1;s:62:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-4-SITE-2.jpg";i:2;s:62:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-4-SITE-3.jpg";i:3;s:59:"http://dev.toolai-fashion.ru/uploads/SS16-ITEM-4-SITE-2.jpg";}', '89645741804048c3fdb0c166add2b41358307099.jpeg', 'Многофункциональный летний плащ.', NULL, '5700.00', 6, NULL),
-(31, 3, 'ПЛАЩ БЕЗ РУКАВОВ "ШТОРМИ"', 'plasch-bez-rukavov-shtormi', '<p>Легкий летний плащ без рукавов, выполненный из льняной вуали, идеально подходит к любому силуэту и благородно подчеркивает индивидуаоьность каждой женщины.</p>', 'ПЛАЩ БЕЗ РУКАВОВ "ШТОРМИ"', 'Легкий летний плащ без рукавов, выполненный из льняной вуали, идеально подходит к любому силуэту и благородно подчеркивает индивидуаоьность каждой женщины.', NULL, NULL, '100%   ЛЕН', '6102.1', '12250.00', 1, 28, 'a:3:{i:0;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-44-SITE-1.jpg";i:1;s:63:"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-44-SITE-2.jpg";i:2;s:57:"http://dev.toolai-fashion.ru/uploads/SS16-ITEM-RGB-44.jpg";}', 'a2d822b335182081f063ab544f56ed7f5c145f82.jpeg', 'Легкий летний плащ без рукавов.', NULL, '4900.00', 6, NULL),
+(4, 3, 'ПЛАТЬЕ \"ИЗИ\"', 'plate-izi', '<p>Летнее платье day-to-night &nbsp;из легкой вискозы длиной чуть выше колена, &nbsp;как для работы, так и для активного вечера.</p>', 'платье', 'Летнее платье day-to-night  из легкой вискозы длиной чуть выше колена,  как для работы, так и для активного вечера.', 'дизайн, мода, платье, лето, вискоза, отдых, работа, натуральный', 'платье, лето, вискоза, отдых, работа, натуральный, дизайн, мода,', '100% ВИСКОЗА ПОПЛИН', '1002.1', '8750.00', 1, 1, 'a:3:{i:0;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-83-SITE-1.jpg\";i:1;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-83-SITE-3.jpg\";i:2;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-83-SITE-2.jpg\";}', 'e9f67b58be2936067212ee6e67a9bd8bb0c45033.jpeg', NULL, '2000.00', '3500.00', 7, 'Примечание'),
+(5, 3, 'ПЛАТЬЕ \"СЛИМ ДЖЕРСИ\"', 'plate-slim-dzhersi', '<p>Длинное платье из мягкой трикотажной вискозы, плавно облегающего силуэта, наиболее подходящий выбор в жаркие летние дни и прохладные вечера.</p>', 'платье', 'Длинное платье из мягкой трикотажной вискозы, плавно облегающего силуэта, наиболее подходящий выбор в жаркие летние дни и прохладные вечера.', NULL, NULL, '100%ВИСКОЗА ТРИКОТАЖ', '1003.1', '4750.00', 1, 2, 'a:2:{i:0;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-13-SITE-1.jpg\";i:1;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-13-SITE-2.jpg\";}', '45b86edac8a9c433944ca768ef397755ce7d0851.jpeg', NULL, NULL, '1900.00', 6, NULL),
+(6, 3, 'ПЛАТЬЕ-РУБАХА \"НОЧНОЙ БЛЮЗ\"', 'platerubaha-nochnoj-bljuz', '<p>Платье-рубашка свободного силуэта , 100-процентная вискоза приятно охлаждает в жаркую погоду</p>', 'ПЛАТЬЕ-РУБАХА \"НОЧНОЙ БЛЮЗ\"', 'Платье-рубашка свободного силуэта , 100-процентная вискоза приятно охлаждает в жаркую погоду', 'Платье, рубашка,силуэт,  вискоза, мода, дизайн', NULL, '100%ВИСКОЗА   ПОПЛИН', '1006.1', '7250.00', 1, 3, 'a:2:{i:0;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-66-SITE-1.jpg\";i:1;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-66-SITE-2.jpg\";}', 'bce83432cb7af062db741162a5002926f1071ee4.jpeg', 'Платье-рубашка свободного силуэта', NULL, '2900.00', 6, 'Примечание текст тест итд'),
+(7, 3, 'ПЛАТЬЕ-САРАФАН В ТРИ УРОВНЯ \"БАТИК\"', 'platesarafan-v-tri-urovnja-batik', '<p>Легкий сарафан на тоненьких бретелях в трех уровнях , проделанный &nbsp;в технике батик вручную.</p>', 'ПЛАТЬЕ-САРАФАН В ТРИ УРОВНЯ \"БАТИК\"', 'Легкий сарафан на тоненьких бретелях в трех уровнях , проделанный  в технике батик вручную.', NULL, NULL, '100%  ХЛОПЧАТОБУМАЖНАЯ  ВУАЛЬ', '1007.1', '7750.00', 1, 4, 'a:2:{i:0;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-26-SITE-1.jpg\";i:1;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-26-SITE-2.jpg\";}', '2d9328debe194c982d4d1fb2f5627cad74bfd8c4.jpeg', 'Легкий сарафан на тоненьких бретелях', NULL, '3100.00', 6, NULL),
+(8, 3, 'ПЛАТЬЕ МАКСИ \"БЛЮ ДЖИН\"', 'plate-maksi-blju-dzhin', '<p>Длинное Бохо-стиль сарафан-платье с широким воланом по низу, отлично подойдет в жаркий день и теплый летний вечер.</p>', 'ПЛАТЬЕ МАКСИ \"БЛЮ ДЖИН\"', 'Длинное Бохо-стиль сарафан-платье с широким воланом по низу, отлично подойдет в жаркий день и теплый летний вечер.', NULL, NULL, '100% ВИСКОЗА ПОПЛИН', '1011.1', '11750.00', 1, 5, 'a:3:{i:0;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-45-SITE-1.jpg\";i:1;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-45-SITE-2.jpg\";i:2;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-45-SITE-3.jpg\";}', '66371546c22e750f60c1f48ccf465076a4a17b58.jpeg', 'Длинное Бохо-стиль сарафан-платье', NULL, '4700.00', 6, NULL),
+(9, 3, 'ПЛАТЬЕ МАКСИ V-ГОРЛОВИНА \"ШТОРМИ\"', 'plate-maksi-vgorlovina-shtormi', '<p>Длинное платье свободного кроя, отличное решение для прогулок по побережью.</p>', 'ПЛАТЬЕ МАКСИ V-ГОРЛОВИНА \"ШТОРМИ\"', 'Длинное платье свободного кроя, отличное решение для прогулок по побережью', NULL, NULL, '100%ВИСКОЗА ПОПЛИН', '1012.1', '9750.00', 1, 6, 'a:3:{i:0;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-50-SITE-1.jpg\";i:1;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-50-SITE-2.jpg\";i:2;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-50-SITE-3.jpg\";}', '121134498fd5fb413f285755a93d86fbe743c1dd.jpeg', 'Длинное платье свободного кроя', NULL, '3900.00', 6, NULL),
+(10, 3, 'ДЛИНОЕ ПЛАТЬЕ-РУБАХА \"ДЖЕНИС ДЖОПЛИН\"', 'dlinoe-platerubaha-dzhenis-dzhoplin', '<p>Многофункциональное платье-рубашка длинного силуэта из 100-процентного хлопка, благодаря мелким пуговицам в разрезах из одной модели возможно представить как минимум три.</p>', 'ДЛИНОЕ ПЛАТЬЕ-РУБАХА \"ДЖЕНИС ДЖОПЛИН\"', 'Многофункциональное платье-рубашка длинного силуэта из 100-процентного хлопка, благодаря мелким пуговицам в разрезах из одной модели возможно представить как минимум три.', NULL, NULL, '100%  ХЛОПЧАТОБУМАЖНЫЙ ПОПЛИН', '1013.1', '7750.00', 1, 7, 'a:3:{i:0;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-18-SITE-1.jpg\";i:1;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-18-SITE-2.jpg\";i:2;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-18-SITE-3.jpg\";}', '6edfd80220bb94ae35bb26fc5dcd85811fba60bf.jpeg', 'Многофункциональное платье-рубашка', NULL, '3100.00', 6, NULL),
+(11, 3, 'ШЕЛКОВОЕ  ПЛАТЬЕ \"КОКОН\"', 'shelkovoe--plate-kokon', '<p>Коктейльное платье в стиле БОХО из хлопчатобумажного шелка с рукавом 3/4 &nbsp;идеальное решение для выхода в летний вечер.</p>', 'ШЕЛКОВОЕ  ПЛАТЬЕ \"КОКОН\"', 'Коктейльное платье в стиле БОХО из хлопчатобумажного шелка с рукавом 3/4  идеальное решение для выхода в летний вечер.', NULL, NULL, 'ШЕЛКОВЫЙ ХЛОПОК С МЕТАЛЛОМ  51%SILK41%COT8%METYARNS', '1008.1', '12750.00', 1, 8, 'a:3:{i:0;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-27-SITE-1.jpg\";i:1;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-27-SITE-2.jpg\";i:2;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-27-SITE-3.jpg\";}', 'da822c50d25b58ffb3acf4c29bad6c824c8de428.jpeg', 'ШЕЛКОВОЕ  КОКТЕЙЛЬНОЕ  ПЛАТЬЕ', NULL, '5100.00', 6, NULL),
+(12, 3, 'КАФТАН -ТУНИКА \"КВАДРАТ\"', 'kaftan-tunika-kvadrat', '<p>Кафтан свободного кроя из плотной хлопчатобумажной габардины ,благодаря большим накладным карманам и симметричным углам, дает нам романтическое ощущение путешественника.</p>', 'КАФТАН -ТУНИКА \"КВАДРАТ\"', 'Кафтан свободного кроя из плотной хлопчатобумажной габардины ,благодаря большим накладным карманам и симметричным углам, дает нам романтическое ощущение путешественника.', NULL, NULL, '100%  ХЛОПЧАТОБУМАЖНЫЙ ПОПЛИН', '1101.1', '6250.00', 1, 9, 'a:3:{i:0;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-53-SITE-3.jpg\";i:1;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-53-SITE-1.jpg\";i:2;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-53-SITE-2.jpg\";}', '3df42cda71f2f756293fe9774510f0ee548f0b36.jpeg', 'Кафтан-туника  свободного кроя', NULL, '2500.00', 6, NULL),
+(13, 3, 'КАФТАН -ТУНИКА  ЛЕГКИЙ \"КВАДРАТ-2\"', 'kaftan-tunika--legkij-kvadrat2', '<p>Кафтан свободного кроя из легкой полупрозрачной хлопчатобусажной вуали дает ощущение свежести в жаркие дни.</p>', 'КАФТАН -ТУНИКА  ЛЕГКИЙ \"КВАДРАТ-2\"', 'Кафтан свободного кроя из легкой полупрозрачной хлопчатобусажной вуали дает ощущение свежести в жаркие дни.', NULL, NULL, '100% ХЛОПЧАТОБУМАЖНАЯ ВУАЛЬ', '1101.2', '7750.00', 1, 10, 'a:3:{i:0;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-23-SITE-1.jpg\";i:1;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-23-SITE-2.jpg\";i:2;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-23-SITE-3.jpg\";}', '1e28e8a758cde832d43632aad58d9b623869a96d.jpeg', 'Кафтан-туника свободного кроя из легкой полупрозрачной  вуали', NULL, '3100.00', 6, NULL),
+(14, 3, 'КАФТАН С КАПЮШОНОМ \"БАТИК\"', 'kaftan-s-kapjushonom-batik', '<p>Короткий кафтан с капюшоном , рукав 3/4 &nbsp;с непринужденными симметричными углами и регулируемой сборкой , решение для всех возрастов.</p>', 'КАФТАН С КАПЮШОНОМ \"БАТИК\"', 'Короткий кафтан с капюшоном , рукав 3/4  с непринужденными симметричными углами и регулируемой сборкой , решение для всех возрастов.', NULL, NULL, '100%  ХЛОПЧАТОБУМАЖНАЯ ВУАЛЬ', '1102.1', '7750.00', 1, 11, 'a:3:{i:0;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-56-SITE-3.jpg\";i:1;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-56-SITE-1.jpg\";i:2;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-56-SITE-2.jpg\";}', '5ccba73a4fd91d0875b7451d6ff003f4c57098ba.jpeg', 'Кафтан свободного кроя с капюшоном', NULL, '3100.00', 6, NULL),
+(15, 3, 'КАФТАН С КАПЮШОНОМ \"КЛЕТЧАТЫЙ\"', 'kaftan-s-kapjushonom-kletchatyj', '<p>Короткий кафтан с капюшоном , рукав 3/4 &nbsp;с непринужденными симметричными углами и регулируемой сборкой , решение для всех возрастов.</p>', 'КАФТАН С КАПЮШОНОМ \"КЛЕТЧАТЫЙ\"', 'Короткий кафтан с капюшоном , рукав 3/4  с непринужденными симметричными углами и регулируемой сборкой , решение для всех возрастов.', NULL, NULL, '100%  КЛЕТЧАТЫЙ ХЛОПОК', '1102.2', '7750.00', 1, 12, 'a:3:{i:0;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-73-SITE-1.jpg\";i:1;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-73-SITE-2.jpg\";i:2;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-73-SITE-3.jpg\";}', 'fed10ac380664bceae9cb925ca32727e27e20019.jpeg', 'Короткий кафтан с капюшоном', NULL, '3100.00', 6, NULL),
+(16, 3, 'ДЛИННЫЙ КАФТАН \"ПАПРИКА\"', 'dlinnyj-kaftan-paprika', '<p>Длинный кафтан прямого свободного кроя всегда актуален для летнего отдыха.</p>', 'ДЛИННЫЙ КАФТАН \"ПАПРИКА\"', 'Длинный кафтан прямого свободного кроя всегда актуален для летнего отдыха.', NULL, NULL, '100% ВИСКОЗНЫЙ ПОПЛИН', '1103.1', '7990.00', 1, 13, 'a:3:{i:0;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-65-SITE-3.jpg\";i:1;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-65-SITE-1.jpg\";i:2;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-65-SITE-2.jpg\";}', '49532a128e513ff22cdb063fa6558b1ad164ef17.jpeg', 'Длинный кафтан прямого свободного кроя', NULL, '3200.00', 6, NULL),
+(17, 3, 'КАФТАН-РУБАШКА \"БАТИК\"', 'kaftanrubashka-batik', '<p>Укороченный кафтан-рубашка из легкого батиста , выполненный вручную в технике батик.</p>', 'КАФТАН-РУБАШКА \"БАТИК\"', 'Укороченный кафтан-рубашка из легкого батиста , выполненный вручную в технике батик.', NULL, NULL, '100%  ХЛОПЧАТОБУМАЖНАЯ ВУАЛЬ', '1104.1', '5750.00', 1, 14, 'a:2:{i:0;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-29-SITE-1.jpg\";i:1;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-29-SITE-2.jpg\";}', 'f62f8f4c42065f3b0b622d4630ef9b98723b0b33.jpeg', 'Укороченный кафтан-рубашка', NULL, '2300.00', 6, NULL),
+(18, 3, 'ТОП-БЛУЗКА \"ТВИСТ\" БЕЗ РУКАВОВ', 'topbluzka-tvist-bez-rukavov', '<p>Блуза-топ без рукавов из мягкого модального трикотажа с элементом перекручивания актуальна в любое время и на любой случай.</p>', 'ТОП-БЛУЗКА \"ТВИСТ\" БЕЗ РУКАВОВ', 'Блуза-топ без рукавов из мягкого модального трикотажа с элементом перекручивания актуальна в любое время и на любой случай.', NULL, NULL, 'ТРИКОТАЖНЫЙ МОДАЛЬ  50%COT50%MODAL', '3004.1', '3990.00', 1, 15, 'a:2:{i:0;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-79-SITE-2.jpg\";i:1;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-79-SITE-1.jpg\";}', '0a9d8f07a4977f6f7a8747263269998f4aea65a2.jpeg', 'Блуза-топ без рукавов', NULL, '1600.00', 6, NULL),
+(19, 3, 'ТОП \"УГОЛОК\"', 'top-ugolok', '<p>Асимметричный легкий топ с акцентом на угол впереди &nbsp;идеальное дополнение для любого гардероба.</p>', 'ТОП \"УГОЛОК\"', 'Асимметричный легкий топ с акцентом на угол впереди  идеальное дополнение для любого гардероба.', NULL, NULL, '100% КЛЕТЧАТЫЙ ХЛОПОК', '3005.2', '3250.00', 1, 16, 'a:3:{i:0;s:55:\"http://dev.toolai-fashion.ru/uploads/SS16-19-SITE-2.jpg\";i:1;s:55:\"http://dev.toolai-fashion.ru/uploads/SS16-19-SITE-1.jpg\";i:2;s:55:\"http://dev.toolai-fashion.ru/uploads/SS16-19-SITE-3.jpg\";}', '8fed0cb4fe903d0bc11eb3b8010cee90c4ad2b3f.jpeg', 'Асимметричный легкий топ', NULL, '1300.00', 6, NULL),
+(20, 3, 'БЛУЗА-РУБАШКА \"ОСАКА\"', 'bluzarubashka-osaka', '<p>Блуза-рубаха из легкого хлопка, решение на любой случай, от деловой встречи до вечеринки с друзьями.</p>', 'БЛУЗА-РУБАШКА \"ОСАКА\"', 'Блуза-рубаха из легкого хлопка, решение на любой случай, от деловой встречи до вечеринки с друзьями.', NULL, NULL, '100%  ХЛОПЧАТОБУМАЖНАЯ ВУАЛЬ', '3010.1', '5500.00', 1, 17, 'a:3:{i:0;s:60:\"http://dev.toolai-fashion.ru/uploads/Blouse-Osaka-1-SITE.jpg\";i:1;s:60:\"http://dev.toolai-fashion.ru/uploads/Blouse-Osaka-2-SITE.jpg\";i:2;s:60:\"http://dev.toolai-fashion.ru/uploads/Blouse-Osaka-3-SITE.jpg\";}', '635d4d752d3932e1ec41746698aeb6428eb19158.jpeg', 'Блуза-рубаха из легкого хлопка', NULL, '2200.00', 6, NULL),
+(21, 3, 'БЛУЗА-РУБАШКА \"ТВИСТ-2\" С ДЛИННЫМИ РУКАВАМИ', 'bluzarubashka-tvist2-s-dlinnymi-rukavami', '<p>Специальное предложение дизайнера, блузка с античным элементом заворота , решение не только на лето но и остальные сезоны.</p>', 'БЛУЗА-РУБАШКА \"ТВИСТ-2\" С ДЛИННЫМИ РУКАВАМИ', 'Специальное предложение дизайнера, блузка с античным элементом заворота , решение не только на лето но и остальные сезоны.', NULL, NULL, '100%  КЛЕТЧАТЫЙ ХЛОПОК', '3008.1', '5990.00', 1, 18, 'a:2:{i:0;s:60:\"http://dev.toolai-fashion.ru/uploads/Blouse-Twist-2-SITE.jpg\";i:1;s:60:\"http://dev.toolai-fashion.ru/uploads/Blouse-Twist-1-SITE.jpg\";}', '41539ec55384ff90a4868fba57edcf5b24bb7ab2.jpeg', 'Блузка с античным элементом заворота', NULL, '2400.00', 6, NULL),
+(22, 3, 'БЛУЗА-РУБАШКА \"АНЖЕЛИКА\"', 'bluzarubashka-anzhelika', '<p>Блузка из легкой вискозы. Мягкие обтекающие линии и широкий свободный крой облагораживают любую фигуру.</p>', 'БЛУЗА-РУБАШКА \"АНЖЕЛИКА\"', 'Блузка из легкой вискозы. Мягкие обтекающие линии и широкий свободный крой облагораживают любую фигуру.', NULL, NULL, '100%  ВИСКОЗНЫЙ ПОПЛИН', '3009.1', '6490.00', 1, 19, 'a:2:{i:0;s:63:\"http://dev.toolai-fashion.ru/uploads/Blouse-Angelica-2-SITE.jpg\";i:1;s:61:\"http://dev.toolai-fashion.ru/uploads/Blouse-Angelica-SITE.jpg\";}', 'e5099c934b85fc1ef0e1bbefc7acfb8f365395b6.jpeg', 'Блузка из легкой вискозы', NULL, '2600.00', 6, NULL),
+(23, 3, 'МНОГОФУНКЦИОНАЛЬНАЯ ЮБКА \"САКУРА\"', 'mnogofunkcionalnaja-jubka-sakura', '<p>Льняная многофункциональная юбка , благодаря &quot;умному&quot; крою, может быть представлена как мини-юбка, юбка средней длины так и оригинальное дизайнерское решение с отпущенным уголком.</p>', 'МНОГОФУНКЦИОНАЛЬНАЯ ЮБКА \"САКУРА\"', 'Льняная многофункциональная юбка , благодаря \"умному\" крою, может быть представлена как мини-юбка, юбка средней длины так и оригинальное дизайнерское решение с отпущенным уголком.', NULL, NULL, '100%   ЛЕН', '2003.2', '6490.00', 1, 20, 'a:8:{i:0;s:60:\"http://dev.toolai-fashion.ru/uploads/SKIRT-STORMY-SITE-1.jpg\";i:1;s:60:\"http://dev.toolai-fashion.ru/uploads/SKIRT-STORMY-SITE-2.jpg\";i:2;s:60:\"http://dev.toolai-fashion.ru/uploads/SKIRT-STORMY-SITE-3.jpg\";i:3;s:65:\"http://dev.toolai-fashion.ru/uploads/SKIRT-STORMY-ITEM-SITE-1.jpg\";i:4;s:69:\"http://dev.toolai-fashion.ru/uploads/SKIRT-STORMY-ITEM-SITE-1BACK.jpg\";i:5;s:65:\"http://dev.toolai-fashion.ru/uploads/SKIRT-STORMY-ITEM-SITE-2.jpg\";i:6;s:69:\"http://dev.toolai-fashion.ru/uploads/SKIRT-STORMY-ITEM-SITE-2BACK.jpg\";i:7;s:65:\"http://dev.toolai-fashion.ru/uploads/SKIRT-STORMY-ITEM-SITE-3.jpg\";}', '003ce8405dd6d3ae24e2e8e304d22ed7a0426648.jpeg', 'Многофункциональная ассиметричная юбка', NULL, NULL, 6, NULL),
+(24, 3, 'БРЮКИ ШИРОКИЕ \"ЛУЗ\"', 'brjuki-shirokie-luz', '<p>Широкие &nbsp;штаны-шаровары &nbsp;из легкой вискозы, решение на жаркие летние дни.</p>', 'БРЮКИ ШИРОКИЕ \"ЛУЗ\"', 'Широкие  штаны-шаровары  из легкой вискозы, решение на жаркие летние дни.', NULL, NULL, '100%  ВИСКОЗНЫЙ ПОПЛИН', '5001.2', '6250.00', 1, 21, 'a:2:{i:0;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-80-SITE-2.jpg\";i:1;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-80-SITE-1.jpg\";}', '93a93cb438d85b9c3ce24630b7c185cc3b459ef3.jpeg', 'Широкие  штаны-шаровары', NULL, '2500.00', 6, NULL),
+(25, 3, 'КОМБИНЕЗОН УДЛИНЕННЫЙ \"ДЫМЧАТОЕ ДЕРЕВО\"', 'kombinezon-udlinennyj-dymchatoe-derevo', '<p>Мягко облегающий тело вискозный комбинезон, оригинальное&nbsp;дизайнерское&nbsp;решение для современной женщины</p>', 'КОМБИНЕЗОН УДЛИНЕННЫЙ \"ДЫМЧАТОЕ ДЕРЕВО\"', 'Мягко облегающий тело вискозный комбинезон, оригинальное дизайнерское решение для современной женщины', NULL, NULL, '100%  ВИСКОЗНЫЙ ПОПЛИН', '5101.1', '10490.00', 1, 22, 'a:3:{i:0;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-68-SITE-1.jpg\";i:1;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-68-SITE-4.jpg\";i:2;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-68-SITE-3.jpg\";}', 'cefc1594b4636572b024fa761066cca254342ea9.jpeg', 'Длинный  вискозный комбинезон', NULL, '4200.00', 6, NULL),
+(26, 3, 'ЛЬНЯНОЙ КОМБИНЕЗОН-ШОРТЫ', 'lnjanoj-kombinezonshorty', '<p>Укороченный комбинезон-шорты свободного кроя в стиле &quot;сафари&quot; выполненный из льняного материала в жаркое лето даст нам прохладу и чуство комфорта.</p>', 'ЛЬНЯНОЙ КОМБИНЕЗОН-ШОРТЫ', 'Укороченный комбинезон-шорты свободного кроя в стиле \"сафари\" выполненный из льняного материала в жаркое лето даст нам прохладу и чуство комфорта.', NULL, NULL, '100%   ЛЕН', '5102.1', '7990.00', 1, 23, 'a:2:{i:0;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-47-SITE-3.jpg\";i:1;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-47-SITE-2.jpg\";}', '64c388cc9bf31e3a048d8132569b3bd528f2a6a5.jpeg', 'Укороченный комбинезон-шорты', NULL, '3200.00', 6, NULL),
+(27, 3, 'ПАРКА УДЛИНЕННАЯ \"НОРВЕГИЯ\"', 'parka-udlinennaja-norvegija', '<p>Летняя парка , для похладных вечеров и ранней осени.</p>', 'ПАРКА УДЛИНЕННАЯ \"НОРВЕГИЯ\"', 'Летняя парка , для похладных вечеров и ранней осени.', NULL, NULL, '30%COT70%NYLON', '4001.1', '13250.00', 1, 24, 'a:3:{i:0;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-75-SITE-1.jpg\";i:1;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-75-SITE-2.jpg\";i:2;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-75-SITE-3.jpg\";}', '7c3dfde089435549c76ee74f3e85161d2b0a18e1.jpeg', 'Летняя  удлиненная парка', NULL, '5300.00', 6, NULL),
+(28, 3, 'ЖАКЕТ-ПАРКА \"СТИЛЬ КРЕПОН\"', 'zhaketparka-stil-krepon', '<p>Летная парка-жакет, выполненная из хлопчатобумажного шелка с металлическими добавками, решение как для повседневного выхода, так и для вечернего коктейля.</p>', 'ЖАКЕТ-ПАРКА \"СТИЛЬ КРЕПОН\"', 'Летная парка-жакет, выполненная из хлопчатобумажного шелка с металлическими добавками, решение как для повседневного выхода, так и для вечернего коктейля.', NULL, NULL, 'ШЕЛКОВЫЙ ХЛОПОК С МЕТАЛЛОМ   51%SILK41%COT8%METYARNS', '4002.1', '11490.00', 1, 25, 'a:3:{i:0;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-38-SITE-1.jpg\";i:1;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-38-SITE-2.jpg\";i:2;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-38-SITE-3.jpg\";}', '303598f98560af7d63ac4c50e4b50f37c2f6b844.jpeg', 'Летная парка-жакет, выполненная из хлопчатобумажного шелка.', NULL, '4600.00', 6, NULL),
+(29, 3, 'ЖАКЕТ-ПАРКА \" СПОРТ-СТИЛЬ\"', 'zhaketparka--sportstil', '<p>Парка-жакет спортивного стиля , решение на каждый день для активных женщин.</p>', 'ЖАКЕТ-ПАРКА \" СПОРТ-СТИЛЬ\"', 'Парка-жакет спортивного стиля , решение на каждый день для активных женщин.', NULL, NULL, 'ШЕЛКОВЫЙ ХЛОПОК С МЕТАЛЛОМ  51%SILK41%COT8%METYARNS', '4003.1', '11490.00', 1, 26, 'a:2:{i:0;s:62:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-1-SITE-1.jpg\";i:1;s:62:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-1-SITE-2.jpg\";}', 'd75f4d0fb7fa6855553153210044b81d8a68ee44.jpeg', 'Парка-жакет спортивного стиля.', NULL, '4600.00', 6, NULL),
+(30, 3, 'МНОГОФУНКЦИОНАЛЬНЫЙ ПЛАЩ \"РОТТЕРДАМ\"', 'mnogofunkcionalnyj-plasch-rotterdam', '<p>Многофункциональный летний плащ, где убираются рукава , выполненный из льняного материала, идеальное решение для регионов с прохладным летом.</p>', 'МНОГОФУНКЦИОНАЛЬНЫЙ ПЛАЩ \"РОТТЕРДАМ\"', 'Многофункциональный летний плащ, где убираются рукава , выполненный из льняного материала, идеальное решение для регионов с прохладным летом.', NULL, NULL, '30%COT70%NYLON', '6101.1', '14250.00', 1, 27, 'a:4:{i:0;s:62:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-4-SITE-1.jpg\";i:1;s:62:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-4-SITE-2.jpg\";i:2;s:62:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-4-SITE-3.jpg\";i:3;s:59:\"http://dev.toolai-fashion.ru/uploads/SS16-ITEM-4-SITE-2.jpg\";}', '89645741804048c3fdb0c166add2b41358307099.jpeg', 'Многофункциональный летний плащ.', NULL, '5700.00', 6, NULL),
+(31, 3, 'ПЛАЩ БЕЗ РУКАВОВ \"ШТОРМИ\"', 'plasch-bez-rukavov-shtormi', '<p>Легкий летний плащ без рукавов, выполненный из льняной вуали, идеально подходит к любому силуэту и благородно подчеркивает индивидуаоьность каждой женщины.</p>', 'ПЛАЩ БЕЗ РУКАВОВ \"ШТОРМИ\"', 'Легкий летний плащ без рукавов, выполненный из льняной вуали, идеально подходит к любому силуэту и благородно подчеркивает индивидуаоьность каждой женщины.', NULL, NULL, '100%   ЛЕН', '6102.1', '12250.00', 1, 28, 'a:3:{i:0;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-44-SITE-1.jpg\";i:1;s:63:\"http://dev.toolai-fashion.ru/uploads/SS16-PICTURE-44-SITE-2.jpg\";i:2;s:57:\"http://dev.toolai-fashion.ru/uploads/SS16-ITEM-RGB-44.jpg\";}', 'a2d822b335182081f063ab544f56ed7f5c145f82.jpeg', 'Легкий летний плащ без рукавов.', NULL, '4900.00', 6, NULL),
 (32, 8, '1', '1', NULL, '1', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 'a:0:{}', 'b3ce20ae54cfc9077908c4464b4017f1dda6f8b8.jpeg', NULL, NULL, NULL, NULL, NULL),
 (33, 8, '2', '2', NULL, '2', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 'a:0:{}', 'f05d30ef8d3026013ab34d1dd6b312b78dca2182.jpeg', NULL, NULL, NULL, NULL, NULL),
 (34, 8, '3', '3', NULL, '3', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 'a:0:{}', 'b03db87b7386e22143895aa6de600ca3ef09cc94.jpeg', NULL, NULL, NULL, NULL, NULL),
@@ -846,10 +877,10 @@ INSERT INTO `shop_product` (`id`, `category_id`, `name`, `alias`, `description`,
 (211, 16, '5-5', '5-5', NULL, '5-5', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 'a:0:{}', '7c54fa2bd25c437c4ad2928305f4db55c6ecefce.jpeg', NULL, NULL, NULL, NULL, NULL),
 (212, 16, '5-6', '5-6', NULL, '5-6', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 'a:0:{}', 'a95a12d8c222677cc8016f4083ee16c6591c94ec.jpeg', NULL, NULL, NULL, NULL, NULL),
 (213, 16, '5-7', '5-7', NULL, '5-7', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 'a:0:{}', 'f6bd4fcb5ad586c7fe2fddd8d1802909dd6f6a5c.jpeg', NULL, NULL, NULL, NULL, NULL),
-(214, 16, '5-8', '5-8', NULL, '5-8', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 'a:0:{}', '080c1e647706ebc7d1859bf1235f284077195be4.jpeg', NULL, NULL, NULL, NULL, NULL),
-(215, 16, '5-9', '5-9', NULL, '5-9', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 'a:0:{}', '1abb071c80aea47d7f4062c5eb450d4b176a7c85.jpeg', NULL, NULL, NULL, NULL, NULL),
-(216, 16, '5-10', '5-10', NULL, '5-10', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 'a:0:{}', '15de40e88e32362c981ef060131bda0c96b65fed.jpeg', NULL, NULL, NULL, NULL, NULL);
+(214, 16, '5-8', '5-8', NULL, '5-8', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 'a:0:{}', '080c1e647706ebc7d1859bf1235f284077195be4.jpeg', NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `shop_product` (`id`, `category_id`, `name`, `alias`, `description`, `meta_tag_title`, `meta_tag_description`, `meta_tag_keywords`, `tags`, `composition`, `style`, `price`, `status`, `orderning`, `images`, `logo`, `type`, `price_discount`, `price_b2b`, `categoryB2B_id`, `note`) VALUES
+(215, 16, '5-9', '5-9', NULL, '5-9', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 'a:0:{}', '1abb071c80aea47d7f4062c5eb450d4b176a7c85.jpeg', NULL, NULL, NULL, NULL, NULL),
+(216, 16, '5-10', '5-10', NULL, '5-10', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 'a:0:{}', '15de40e88e32362c981ef060131bda0c96b65fed.jpeg', NULL, NULL, NULL, NULL, NULL),
 (217, 16, '5-11', '5-11', NULL, '5-11', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 'a:0:{}', 'defa101776f7f236358a4f5d5f9d20a045afadfc.jpeg', NULL, NULL, NULL, NULL, NULL),
 (218, 11, '3-22', '3-22', NULL, '3-22', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 'a:0:{}', '7213cc5a7bac4a0b8491c827d2b33a488ea3fde2.jpeg', NULL, NULL, NULL, NULL, NULL),
 (219, 16, '5-12', '5-12', NULL, '5-12', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 'a:0:{}', 'bdbd60aec0c08202f651b891402b36d95c870f9b.jpeg', NULL, NULL, NULL, NULL, NULL),
@@ -982,7 +1013,7 @@ INSERT INTO `shop_product` (`id`, `category_id`, `name`, `alias`, `description`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_product_category`
+-- Структура таблицы `shop_product_category`
 --
 
 CREATE TABLE `shop_product_category` (
@@ -991,7 +1022,7 @@ CREATE TABLE `shop_product_category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `shop_product_category`
+-- Дамп данных таблицы `shop_product_category`
 --
 
 INSERT INTO `shop_product_category` (`product_id`, `category_id`) VALUES
@@ -1028,7 +1059,7 @@ INSERT INTO `shop_product_category` (`product_id`, `category_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_product_color`
+-- Структура таблицы `shop_product_color`
 --
 
 CREATE TABLE `shop_product_color` (
@@ -1037,7 +1068,7 @@ CREATE TABLE `shop_product_color` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `shop_product_color`
+-- Дамп данных таблицы `shop_product_color`
 --
 
 INSERT INTO `shop_product_color` (`product_id`, `color_id`) VALUES
@@ -1091,7 +1122,7 @@ INSERT INTO `shop_product_color` (`product_id`, `color_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_product_filter`
+-- Структура таблицы `shop_product_filter`
 --
 
 CREATE TABLE `shop_product_filter` (
@@ -1100,7 +1131,7 @@ CREATE TABLE `shop_product_filter` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `shop_product_filter`
+-- Дамп данных таблицы `shop_product_filter`
 --
 
 INSERT INTO `shop_product_filter` (`product_id`, `filter_id`) VALUES
@@ -1162,7 +1193,7 @@ INSERT INTO `shop_product_filter` (`product_id`, `filter_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_product_size`
+-- Структура таблицы `shop_product_size`
 --
 
 CREATE TABLE `shop_product_size` (
@@ -1171,7 +1202,7 @@ CREATE TABLE `shop_product_size` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `shop_product_size`
+-- Дамп данных таблицы `shop_product_size`
 --
 
 INSERT INTO `shop_product_size` (`product_id`, `size_id`) VALUES
@@ -1266,7 +1297,7 @@ INSERT INTO `shop_product_size` (`product_id`, `size_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_product_stroe`
+-- Структура таблицы `shop_product_stroe`
 --
 
 CREATE TABLE `shop_product_stroe` (
@@ -1279,7 +1310,7 @@ CREATE TABLE `shop_product_stroe` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `shop_product_stroe`
+-- Дамп данных таблицы `shop_product_stroe`
 --
 
 INSERT INTO `shop_product_stroe` (`id`, `size_id`, `color_id`, `product_id`, `store_id`, `count`) VALUES
@@ -1395,7 +1426,7 @@ INSERT INTO `shop_product_stroe` (`id`, `size_id`, `color_id`, `product_id`, `st
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_product_user`
+-- Структура таблицы `shop_product_user`
 --
 
 CREATE TABLE `shop_product_user` (
@@ -1404,7 +1435,7 @@ CREATE TABLE `shop_product_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `shop_product_user`
+-- Дамп данных таблицы `shop_product_user`
 --
 
 INSERT INTO `shop_product_user` (`product_id`, `user_id`) VALUES
@@ -1420,7 +1451,7 @@ INSERT INTO `shop_product_user` (`product_id`, `user_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_setting_country`
+-- Структура таблицы `shop_setting_country`
 --
 
 CREATE TABLE `shop_setting_country` (
@@ -1437,7 +1468,7 @@ CREATE TABLE `shop_setting_country` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `shop_setting_country`
+-- Дамп данных таблицы `shop_setting_country`
 --
 
 INSERT INTO `shop_setting_country` (`id`, `parent_id`, `name`, `status`, `orderning`, `lft`, `rgt`, `lvl`, `root`, `procent`) VALUES
@@ -1448,7 +1479,7 @@ INSERT INTO `shop_setting_country` (`id`, `parent_id`, `name`, `status`, `ordern
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_setting_currency`
+-- Структура таблицы `shop_setting_currency`
 --
 
 CREATE TABLE `shop_setting_currency` (
@@ -1463,14 +1494,14 @@ CREATE TABLE `shop_setting_currency` (
   `subunit_morph2` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
   `subunit_morph5` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
   `short_sign` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `main` tinyint(1) NOT NULL DEFAULT '0',
+  `main` tinyint(1) NOT NULL DEFAULT 0,
   `rate` double DEFAULT NULL,
   `status` tinyint(1) NOT NULL,
   `created` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `shop_setting_currency`
+-- Дамп данных таблицы `shop_setting_currency`
 --
 
 INSERT INTO `shop_setting_currency` (`id`, `iso_name`, `name`, `symbol`, `morph1`, `morph2`, `morph5`, `subunit_morph1`, `subunit_morph2`, `subunit_morph5`, `short_sign`, `main`, `rate`, `status`, `created`) VALUES
@@ -1480,7 +1511,7 @@ INSERT INTO `shop_setting_currency` (`id`, `iso_name`, `name`, `symbol`, `morph1
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_setting_slider_image`
+-- Структура таблицы `shop_setting_slider_image`
 --
 
 CREATE TABLE `shop_setting_slider_image` (
@@ -1496,7 +1527,7 @@ CREATE TABLE `shop_setting_slider_image` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `shop_setting_slider_image`
+-- Дамп данных таблицы `shop_setting_slider_image`
 --
 
 INSERT INTO `shop_setting_slider_image` (`id`, `category_id`, `product_id`, `name`, `title`, `status`, `orderning`, `type`, `logo`) VALUES
@@ -1508,7 +1539,7 @@ INSERT INTO `shop_setting_slider_image` (`id`, `category_id`, `product_id`, `nam
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_shop_by_look`
+-- Структура таблицы `shop_shop_by_look`
 --
 
 CREATE TABLE `shop_shop_by_look` (
@@ -1521,56 +1552,56 @@ CREATE TABLE `shop_shop_by_look` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `shop_shop_by_look`
+-- Дамп данных таблицы `shop_shop_by_look`
 --
 
 INSERT INTO `shop_shop_by_look` (`id`, `name`, `status`, `orderning`, `logo`, `category_id`) VALUES
-(2, 'Платье "Шарлиз"', 1, 1, 'e0ed0e25d53f3f423aa17b2077052eb3d2bdf235.jpeg', 3),
-(3, 'Платье "Клаудия"', 1, 2, '2fb12db3c72c01c223157bd13b0b4c9df55888fd.jpeg', 3),
-(4, 'Платье "Изи"', 1, 3, '3e86daabf072c9a5575bac6e07dc8a7b0f74e121.jpeg', 3),
-(5, 'Блузка "Твист-Луз"', 1, 4, '92805d22b5909ea925677444e5c621b63785a09f.jpeg', 3),
-(6, 'Брюки "Луз"', 1, 5, 'c3eb95b6b61e04e38ab838ef8b119ee20eaf24fe.jpeg', 3),
-(7, 'Жилет "Деловая леди"', 1, 6, 'db5ac83f31495140d7fe74f79f5c7247dc3da056.jpeg', 3),
-(8, 'Блузка "Твист без рукавов"', 1, 7, '07fd7e62c2c475144bb5a923c452bbc68b3286ce.jpeg', 3),
-(9, 'Платье "Слим Джерси"', 1, 8, 'fc62f2c18148d7395502fd949ca08731268210c5.jpeg', 3),
-(10, 'Сет " Спорт стайл"', 1, 9, 'a27bfcb2bd0208f90376347330dba7094c54aa7e.jpeg', 3),
-(11, 'Брюки "Луз"', 1, 10, '5174293731a43cdb9218f450dab24243e5fa9003.jpeg', 3),
-(12, 'Юбка "Сакура"-Топ "Углы"', 1, 11, 'fbbea22eeced1f1a885580971e6c4c4fbe61e955.jpeg', 3),
-(13, 'Многофункциональный плащ "Роттердам"- Брюки "Луз" белые', 1, 12, '77a757fda17c1bffcfdf4b11a36fbdbfe679d20a.jpeg', 3),
-(14, 'Жакет-парка "Крепон стиль"- Брюки "Луз"', 1, 13, '4e924fcbedfcc9da05a8bc20e042f4403ca1abf8.jpeg', 3),
-(15, 'Костюм - сет "Шелковый лен-черный"', 1, 14, 'e1baa68e1fe811b3e08137eac8f5807c8f4ae9f2.jpeg', 3),
-(16, 'Костюм - сет "Шелковый лен-черный"', 1, 15, 'b8ca1ac5f3bec3a51b5c4cb99a543c10b2296de5.jpeg', 3),
-(17, 'Блуза-рубашка "Анжелика"', 1, 16, '797f9330a9d2b723824b6ee5467083a7b83348f4.jpeg', 3),
-(18, 'Блузка "Осака"', 1, 17, 'd82b8728ab1d3eb694e3bfab6b750f5bf3071b76.jpeg', 3),
-(19, 'Топ "Лайф"', 1, 18, 'ad48a9a6e43e1027773a6e16c3937f1d304f7a79.jpeg', 3),
-(20, 'Платье "Блю Джин"', 1, 19, '76f327eead6e5cd761d32f083104a61b9166d3ae.jpeg', 3),
-(21, 'Платье "Три лайерс батик"', 1, 20, '9eb87d78ad19f0479811544142c3b6ec431026b9.jpeg', 3),
-(22, 'Кафтан "Паприка"', 1, 21, 'fe380f973fded8c955205bf9a6d0ec5be1325c4a.jpeg', 3),
-(23, 'Платье "Шторми"', 1, 22, '02e0d6470716e524ef6af8a12a9a02f69365d62a.jpeg', 3),
-(24, 'Кафтан "Батик"', 1, 23, '08656eb4f1b649e4a2557e8fe098f873e9d577a0.jpeg', 3),
-(25, 'Платье "Найт Блюз"', 1, 24, '874e13b23dc73785116772c1473f477d8f0ca8be.jpeg', 3),
-(26, 'Кафтан "Квадрат"', 1, 25, '831cfa1c672d23a886064885302d6ff3c312864b.jpeg', 3),
-(27, 'Платье-рубашка "Дженис Джоплин"', 1, 26, '58dca551aa8fc1ef09ad43a3d8ffea0b66c9e0fa.jpeg', 3),
-(28, 'Кафтан-рубашка "Батик"', 1, 27, '5e5005d3ff513f98a9a7531cdaa82e13f7c1ca6f.jpeg', 3),
-(29, 'Платье "Мини-Деним"', 1, 28, '468762576a00ff18ebb6b220516cad2a64b6f060.jpeg', 3),
-(30, 'Жакет-парка "Крепон стиль"- Блузка "Твист без рукавов"', 1, 29, '7e970072588c578afefa7a7d5fe8cd88d4070d7f.jpeg', 3),
-(31, 'Плащ "Шторми" без рукавов', 1, 30, '54b520b002ce68ba8f7bb4a91a73ec75c7dabc90.jpeg', 3),
-(32, 'Топ "Уголок"', 1, 31, 'dcdef0aec25746728acfb47cab4fa6bf2db29689.jpeg', 3),
-(33, 'Комбинезон-шорты "Принт"', 1, 32, '180ce01f19e9df51c466b5850fb11eb180755543.jpeg', 3),
-(34, 'Топ "Паприка с капюшоном"', 1, 33, '162ede82a5bcd6904e151d1cbc2195a75964db5d.jpeg', 3),
-(35, 'Топ "Уголок"', 1, 34, '914dd8be25b43f9a83ea51636d5e35ed8191262e.jpeg', 3),
-(36, 'Куртка "Сборка атлантик-дип"', 1, 35, '6d6a549c8a13af1d17a57cf6f73db6f5dd916271.jpeg', 3),
-(37, 'Комбинезон-шорты "Льняной"', 1, 36, 'cca44446803de2fdf27621b62e2a723e9ccabe23.jpeg', 3),
-(38, 'Блузка "Твист" с длиными рукавами', 1, 37, 'ac8daafedc68af217fc5abce0b8040b3278b3621.jpeg', 3),
-(39, 'Куртка "Джин"-Юбка "Сакура"', 1, 38, 'a5f9f380ca9a2ae6e221e57a73835555e74a5135.jpeg', 3),
-(40, 'Блузка "Твист" с длиными рукавами-Юбка "Барбара"', 1, 39, 'bb7dfacf9cda3c532a3d0befe6a17e3b820d9e68.jpeg', 3),
-(41, 'Платье "Кокон"', 1, 40, '01e2e39de715a123ca35837cc144f7fab7e7fcdd.jpeg', 3),
-(42, 'Платье шелковое длинное "Блю Джин"', 1, 41, 'f033531fe7368c17e631770cba37e40806c51f6f.jpeg', 3),
-(43, 'Платье длинное "Инфинити"', 1, 42, '61b5029b06aa78c4bf09638c73e6c149322a8c21.jpeg', 3),
-(44, 'Комбинезон "Вудсмок"', 1, 43, 'db382c22928025a7a5d0ac0964e884b0503ec633.jpeg', 3),
-(45, 'Платье "Три уровня - Батик"', 1, 44, 'd3a50db5895b17d51a5bb808103d45e555297ab4.jpeg', 3),
-(46, 'Кафтан-рубашка "Клетчатый энзим"', 1, 45, '2a9cad429650c74cb0315e3cff457abc3aa1e0c4.jpeg', 3),
-(47, 'Комбинезон "Вудсмок"', 1, 46, 'd73773c3932e28c9bf726ae8f824d10578b314fa.jpeg', 3),
+(2, 'Платье \"Шарлиз\"', 1, 1, 'e0ed0e25d53f3f423aa17b2077052eb3d2bdf235.jpeg', 3),
+(3, 'Платье \"Клаудия\"', 1, 2, '2fb12db3c72c01c223157bd13b0b4c9df55888fd.jpeg', 3),
+(4, 'Платье \"Изи\"', 1, 3, '3e86daabf072c9a5575bac6e07dc8a7b0f74e121.jpeg', 3),
+(5, 'Блузка \"Твист-Луз\"', 1, 4, '92805d22b5909ea925677444e5c621b63785a09f.jpeg', 3),
+(6, 'Брюки \"Луз\"', 1, 5, 'c3eb95b6b61e04e38ab838ef8b119ee20eaf24fe.jpeg', 3),
+(7, 'Жилет \"Деловая леди\"', 1, 6, 'db5ac83f31495140d7fe74f79f5c7247dc3da056.jpeg', 3),
+(8, 'Блузка \"Твист без рукавов\"', 1, 7, '07fd7e62c2c475144bb5a923c452bbc68b3286ce.jpeg', 3),
+(9, 'Платье \"Слим Джерси\"', 1, 8, 'fc62f2c18148d7395502fd949ca08731268210c5.jpeg', 3),
+(10, 'Сет \" Спорт стайл\"', 1, 9, 'a27bfcb2bd0208f90376347330dba7094c54aa7e.jpeg', 3),
+(11, 'Брюки \"Луз\"', 1, 10, '5174293731a43cdb9218f450dab24243e5fa9003.jpeg', 3),
+(12, 'Юбка \"Сакура\"-Топ \"Углы\"', 1, 11, 'fbbea22eeced1f1a885580971e6c4c4fbe61e955.jpeg', 3),
+(13, 'Многофункциональный плащ \"Роттердам\"- Брюки \"Луз\" белые', 1, 12, '77a757fda17c1bffcfdf4b11a36fbdbfe679d20a.jpeg', 3),
+(14, 'Жакет-парка \"Крепон стиль\"- Брюки \"Луз\"', 1, 13, '4e924fcbedfcc9da05a8bc20e042f4403ca1abf8.jpeg', 3),
+(15, 'Костюм - сет \"Шелковый лен-черный\"', 1, 14, 'e1baa68e1fe811b3e08137eac8f5807c8f4ae9f2.jpeg', 3),
+(16, 'Костюм - сет \"Шелковый лен-черный\"', 1, 15, 'b8ca1ac5f3bec3a51b5c4cb99a543c10b2296de5.jpeg', 3),
+(17, 'Блуза-рубашка \"Анжелика\"', 1, 16, '797f9330a9d2b723824b6ee5467083a7b83348f4.jpeg', 3),
+(18, 'Блузка \"Осака\"', 1, 17, 'd82b8728ab1d3eb694e3bfab6b750f5bf3071b76.jpeg', 3),
+(19, 'Топ \"Лайф\"', 1, 18, 'ad48a9a6e43e1027773a6e16c3937f1d304f7a79.jpeg', 3),
+(20, 'Платье \"Блю Джин\"', 1, 19, '76f327eead6e5cd761d32f083104a61b9166d3ae.jpeg', 3),
+(21, 'Платье \"Три лайерс батик\"', 1, 20, '9eb87d78ad19f0479811544142c3b6ec431026b9.jpeg', 3),
+(22, 'Кафтан \"Паприка\"', 1, 21, 'fe380f973fded8c955205bf9a6d0ec5be1325c4a.jpeg', 3),
+(23, 'Платье \"Шторми\"', 1, 22, '02e0d6470716e524ef6af8a12a9a02f69365d62a.jpeg', 3),
+(24, 'Кафтан \"Батик\"', 1, 23, '08656eb4f1b649e4a2557e8fe098f873e9d577a0.jpeg', 3),
+(25, 'Платье \"Найт Блюз\"', 1, 24, '874e13b23dc73785116772c1473f477d8f0ca8be.jpeg', 3),
+(26, 'Кафтан \"Квадрат\"', 1, 25, '831cfa1c672d23a886064885302d6ff3c312864b.jpeg', 3),
+(27, 'Платье-рубашка \"Дженис Джоплин\"', 1, 26, '58dca551aa8fc1ef09ad43a3d8ffea0b66c9e0fa.jpeg', 3),
+(28, 'Кафтан-рубашка \"Батик\"', 1, 27, '5e5005d3ff513f98a9a7531cdaa82e13f7c1ca6f.jpeg', 3),
+(29, 'Платье \"Мини-Деним\"', 1, 28, '468762576a00ff18ebb6b220516cad2a64b6f060.jpeg', 3),
+(30, 'Жакет-парка \"Крепон стиль\"- Блузка \"Твист без рукавов\"', 1, 29, '7e970072588c578afefa7a7d5fe8cd88d4070d7f.jpeg', 3),
+(31, 'Плащ \"Шторми\" без рукавов', 1, 30, '54b520b002ce68ba8f7bb4a91a73ec75c7dabc90.jpeg', 3),
+(32, 'Топ \"Уголок\"', 1, 31, 'dcdef0aec25746728acfb47cab4fa6bf2db29689.jpeg', 3),
+(33, 'Комбинезон-шорты \"Принт\"', 1, 32, '180ce01f19e9df51c466b5850fb11eb180755543.jpeg', 3),
+(34, 'Топ \"Паприка с капюшоном\"', 1, 33, '162ede82a5bcd6904e151d1cbc2195a75964db5d.jpeg', 3),
+(35, 'Топ \"Уголок\"', 1, 34, '914dd8be25b43f9a83ea51636d5e35ed8191262e.jpeg', 3),
+(36, 'Куртка \"Сборка атлантик-дип\"', 1, 35, '6d6a549c8a13af1d17a57cf6f73db6f5dd916271.jpeg', 3),
+(37, 'Комбинезон-шорты \"Льняной\"', 1, 36, 'cca44446803de2fdf27621b62e2a723e9ccabe23.jpeg', 3),
+(38, 'Блузка \"Твист\" с длиными рукавами', 1, 37, 'ac8daafedc68af217fc5abce0b8040b3278b3621.jpeg', 3),
+(39, 'Куртка \"Джин\"-Юбка \"Сакура\"', 1, 38, 'a5f9f380ca9a2ae6e221e57a73835555e74a5135.jpeg', 3),
+(40, 'Блузка \"Твист\" с длиными рукавами-Юбка \"Барбара\"', 1, 39, 'bb7dfacf9cda3c532a3d0befe6a17e3b820d9e68.jpeg', 3),
+(41, 'Платье \"Кокон\"', 1, 40, '01e2e39de715a123ca35837cc144f7fab7e7fcdd.jpeg', 3),
+(42, 'Платье шелковое длинное \"Блю Джин\"', 1, 41, 'f033531fe7368c17e631770cba37e40806c51f6f.jpeg', 3),
+(43, 'Платье длинное \"Инфинити\"', 1, 42, '61b5029b06aa78c4bf09638c73e6c149322a8c21.jpeg', 3),
+(44, 'Комбинезон \"Вудсмок\"', 1, 43, 'db382c22928025a7a5d0ac0964e884b0503ec633.jpeg', 3),
+(45, 'Платье \"Три уровня - Батик\"', 1, 44, 'd3a50db5895b17d51a5bb808103d45e555297ab4.jpeg', 3),
+(46, 'Кафтан-рубашка \"Клетчатый энзим\"', 1, 45, '2a9cad429650c74cb0315e3cff457abc3aa1e0c4.jpeg', 3),
+(47, 'Комбинезон \"Вудсмок\"', 1, 46, 'd73773c3932e28c9bf726ae8f824d10578b314fa.jpeg', 3),
 (48, '1', 1, 1, '03c07bc73e080a6eb239faf0b5f3dcb16671eff6.jpeg', 5),
 (49, '2', 1, 2, '9d51057fe7f5310d8c6efd81fa99bd182af09d3e.jpeg', 5),
 (50, '3', 1, 3, '26368e36e78f2bebf5eae255504d3dcd2ff11144.jpeg', 5),
@@ -1603,7 +1634,7 @@ INSERT INTO `shop_shop_by_look` (`id`, `name`, `status`, `orderning`, `logo`, `c
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_shop_by_look_product`
+-- Структура таблицы `shop_shop_by_look_product`
 --
 
 CREATE TABLE `shop_shop_by_look_product` (
@@ -1612,7 +1643,7 @@ CREATE TABLE `shop_shop_by_look_product` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `shop_shop_by_look_product`
+-- Дамп данных таблицы `shop_shop_by_look_product`
 --
 
 INSERT INTO `shop_shop_by_look_product` (`shop_by_look_id`, `product_id`) VALUES
@@ -1660,7 +1691,7 @@ INSERT INTO `shop_shop_by_look_product` (`shop_by_look_id`, `product_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_size`
+-- Структура таблицы `shop_size`
 --
 
 CREATE TABLE `shop_size` (
@@ -1680,7 +1711,7 @@ CREATE TABLE `shop_size` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `shop_size`
+-- Дамп данных таблицы `shop_size`
 --
 
 INSERT INTO `shop_size` (`id`, `size`, `marking`, `bust`, `waist`, `hips`, `front_waist_length`, `bust_depth`, `back_length`, `back_width`, `shoulder_width`, `hand_length`, `height`) VALUES
@@ -1694,7 +1725,7 @@ INSERT INTO `shop_size` (`id`, `size`, `marking`, `bust`, `waist`, `hips`, `fron
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_store`
+-- Структура таблицы `shop_store`
 --
 
 CREATE TABLE `shop_store` (
@@ -1705,7 +1736,7 @@ CREATE TABLE `shop_store` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `shop_store`
+-- Дамп данных таблицы `shop_store`
 --
 
 INSERT INTO `shop_store` (`id`, `country_id`, `name`, `status`) VALUES
@@ -1715,29 +1746,30 @@ INSERT INTO `shop_store` (`id`, `country_id`, `name`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `subscribe`
+-- Структура таблицы `subscribe`
 --
 
 CREATE TABLE `subscribe` (
   `id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `title` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `content` longtext COLLATE utf8_unicode_ci,
+  `content` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
   `date` datetime NOT NULL,
   `type` varchar(5) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `subscribe`
+-- Дамп данных таблицы `subscribe`
 --
 
 INSERT INTO `subscribe` (`id`, `name`, `title`, `content`, `date`, `type`) VALUES
-(2, 'Пример рассылки', 'Проверка', '<p><strong>Проверка еуые</strong></p>', '2016-07-28 19:12:28', 'b2b');
+(2, 'Пример рассылки', 'Проверка', '<p><strong>Проверка еуые</strong></p>', '2016-07-28 19:12:28', 'b2b'),
+(3, 'Тестовая рассылка', 'Тестовая рассылка', '<p>Тестовая рассылка</p>', '2019-11-19 06:49:52', 'b2b');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Структура таблицы `users`
 --
 
 CREATE TABLE `users` (
@@ -1765,24 +1797,28 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `users`
+-- Дамп данных таблицы `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `username_canonical`, `email`, `email_canonical`, `enabled`, `salt`, `password`, `last_login`, `locked`, `expired`, `expires_at`, `confirmation_token`, `password_requested_at`, `roles`, `credentials_expired`, `credentials_expire_at`, `name`, `f_name`, `gender`, `news`) VALUES
-(1, 'admin', 'admin', 'web.arli@gmail.com', 'web.arli@gmail.com', 1, '9qkos6gdcmko4cocc88w8wkosgs0wc4', '$2y$13$O.BqZrW1JBF63EOTlVbrp..8Pjm0dQC9GshzrzGmlSoxnOt.02RM2', '2016-10-18 07:33:13', 0, 0, NULL, NULL, NULL, 'a:1:{i:0;s:16:"ROLE_SUPER_ADMIN";}', 0, NULL, '', '', '', 0),
+(1, 'admin', 'admin', 'web.arli@gmail.com', 'web.arli@gmail.com', 1, '9qkos6gdcmko4cocc88w8wkosgs0wc4', '$2y$13$O.BqZrW1JBF63EOTlVbrp..8Pjm0dQC9GshzrzGmlSoxnOt.02RM2', '2019-12-10 17:42:24', 0, 0, NULL, NULL, NULL, 'a:1:{i:0;s:16:\"ROLE_SUPER_ADMIN\";}', 0, NULL, '', '', '', 0),
 (2, 'roman.kubatov@gmail.com', 'roman.kubatov@gmail.com', 'roman.kubatov@gmail.com', 'roman.kubatov@gmail.com', 1, 'b8mhmjwqfsowkk8cwgwscoksg48og48', '$2y$13$0dcOcqxfsiX8qPkCu0.FvODxzMu1DteHaaOr3Vh974ms3BjBMoLIS', '2016-05-24 09:12:25', 0, 0, NULL, NULL, NULL, 'a:0:{}', 0, NULL, 'qwe', 'qqq www eee', NULL, 1),
 (5, 'testuser23@mail.ru', 'testuser23@mail.ru', 'testuser23@mail.ru', 'testuser23@mail.ru', 1, 'k2cnm2mnouo80wwk4wgo4gwcgg48040', '$2y$13$xIPxaguLkoty7HozV7P4quYkfg8OJjeUnz8nriOqXjUKt8AfX7HL.', '2016-08-16 07:24:57', 0, 0, NULL, NULL, NULL, 'a:0:{}', 0, NULL, 'company', 'Mavlyanov', '2', 1),
 (6, 'testuser@mil.ru', 'testuser@mil.ru', 'testuser@mil.ru', 'testuser@mil.ru', 1, 'kscm3veztnkkg0kc80swk0k4s84wwso', '$2y$13$ZHNgV58NnsFTcbFZHo5QZu.F9WiTZGyxQcTih1O5.aYiwrpqbR4Ai', '2016-06-08 15:00:57', 0, 0, NULL, NULL, NULL, 'a:0:{}', 0, NULL, 'company', 'fio', NULL, 1),
-(7, 'x_pat@mail.ru', 'x_pat@mail.ru', 'x_pat@mail.ru', 'x_pat@mail.ru', 1, 'e9db8zeb3oggk8k0ok4sgwkc8sk4g0w', '$2y$13$9Yf5JjErkvk4DnVKNMys9uGLVucdDj78efrH5k0w3TTwTQgK4xz56', NULL, 0, 0, NULL, NULL, NULL, 'a:1:{i:0;s:16:"ROLE_SUPER_ADMIN";}', 0, NULL, 'Company2', 'Ivanov', NULL, 1);
+(7, 'x_pat@mail.ru', 'x_pat@mail.ru', 'x_pat@mail.ru', 'x_pat@mail.ru', 1, 'e9db8zeb3oggk8k0ok4sgwkc8sk4g0w', '$2y$13$9Yf5JjErkvk4DnVKNMys9uGLVucdDj78efrH5k0w3TTwTQgK4xz56', NULL, 0, 0, NULL, NULL, NULL, 'a:1:{i:0;s:16:\"ROLE_SUPER_ADMIN\";}', 0, NULL, 'Company2', 'Ivanov', NULL, 1),
+(8, 'marygray4194@gmail.com', 'marygray4194@gmail.com', 'marygray4194@gmail.com', 'marygray4194@gmail.com', 1, 'nsnrm4vt640o4swcosgw4kk8ogg4gos', '$2y$13$N5ueOtwmSrfKqDaxxe1/WO2VCB0Z/0LuIeEiVTDHsPQwwshKripUS', '2019-11-22 12:06:40', 0, 0, NULL, NULL, NULL, 'a:0:{}', 0, NULL, 'dvlAEwtoyGSxID', 'IuZrbToAhRtYSN', '2', 1),
+(9, 'Lit@jkdihanie.ru', 'lit@jkdihanie.ru', 'Lit@jkdihanie.ru', 'lit@jkdihanie.ru', 1, 'mzo4to7mpvk0wgg4w08gkokw4ow8ocs', '$2y$13$XXy41tP3ArOAn9K8.U9BQun78Nd60KIKyCz60JJa/o8/1RlZ1U4dS', '2019-11-23 05:51:24', 0, 0, NULL, NULL, NULL, 'a:0:{}', 0, NULL, 'OksanaLer', 'OksanaLer', NULL, 0),
+(10, 'tuiclasecan1984@mail.ru', 'tuiclasecan1984@mail.ru', 'tuiclasecan1984@mail.ru', 'tuiclasecan1984@mail.ru', 1, '2obktodsr4kk4ksco8wk0wg4wwww80w', '$2y$13$jytLDOHTsHQB294gLuoequ2X4VNo0yT42MgnkkDB.UcvkVCo4.r6S', '2019-12-03 06:53:41', 0, 0, NULL, NULL, NULL, 'a:0:{}', 0, NULL, 'Glennnig', 'Glennnig', NULL, 0),
+(11, 'haritonsiraev430@gmail.com', 'haritonsiraev430@gmail.com', 'haritonsiraev430@gmail.com', 'haritonsiraev430@gmail.com', 1, 'lks9jlns0hwkwowwc04o8kwsw0ogkc0', '$2y$13$9JCJRqbbxNrCLNcGFok7ceqJBFRkGm56ELTN2myTYtRBKT./voFPG', '2019-12-08 13:15:52', 0, 0, NULL, NULL, NULL, 'a:0:{}', 0, NULL, 'YnyetWrilk', 'YnyetWrilk', NULL, 0);
 
 --
--- Indexes for dumped tables
+-- Индексы сохранённых таблиц
 --
 
 --
--- Indexes for table `CMS_Menu`
+-- Индексы таблицы `cms_menu`
 --
-ALTER TABLE `CMS_Menu`
+ALTER TABLE `cms_menu`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `UNIQ_2BC6662CE16C6B94` (`alias`),
   ADD KEY `IDX_2BC6662CC4663E4` (`page_id`),
@@ -1790,55 +1826,55 @@ ALTER TABLE `CMS_Menu`
   ADD KEY `IDX_2BC6662CF9262FDF` (`menuType`);
 
 --
--- Indexes for table `CMS_Menu_Type`
+-- Индексы таблицы `cms_menu_type`
 --
-ALTER TABLE `CMS_Menu_Type`
+ALTER TABLE `cms_menu_type`
   ADD PRIMARY KEY (`id`),
   ADD KEY `IDX_88E7F54D6BF700BD` (`status_id`);
 
 --
--- Indexes for table `CMS_Pages`
+-- Индексы таблицы `cms_pages`
 --
-ALTER TABLE `CMS_Pages`
+ALTER TABLE `cms_pages`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `UNIQ_7BFC8834E16C6B94` (`alias`),
   ADD KEY `IDX_7BFC8834727ACA70` (`parent_id`);
 
 --
--- Indexes for table `CMS_Widget`
+-- Индексы таблицы `cms_widget`
 --
-ALTER TABLE `CMS_Widget`
+ALTER TABLE `cms_widget`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `CMS_widget_menu`
+-- Индексы таблицы `cms_widget_menu`
 --
-ALTER TABLE `CMS_widget_menu`
+ALTER TABLE `cms_widget_menu`
   ADD PRIMARY KEY (`widget_id`,`menu_id`),
   ADD KEY `IDX_8ECC8B4BFBE885E2` (`widget_id`),
   ADD KEY `IDX_8ECC8B4BCCD7E912` (`menu_id`);
 
 --
--- Indexes for table `email_db`
+-- Индексы таблицы `email_db`
 --
 ALTER TABLE `email_db`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `feedback`
+-- Индексы таблицы `feedback`
 --
 ALTER TABLE `feedback`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `legal_person`
+-- Индексы таблицы `legal_person`
 --
 ALTER TABLE `legal_person`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `UNIQ_D8EA0B0DA76ED395` (`user_id`);
 
 --
--- Indexes for table `ordering_products`
+-- Индексы таблицы `ordering_products`
 --
 ALTER TABLE `ordering_products`
   ADD PRIMARY KEY (`id`),
@@ -1848,7 +1884,7 @@ ALTER TABLE `ordering_products`
   ADD KEY `IDX_C1CBF42DC54C8C93` (`type_id`);
 
 --
--- Indexes for table `orders`
+-- Индексы таблицы `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
@@ -1857,7 +1893,7 @@ ALTER TABLE `orders`
   ADD KEY `IDX_E52FFDEEA76ED395` (`user_id`);
 
 --
--- Indexes for table `orders_products`
+-- Индексы таблицы `orders_products`
 --
 ALTER TABLE `orders_products`
   ADD PRIMARY KEY (`order_id`,`product_id`),
@@ -1865,50 +1901,50 @@ ALTER TABLE `orders_products`
   ADD KEY `IDX_749C879C4584665A` (`product_id`);
 
 --
--- Indexes for table `order_status`
+-- Индексы таблицы `order_status`
 --
 ALTER TABLE `order_status`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `ref_status`
+-- Индексы таблицы `ref_status`
 --
 ALTER TABLE `ref_status`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `settings`
+-- Индексы таблицы `settings`
 --
 ALTER TABLE `settings`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `shipping_method`
+-- Индексы таблицы `shipping_method`
 --
 ALTER TABLE `shipping_method`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `shop_category`
+-- Индексы таблицы `shop_category`
 --
 ALTER TABLE `shop_category`
   ADD PRIMARY KEY (`id`),
   ADD KEY `IDX_DDF4E357727ACA70` (`parent_id`);
 
 --
--- Indexes for table `shop_color`
+-- Индексы таблицы `shop_color`
 --
 ALTER TABLE `shop_color`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `shop_filters`
+-- Индексы таблицы `shop_filters`
 --
 ALTER TABLE `shop_filters`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `shop_product`
+-- Индексы таблицы `shop_product`
 --
 ALTER TABLE `shop_product`
   ADD PRIMARY KEY (`id`),
@@ -1917,7 +1953,7 @@ ALTER TABLE `shop_product`
   ADD KEY `IDX_D0794487E2A5CE63` (`categoryB2B_id`);
 
 --
--- Indexes for table `shop_product_category`
+-- Индексы таблицы `shop_product_category`
 --
 ALTER TABLE `shop_product_category`
   ADD PRIMARY KEY (`product_id`,`category_id`),
@@ -1925,7 +1961,7 @@ ALTER TABLE `shop_product_category`
   ADD KEY `IDX_ECA174E712469DE2` (`category_id`);
 
 --
--- Indexes for table `shop_product_color`
+-- Индексы таблицы `shop_product_color`
 --
 ALTER TABLE `shop_product_color`
   ADD PRIMARY KEY (`product_id`,`color_id`),
@@ -1933,7 +1969,7 @@ ALTER TABLE `shop_product_color`
   ADD KEY `IDX_D916A4BA7ADA1FB5` (`color_id`);
 
 --
--- Indexes for table `shop_product_filter`
+-- Индексы таблицы `shop_product_filter`
 --
 ALTER TABLE `shop_product_filter`
   ADD PRIMARY KEY (`product_id`,`filter_id`),
@@ -1941,7 +1977,7 @@ ALTER TABLE `shop_product_filter`
   ADD KEY `IDX_8D191FBFD395B25E` (`filter_id`);
 
 --
--- Indexes for table `shop_product_size`
+-- Индексы таблицы `shop_product_size`
 --
 ALTER TABLE `shop_product_size`
   ADD PRIMARY KEY (`product_id`,`size_id`),
@@ -1949,7 +1985,7 @@ ALTER TABLE `shop_product_size`
   ADD KEY `IDX_674D6159498DA827` (`size_id`);
 
 --
--- Indexes for table `shop_product_stroe`
+-- Индексы таблицы `shop_product_stroe`
 --
 ALTER TABLE `shop_product_stroe`
   ADD PRIMARY KEY (`id`),
@@ -1959,7 +1995,7 @@ ALTER TABLE `shop_product_stroe`
   ADD KEY `IDX_AB85E81BB092A811` (`store_id`);
 
 --
--- Indexes for table `shop_product_user`
+-- Индексы таблицы `shop_product_user`
 --
 ALTER TABLE `shop_product_user`
   ADD PRIMARY KEY (`product_id`,`user_id`),
@@ -1967,20 +2003,20 @@ ALTER TABLE `shop_product_user`
   ADD KEY `IDX_1D1E937AA76ED395` (`user_id`);
 
 --
--- Indexes for table `shop_setting_country`
+-- Индексы таблицы `shop_setting_country`
 --
 ALTER TABLE `shop_setting_country`
   ADD PRIMARY KEY (`id`),
   ADD KEY `IDX_E2D27DBA727ACA70` (`parent_id`);
 
 --
--- Indexes for table `shop_setting_currency`
+-- Индексы таблицы `shop_setting_currency`
 --
 ALTER TABLE `shop_setting_currency`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `shop_setting_slider_image`
+-- Индексы таблицы `shop_setting_slider_image`
 --
 ALTER TABLE `shop_setting_slider_image`
   ADD PRIMARY KEY (`id`),
@@ -1988,14 +2024,14 @@ ALTER TABLE `shop_setting_slider_image`
   ADD KEY `IDX_B8F8AB004584665A` (`product_id`);
 
 --
--- Indexes for table `shop_shop_by_look`
+-- Индексы таблицы `shop_shop_by_look`
 --
 ALTER TABLE `shop_shop_by_look`
   ADD PRIMARY KEY (`id`),
   ADD KEY `IDX_303AA0712469DE2` (`category_id`);
 
 --
--- Indexes for table `shop_shop_by_look_product`
+-- Индексы таблицы `shop_shop_by_look_product`
 --
 ALTER TABLE `shop_shop_by_look_product`
   ADD PRIMARY KEY (`shop_by_look_id`,`product_id`),
@@ -2003,26 +2039,26 @@ ALTER TABLE `shop_shop_by_look_product`
   ADD KEY `IDX_8F2868974584665A` (`product_id`);
 
 --
--- Indexes for table `shop_size`
+-- Индексы таблицы `shop_size`
 --
 ALTER TABLE `shop_size`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `shop_store`
+-- Индексы таблицы `shop_store`
 --
 ALTER TABLE `shop_store`
   ADD PRIMARY KEY (`id`),
   ADD KEY `IDX_38410225F92F3E70` (`country_id`);
 
 --
--- Indexes for table `subscribe`
+-- Индексы таблицы `subscribe`
 --
 ALTER TABLE `subscribe`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `users`
+-- Индексы таблицы `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
@@ -2030,178 +2066,204 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `UNIQ_1483A5E9A0D96FBF` (`email_canonical`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT для сохранённых таблиц
 --
 
 --
--- AUTO_INCREMENT for table `CMS_Menu`
+-- AUTO_INCREMENT для таблицы `cms_menu`
 --
-ALTER TABLE `CMS_Menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+ALTER TABLE `cms_menu`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
 --
--- AUTO_INCREMENT for table `CMS_Menu_Type`
+-- AUTO_INCREMENT для таблицы `cms_menu_type`
 --
-ALTER TABLE `CMS_Menu_Type`
+ALTER TABLE `cms_menu_type`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
--- AUTO_INCREMENT for table `CMS_Pages`
+-- AUTO_INCREMENT для таблицы `cms_pages`
 --
-ALTER TABLE `CMS_Pages`
+ALTER TABLE `cms_pages`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
 --
--- AUTO_INCREMENT for table `CMS_Widget`
+-- AUTO_INCREMENT для таблицы `cms_widget`
 --
-ALTER TABLE `CMS_Widget`
+ALTER TABLE `cms_widget`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
 --
--- AUTO_INCREMENT for table `email_db`
+-- AUTO_INCREMENT для таблицы `email_db`
 --
 ALTER TABLE `email_db`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
--- AUTO_INCREMENT for table `feedback`
+-- AUTO_INCREMENT для таблицы `feedback`
 --
 ALTER TABLE `feedback`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
 --
--- AUTO_INCREMENT for table `legal_person`
+-- AUTO_INCREMENT для таблицы `legal_person`
 --
 ALTER TABLE `legal_person`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
--- AUTO_INCREMENT for table `ordering_products`
+-- AUTO_INCREMENT для таблицы `ordering_products`
 --
 ALTER TABLE `ordering_products`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
 --
--- AUTO_INCREMENT for table `orders`
+-- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
 --
--- AUTO_INCREMENT for table `order_status`
+-- AUTO_INCREMENT для таблицы `order_status`
 --
 ALTER TABLE `order_status`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
--- AUTO_INCREMENT for table `ref_status`
+-- AUTO_INCREMENT для таблицы `ref_status`
 --
 ALTER TABLE `ref_status`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
--- AUTO_INCREMENT for table `settings`
+-- AUTO_INCREMENT для таблицы `settings`
 --
 ALTER TABLE `settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
--- AUTO_INCREMENT for table `shipping_method`
+-- AUTO_INCREMENT для таблицы `shipping_method`
 --
 ALTER TABLE `shipping_method`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
--- AUTO_INCREMENT for table `shop_category`
+-- AUTO_INCREMENT для таблицы `shop_category`
 --
 ALTER TABLE `shop_category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
 --
--- AUTO_INCREMENT for table `shop_color`
+-- AUTO_INCREMENT для таблицы `shop_color`
 --
 ALTER TABLE `shop_color`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+
 --
--- AUTO_INCREMENT for table `shop_filters`
+-- AUTO_INCREMENT для таблицы `shop_filters`
 --
 ALTER TABLE `shop_filters`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
 --
--- AUTO_INCREMENT for table `shop_product`
+-- AUTO_INCREMENT для таблицы `shop_product`
 --
 ALTER TABLE `shop_product`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=360;
+
 --
--- AUTO_INCREMENT for table `shop_product_stroe`
+-- AUTO_INCREMENT для таблицы `shop_product_stroe`
 --
 ALTER TABLE `shop_product_stroe`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
+
 --
--- AUTO_INCREMENT for table `shop_setting_country`
+-- AUTO_INCREMENT для таблицы `shop_setting_country`
 --
 ALTER TABLE `shop_setting_country`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
--- AUTO_INCREMENT for table `shop_setting_currency`
+-- AUTO_INCREMENT для таблицы `shop_setting_currency`
 --
 ALTER TABLE `shop_setting_currency`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
--- AUTO_INCREMENT for table `shop_setting_slider_image`
+-- AUTO_INCREMENT для таблицы `shop_setting_slider_image`
 --
 ALTER TABLE `shop_setting_slider_image`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
 --
--- AUTO_INCREMENT for table `shop_shop_by_look`
+-- AUTO_INCREMENT для таблицы `shop_shop_by_look`
 --
 ALTER TABLE `shop_shop_by_look`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+
 --
--- AUTO_INCREMENT for table `shop_size`
+-- AUTO_INCREMENT для таблицы `shop_size`
 --
 ALTER TABLE `shop_size`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
--- AUTO_INCREMENT for table `shop_store`
+-- AUTO_INCREMENT для таблицы `shop_store`
 --
 ALTER TABLE `shop_store`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
--- AUTO_INCREMENT for table `subscribe`
+-- AUTO_INCREMENT для таблицы `subscribe`
 --
 ALTER TABLE `subscribe`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
 --
--- Constraints for dumped tables
+-- Ограничения внешнего ключа сохраненных таблиц
 --
 
 --
--- Constraints for table `CMS_Menu`
+-- Ограничения внешнего ключа таблицы `cms_menu`
 --
-ALTER TABLE `CMS_Menu`
-  ADD CONSTRAINT `FK_2BC6662C727ACA70` FOREIGN KEY (`parent_id`) REFERENCES `CMS_Menu` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `FK_2BC6662CC4663E4` FOREIGN KEY (`page_id`) REFERENCES `CMS_Pages` (`id`),
-  ADD CONSTRAINT `FK_2BC6662CF9262FDF` FOREIGN KEY (`menuType`) REFERENCES `CMS_Menu_Type` (`id`);
+ALTER TABLE `cms_menu`
+  ADD CONSTRAINT `FK_2BC6662C727ACA70` FOREIGN KEY (`parent_id`) REFERENCES `cms_menu` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_2BC6662CC4663E4` FOREIGN KEY (`page_id`) REFERENCES `cms_pages` (`id`),
+  ADD CONSTRAINT `FK_2BC6662CF9262FDF` FOREIGN KEY (`menuType`) REFERENCES `cms_menu_type` (`id`);
 
 --
--- Constraints for table `CMS_Menu_Type`
+-- Ограничения внешнего ключа таблицы `cms_menu_type`
 --
-ALTER TABLE `CMS_Menu_Type`
+ALTER TABLE `cms_menu_type`
   ADD CONSTRAINT `FK_88E7F54D6BF700BD` FOREIGN KEY (`status_id`) REFERENCES `ref_status` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `CMS_Pages`
+-- Ограничения внешнего ключа таблицы `cms_pages`
 --
-ALTER TABLE `CMS_Pages`
-  ADD CONSTRAINT `FK_7BFC8834727ACA70` FOREIGN KEY (`parent_id`) REFERENCES `CMS_Pages` (`id`) ON DELETE CASCADE;
+ALTER TABLE `cms_pages`
+  ADD CONSTRAINT `FK_7BFC8834727ACA70` FOREIGN KEY (`parent_id`) REFERENCES `cms_pages` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `CMS_widget_menu`
+-- Ограничения внешнего ключа таблицы `cms_widget_menu`
 --
-ALTER TABLE `CMS_widget_menu`
-  ADD CONSTRAINT `FK_8ECC8B4BCCD7E912` FOREIGN KEY (`menu_id`) REFERENCES `CMS_Menu` (`id`),
-  ADD CONSTRAINT `FK_8ECC8B4BFBE885E2` FOREIGN KEY (`widget_id`) REFERENCES `CMS_Widget` (`id`);
+ALTER TABLE `cms_widget_menu`
+  ADD CONSTRAINT `FK_8ECC8B4BCCD7E912` FOREIGN KEY (`menu_id`) REFERENCES `cms_menu` (`id`),
+  ADD CONSTRAINT `FK_8ECC8B4BFBE885E2` FOREIGN KEY (`widget_id`) REFERENCES `cms_widget` (`id`);
 
 --
--- Constraints for table `legal_person`
+-- Ограничения внешнего ключа таблицы `legal_person`
 --
 ALTER TABLE `legal_person`
   ADD CONSTRAINT `FK_D8EA0B0DA76ED395` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `ordering_products`
+-- Ограничения внешнего ключа таблицы `ordering_products`
 --
 ALTER TABLE `ordering_products`
   ADD CONSTRAINT `FK_C1CBF42D4584665A` FOREIGN KEY (`product_id`) REFERENCES `shop_product` (`id`) ON DELETE CASCADE,
@@ -2210,7 +2272,7 @@ ALTER TABLE `ordering_products`
   ADD CONSTRAINT `FK_C1CBF42DC54C8C93` FOREIGN KEY (`type_id`) REFERENCES `shop_category` (`id`) ON DELETE SET NULL;
 
 --
--- Constraints for table `orders`
+-- Ограничения внешнего ключа таблицы `orders`
 --
 ALTER TABLE `orders`
   ADD CONSTRAINT `FK_E52FFDEE5F7D6850` FOREIGN KEY (`shipping_method_id`) REFERENCES `shipping_method` (`id`) ON DELETE SET NULL,
@@ -2218,55 +2280,55 @@ ALTER TABLE `orders`
   ADD CONSTRAINT `FK_E52FFDEEA76ED395` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;
 
 --
--- Constraints for table `orders_products`
+-- Ограничения внешнего ключа таблицы `orders_products`
 --
 ALTER TABLE `orders_products`
   ADD CONSTRAINT `FK_749C879C4584665A` FOREIGN KEY (`product_id`) REFERENCES `ordering_products` (`id`),
   ADD CONSTRAINT `FK_749C879C8D9F6D38` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`);
 
 --
--- Constraints for table `shop_category`
+-- Ограничения внешнего ключа таблицы `shop_category`
 --
 ALTER TABLE `shop_category`
   ADD CONSTRAINT `FK_DDF4E357727ACA70` FOREIGN KEY (`parent_id`) REFERENCES `shop_category` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `shop_product`
+-- Ограничения внешнего ключа таблицы `shop_product`
 --
 ALTER TABLE `shop_product`
   ADD CONSTRAINT `FK_D079448712469DE2` FOREIGN KEY (`category_id`) REFERENCES `shop_category` (`id`),
   ADD CONSTRAINT `FK_D0794487E2A5CE63` FOREIGN KEY (`categoryB2B_id`) REFERENCES `shop_category` (`id`);
 
 --
--- Constraints for table `shop_product_category`
+-- Ограничения внешнего ключа таблицы `shop_product_category`
 --
 ALTER TABLE `shop_product_category`
   ADD CONSTRAINT `FK_ECA174E712469DE2` FOREIGN KEY (`category_id`) REFERENCES `shop_category` (`id`),
   ADD CONSTRAINT `FK_ECA174E74584665A` FOREIGN KEY (`product_id`) REFERENCES `shop_product` (`id`);
 
 --
--- Constraints for table `shop_product_color`
+-- Ограничения внешнего ключа таблицы `shop_product_color`
 --
 ALTER TABLE `shop_product_color`
   ADD CONSTRAINT `FK_D916A4BA4584665A` FOREIGN KEY (`product_id`) REFERENCES `shop_product` (`id`),
   ADD CONSTRAINT `FK_D916A4BA7ADA1FB5` FOREIGN KEY (`color_id`) REFERENCES `shop_color` (`id`);
 
 --
--- Constraints for table `shop_product_filter`
+-- Ограничения внешнего ключа таблицы `shop_product_filter`
 --
 ALTER TABLE `shop_product_filter`
   ADD CONSTRAINT `FK_8D191FBF4584665A` FOREIGN KEY (`product_id`) REFERENCES `shop_product` (`id`),
   ADD CONSTRAINT `FK_8D191FBFD395B25E` FOREIGN KEY (`filter_id`) REFERENCES `shop_filters` (`id`);
 
 --
--- Constraints for table `shop_product_size`
+-- Ограничения внешнего ключа таблицы `shop_product_size`
 --
 ALTER TABLE `shop_product_size`
   ADD CONSTRAINT `FK_674D61594584665A` FOREIGN KEY (`product_id`) REFERENCES `shop_product` (`id`),
   ADD CONSTRAINT `FK_674D6159498DA827` FOREIGN KEY (`size_id`) REFERENCES `shop_size` (`id`);
 
 --
--- Constraints for table `shop_product_stroe`
+-- Ограничения внешнего ключа таблицы `shop_product_stroe`
 --
 ALTER TABLE `shop_product_stroe`
   ADD CONSTRAINT `FK_AB85E81B4584665A` FOREIGN KEY (`product_id`) REFERENCES `shop_product` (`id`),
@@ -2275,43 +2337,44 @@ ALTER TABLE `shop_product_stroe`
   ADD CONSTRAINT `FK_AB85E81BB092A811` FOREIGN KEY (`store_id`) REFERENCES `shop_store` (`id`);
 
 --
--- Constraints for table `shop_product_user`
+-- Ограничения внешнего ключа таблицы `shop_product_user`
 --
 ALTER TABLE `shop_product_user`
   ADD CONSTRAINT `FK_1D1E937A4584665A` FOREIGN KEY (`product_id`) REFERENCES `shop_product` (`id`),
   ADD CONSTRAINT `FK_1D1E937AA76ED395` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
--- Constraints for table `shop_setting_country`
+-- Ограничения внешнего ключа таблицы `shop_setting_country`
 --
 ALTER TABLE `shop_setting_country`
   ADD CONSTRAINT `FK_E2D27DBA727ACA70` FOREIGN KEY (`parent_id`) REFERENCES `shop_setting_country` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `shop_setting_slider_image`
+-- Ограничения внешнего ключа таблицы `shop_setting_slider_image`
 --
 ALTER TABLE `shop_setting_slider_image`
   ADD CONSTRAINT `FK_B8F8AB0012469DE2` FOREIGN KEY (`category_id`) REFERENCES `shop_category` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `FK_B8F8AB004584665A` FOREIGN KEY (`product_id`) REFERENCES `shop_product` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `shop_shop_by_look`
+-- Ограничения внешнего ключа таблицы `shop_shop_by_look`
 --
 ALTER TABLE `shop_shop_by_look`
   ADD CONSTRAINT `FK_303AA0712469DE2` FOREIGN KEY (`category_id`) REFERENCES `shop_category` (`id`);
 
 --
--- Constraints for table `shop_shop_by_look_product`
+-- Ограничения внешнего ключа таблицы `shop_shop_by_look_product`
 --
 ALTER TABLE `shop_shop_by_look_product`
   ADD CONSTRAINT `FK_8F2868974584665A` FOREIGN KEY (`product_id`) REFERENCES `shop_product` (`id`),
   ADD CONSTRAINT `FK_8F286897471CD25B` FOREIGN KEY (`shop_by_look_id`) REFERENCES `shop_shop_by_look` (`id`);
 
 --
--- Constraints for table `shop_store`
+-- Ограничения внешнего ключа таблицы `shop_store`
 --
 ALTER TABLE `shop_store`
   ADD CONSTRAINT `FK_38410225F92F3E70` FOREIGN KEY (`country_id`) REFERENCES `shop_setting_country` (`id`) ON DELETE CASCADE;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -80,16 +80,42 @@ class Builder
                 'class' => 'treeview-menu',
             )
         ));
-        $dropdown->addChild('Категории', array('route' => 'admin_shop_category',));
+
+        $dropdown_child = $dropdown->addChild('Категории', array(
+            'uri'=>'#',
+            'caret' => true,
+            'attributes'=>array('class'=>'treeview'),
+            'childrenAttributes' => array(
+                'class' => 'treeview-menu',
+            )
+        ));
+
+        $dropdown_child->addChild('Коллекции', array('route' => 'admin_shop_category_collection',));
+        $dropdown_child->addChild('Магазин', array('route' => 'admin_shop_category_trade',));
+        $dropdown_child->addChild('Для бизнеса', array('route' => 'admin_shop_category_business',));
+        if (strrpos($request->get('_route'), 'admin_shop_shop_by_look') !== false) {
+            $dropdown_child['Коллекции']->setCurrent(true);
+        }
+        if (strrpos($request->get('_route'), 'admin_shop_category_collection_') !== false) {
+            $dropdown_child['Коллекции']->setCurrent(true);
+        }
+        if (strrpos($request->get('_route'), 'admin_shop_category_trade_') !== false) {
+            $dropdown_child['Магазин']->setCurrent(true);
+        }
+        if (strrpos($request->get('_route'), 'admin_shop_category_business_') !== false) {
+            $dropdown_child['Для бизнеса']->setCurrent(true);
+        }
+
+
+//        $dropdown->addChild('Категории', array('route' => 'admin_shop_category',));
         $dropdown->addChild('Товары', array('route' => 'admin_shop_product',));
         $dropdown->addChild('Размеры', array('route' => 'admin_shop_size',));
         $dropdown->addChild('Фильтры', array('route' => 'admin_shop_settings_filter',));
-
         $dropdown->addChild('Склады', array('route' => 'admin_shop_store',));
 //        $dropdown->addChild('Shop By Look', array('route' => 'admin_shop_shop_by_look',));
-        if (strrpos($request->get('_route'), 'admin_shop_category_') !== false) {
-            $dropdown['Категории']->setCurrent(true);
-        }
+//        if (strrpos($request->get('_route'), 'admin_shop_category_') !== false) {
+//            $dropdown['Категории']->setCurrent(true);
+//        }
         if (strrpos($request->get('_route'), 'admin_shop_product_') !== false) {
             $dropdown['Товары']->setCurrent(true);
         }
@@ -102,9 +128,9 @@ class Builder
         if (strrpos($request->get('_route'), 'admin_shop_store_') !== false) {
             $dropdown['Склады']->setCurrent(true);
         }
-        if (strrpos($request->get('_route'), 'admin_shop_shop_by_look') !== false) {
-            $dropdown['Категории']->setCurrent(true);
-        }
+//        if (strrpos($request->get('_route'), 'admin_shop_shop_by_look') !== false) {
+//            $dropdown['Категории']->setCurrent(true);
+//        }
         $dropdown_child = $dropdown->addChild('Настройки', array(
             'uri'=>'#',
             'caret' => true,
@@ -128,15 +154,15 @@ class Builder
         }
 
 
-        $user = $menu->addChild('Пользователи', array(
-            'uri'=>'#',
-            'caret' => true,
-            'attributes'=>array('class'=>'treeview'),
-            'childrenAttributes' => array(
-                'class' => 'treeview-menu',
-            )
-        ));
-        $user->addChild('Список', array('route' => 'admin_user',));
+//        $user = $menu->addChild('Пользователи', array(
+//            'uri'=>'#',
+//            'caret' => true,
+//            'attributes'=>array('class'=>'treeview'),
+//            'childrenAttributes' => array(
+//                'class' => 'treeview-menu',
+//            )
+//        ));
+        $menu->addChild('Пользователи', array('route' => 'admin_user',));
         $menu->addChild('Заказы', array('route' => 'admin_orders',));
         $menu->addChild('Настройки', array('route' => 'admin_settings',));
 

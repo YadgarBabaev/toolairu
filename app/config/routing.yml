@@ -41,6 +41,11 @@ rlee_cms_shop_settings:
     type:     annotation
     prefix:   /admin/shop/settings
 
+rlee_cms_shop_category:
+    resource: "@RleeCMSShopBundle/Controller/Admin/Category"
+    type:     annotation
+    prefix:   /admin/shop/category
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
