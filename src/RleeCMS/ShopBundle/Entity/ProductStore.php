@@ -29,26 +29,26 @@ class ProductStore
 
     /**
      * @ORM\ManyToOne(targetEntity="Size")
-     * @ORM\JoinColumn(name="size_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="size_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      **/
     private $size;
 
     /**
      * @ORM\ManyToOne(targetEntity="Color")
-     * @ORM\JoinColumn(name="color_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="color_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      **/
     private $color;
 
     /**
      * @ORM\ManyToOne(targetEntity="Product")
-     * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      * @Assert\NotBlank()
      */
     private $product;
 
     /**
      * @ORM\ManyToOne(targetEntity="Store")
-     * @ORM\JoinColumn(name="store_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="store_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      * @Assert\NotBlank()
      */
     private $store;

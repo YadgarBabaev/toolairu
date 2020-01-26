@@ -48,9 +48,8 @@ class ShopByLook
     /**
      * @ORM\ManyToMany(targetEntity="Product", inversedBy="shopbylooks")
      * @ORM\JoinTable(name="shop_shop_by_look_product",
-     *      joinColumns={@ORM\JoinColumn(name="shop_by_look_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="product_id",
-     * referencedColumnName="id")}
+     *      joinColumns={@ORM\JoinColumn(name="shop_by_look_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE")}
      *      )
      **/
     protected $products;
@@ -64,7 +63,7 @@ class ShopByLook
 
     /**
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="shopbylook")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     private $category;
 

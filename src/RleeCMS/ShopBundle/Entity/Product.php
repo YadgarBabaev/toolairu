@@ -138,32 +138,30 @@ class Product
     /**
      * @ORM\ManyToMany(targetEntity="Category", inversedBy="products")
      * @ORM\JoinTable(name="shop_product_category",
-     *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="category_id",
-     * referencedColumnName="id")}
+     *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="CASCADE")}
      *      )
      **/
     protected $categories;
 
     /**
      * @ORM\ManyToOne(targetEntity="Category")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      * @Assert\NotBlank()
      */
     private $category;
 
     /**
      * @ORM\ManyToOne(targetEntity="Category")
-     * @ORM\JoinColumn(name="categoryB2B_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="categoryB2B_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     private $categoryB2B;
 
     /**
      * @ORM\ManyToMany(targetEntity="Size", inversedBy="products")
      * @ORM\JoinTable(name="shop_product_size",
-     *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="size_id",
-     * referencedColumnName="id")}
+     *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="size_id", referencedColumnName="id", onDelete="CASCADE")}
      *      )
      **/
     private $sizes;
@@ -171,9 +169,8 @@ class Product
     /**
      * @ORM\ManyToMany(targetEntity="Filters")
      * @ORM\JoinTable(name="shop_product_filter",
-     *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="filter_id",
-     * referencedColumnName="id")}
+     *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="filter_id", referencedColumnName="id", onDelete="CASCADE")}
      *      )
      **/
     private $filters;
@@ -182,9 +179,8 @@ class Product
     /**
      * @ORM\ManyToMany(targetEntity="Color", inversedBy="products", cascade={"persist"})
      * @ORM\JoinTable(name="shop_product_color",
-     *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="color_id",
-     * referencedColumnName="id")}
+     *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="color_id", referencedColumnName="id", onDelete="CASCADE")}
      *      )
      **/
     private $colors;
@@ -214,9 +210,8 @@ class Product
     /**
      * @ORM\ManyToMany(targetEntity="RleeCMS\UserBundle\Entity\User")
      * @ORM\JoinTable(name="shop_product_user",
-     *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="user_id",
-     * referencedColumnName="id")}
+     *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")}
      *      )
      **/
     private $users;
